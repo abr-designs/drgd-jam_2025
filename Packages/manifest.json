@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.abrds.jam-starter": "https://github.com/abr-designs/jam-starter-package.git",
     "com.unity.ai.navigation": "2.0.7",
     "com.unity.collab-proxy": "2.7.1",
     "com.unity.ide.rider": "3.0.35",
@@ -42,6 +43,9 @@
     "com.unity.modules.video": "1.0.0",
     "com.unity.modules.vr": "1.0.0",
     "com.unity.modules.wind": "1.0.0",
-    "com.unity.modules.xr": "1.0.0"
+    "com.unity.modules.xr": "1.0.0",
+    "com.dbrizov.naughtyattributes": "https://github.com/dbrizov/NaughtyAttributes.git#upm",
+    "com.gitamend.unityutils": "https://github.com/adammyhre/Unity-Utils.git",
+    "ayellowpaper.serialized-dictionary": "https://github.com/ayellowpaper/SerializedDictionary.git"
   }
 }
