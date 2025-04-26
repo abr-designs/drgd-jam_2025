@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4950491224260487683}
   - component: {fileID: -3972038626429450635}
   m_Layer: 6
-  m_Name: Gold
+  m_Name: GoldCollectablePrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,11 +47,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _type: 2
   itemStack:
-    item:
-      inventoryItemSO: {fileID: 11400000, guid: 0d98f7c3eb0787241bd670725d9da027, type: 2}
-      collectablePrefab: {fileID: 4950491224260487683}
+    itemSo: {fileID: 11400000, guid: 0d98f7c3eb0787241bd670725d9da027, type: 2}
     quantity: 1
-  healthToAdd: 1
 --- !u!1001 &4236275516718638363
 PrefabInstance:
   m_ObjectHideFlags: 0

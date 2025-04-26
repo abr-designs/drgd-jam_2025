@@ -1,4 +1,5 @@
 using Audio;
+using Samples.CharacterController3D.Scripts;
 using System;
 using UnityEngine;
 
@@ -29,7 +30,7 @@ public class CollectableBase : MonoBehaviour
     //------------------------------------------------//
 
     //private static PlayerHealth _playerHealth;
-    private static Samples.CharacterController3D.Scripts.CharacterController3D _characterController;
+    private static CharacterController3D _characterController;
     private static InventorySystem _inventorySystem;
     private static Transform _playerTransform;
 
@@ -44,9 +45,6 @@ public class CollectableBase : MonoBehaviour
         this.itemStack = itemStack;
     }
     public ItemStack GetItemStack() { return itemStack; }
-
-    [SerializeField, Min(0)]
-    private int healthToAdd;
 
     private CollectableBehaviourData _behaviourData;
 
@@ -63,12 +61,16 @@ public class CollectableBase : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        if (_playerTransform == null)
+        if (_playerTransform != null)
         {
-            _characterController = FindAnyObjectByType<Samples.CharacterController3D.Scripts.CharacterController3D>();
-            _playerTransform = _characterController.transform;
-            _inventorySystem = FindAnyObjectByType<InventorySystem>();
+            return;
         }
+        else
+        {
+            _characterController = FindAnyObjectByType<CharacterController3D>();
+            _playerTransform = _characterController.transform;
+        }
+
     }
 
     //TODO Set this up as a state machine
@@ -118,7 +120,8 @@ public class CollectableBase : MonoBehaviour
                 {
                     //TODO Pickup
                     //_playerHealth.AddHealth(healthToAdd);
-                    _inventorySystem.InsertItemStackToInventory(itemStack);
+                    //_inventorySystem.InsertItemStackToInventory(itemStack);
+                    InventorySystem.Instance.InsertItemStackToInventory(itemStack);
                     SFXManager.Instance.PlaySound(SFX.OBJECT_PICKUP);
 
                     // we need to broadcast that the item has been collected

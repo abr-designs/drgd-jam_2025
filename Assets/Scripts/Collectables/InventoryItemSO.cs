@@ -4,7 +4,7 @@ using UnityEngine;
 public class InventoryItemSO : ScriptableObject {
     
     public new string name;
-    public int maxQuantity;
+    public int maxHoldCount;
     public Sprite inventoryIconSprite;
     public Transform collectablePrefab;
 

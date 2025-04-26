@@ -4,23 +4,25 @@ using UnityEngine;
 
 [Serializable]
 public class ItemStack {
-    public InventoryItem item;
+    public InventoryItemSO itemSo;
     public int quantity;
 
-    public ItemStack(InventoryItem item, int quantity) {
-        this.item = item;
+    public ItemStack(InventoryItemSO itemSo, int quantity) {
+        this.itemSo = itemSo;
         this.quantity = quantity;
     }
 
     public override string ToString()
     {
-        return $"{item}[{quantity}]";
+        return $"{itemSo.name}[{quantity}]";
     }
 }
 
 public class InventorySystem : MonoBehaviour
 {
     private static InventorySystem _instance;
+    public static InventorySystem Instance { get { return _instance; } }
+
     private List<ItemStack> items = new List<ItemStack>();
 
     int currentSelectedIndex = 0;
@@ -37,12 +39,12 @@ public class InventorySystem : MonoBehaviour
 
     }
 
-    public int GetCountOfItem(InventoryItem item) {
+    public int GetCountOfItem(InventoryItemSO itemSo) {
 
         int countOfItems = 0;
 
         for (int i = 0; i < items.Count; i += 1) {
-            if (items[i].item == item) {
+            if (items[i].itemSo == itemSo) {
                 //itemStackIndex = i;
                 countOfItems += items[i].quantity;
                 break;
@@ -56,9 +58,10 @@ public class InventorySystem : MonoBehaviour
 
         int itemStackIndex = -1;
         for (int i = 0; i < items.Count; i += 1) {
-            if (items[i].item.Equals(newItemStack.item)) {
+            if (items[i].itemSo == newItemStack.itemSo)
+            {
                 // check current quantity of existing item stack
-                if(items[i].quantity + newItemStack.quantity > items[i].item.InventoryItemSO.maxQuantity) {
+                if (items[i].quantity + newItemStack.quantity > items[i].itemSo.maxHoldCount) {
                     itemStackIndex = -1;
                     break;
                 }
@@ -100,18 +103,18 @@ public class InventorySystem : MonoBehaviour
 
     public void RemoveItem(ItemStack itemStack) {
 
-        InventoryItem item = itemStack.item;
+        InventoryItemSO itemSo = itemStack.itemSo;
         int quantity = itemStack.quantity;
 
-        RemoveItem(item, quantity);
+        RemoveItem(itemSo, quantity);
     }
 
-    public void RemoveItem(InventoryItem item, int quantity) {
+    public void RemoveItem(InventoryItemSO itemSo, int quantity) {
 
         // check if item is in inventory
         int itemStackIndex = -1;
         for (int i = 0; i < items.Count; i += 1) {
-            if (items[i].item == item) {
+            if (items[i].itemSo == itemSo) {
                 itemStackIndex = i;
                 break;
             }
@@ -132,18 +135,21 @@ public class InventorySystem : MonoBehaviour
         }
     }
 
-    public static ItemStack GenerateItemStack(InventoryItem item, int quantity)
+    public static ItemStack GenerateItemStack(InventoryItemSO itemSo, int quantity)
     {
-        ItemStack newItemStack = new ItemStack(item, quantity);
+        ItemStack newItemStack = new ItemStack(itemSo, quantity);
         return newItemStack;
     }
 
     public override string ToString()
     {
-        string str = $"Inventory System Contains: ";
-        foreach(ItemStack itemStack in items)
+        string str = $"Inventory Contains: ";
+
+        for(int i = 0; i < items.Count; i += 1)
         {
-            str += itemStack.ToString();
+            str += items[i].ToString();
+
+            if(i < items.Count - 1) str += ", ";
         }
 
         return str;
