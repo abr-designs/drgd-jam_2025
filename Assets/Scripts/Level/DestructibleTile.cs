@@ -40,7 +40,6 @@ public class DestructibleTile : MonoBehaviour, IHaveHealth
         }
     }
 
-    static readonly ProfilerMarker s_PreparePerfMarker = new ProfilerMarker("DestructibleTile.CheckShouldAdjustNeighors");
     private void DestroyTile()
     {
         var previousPosition = transform.position;
@@ -56,9 +55,7 @@ public class DestructibleTile : MonoBehaviour, IHaveHealth
         // broadcast
         OnYLevelChanged?.Invoke((int)transform.position.y);
         
-        s_PreparePerfMarker.Begin();
         TilesController.CheckShouldAdjustNeighors(transform);
-        s_PreparePerfMarker.End();
     }
 
     private void RandomizeTileRotation()
@@ -80,7 +77,7 @@ public class DestructibleTile : MonoBehaviour, IHaveHealth
         ApplyDamage(1);
     }
 
-    private void OnMouseDown()
+    /*private void OnMouseDown()
     {
         if (!Application.isPlaying)
             return;
@@ -104,7 +101,7 @@ public class DestructibleTile : MonoBehaviour, IHaveHealth
             }
 
         }
-    }
+    }*/
 
 #endif
 }
