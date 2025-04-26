@@ -167,6 +167,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2265820666162408230, guid: 9ae64bdf400f3ac4280958bd36b23f62, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3619196265895802025, guid: 9ae64bdf400f3ac4280958bd36b23f62, type: 3}
       propertyPath: m_Name
       value: === Audio Controllers ===
@@ -744,6 +748,10 @@ PrefabInstance:
     - target: {fileID: 4411305886374573536, guid: 8c4a15e0380f87549b6ea81f6ed3d716, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5532229508301729137, guid: 8c4a15e0380f87549b6ea81f6ed3d716, type: 3}
+      propertyPath: SpawnRate
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6718848166253620183, guid: 8c4a15e0380f87549b6ea81f6ed3d716, type: 3}
       propertyPath: m_Name
