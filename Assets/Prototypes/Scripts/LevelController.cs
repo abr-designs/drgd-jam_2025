@@ -37,6 +37,13 @@ public class LevelController : HiddenSingleton<LevelController>
         OnWorldYChanged?.Invoke(m_currentYLevel);
     }
 
+    //For Debugging only
+    /*private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Space))
+            OnYLevelChanged(m_currentYLevel - 2);
+    }*/
+
     private void OnDisable()
     {
         DestructableTile.OnYLevelChanged -= OnYLevelChanged;
