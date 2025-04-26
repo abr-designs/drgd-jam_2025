@@ -2,7 +2,9 @@ using System;
 using GGJ.Collectables;
 using Interfaces;
 using NaughtyAttributes;
+using Unity.Profiling;
 using UnityEngine;
+using Utilities.Debugging;
 using VisualFX;
 
 public class DestructibleTile : MonoBehaviour, IHaveHealth
@@ -59,6 +61,8 @@ public class DestructibleTile : MonoBehaviour, IHaveHealth
 
         // broadcast
         OnYLevelChanged?.Invoke((int)transform.position.y);
+        
+        TilesController.CheckShouldAdjustNeighors(transform);
     }
 
     private void SpawnCollectable()
@@ -85,6 +89,32 @@ public class DestructibleTile : MonoBehaviour, IHaveHealth
     {
         ApplyDamage(1);
     }
-    
+
+    /*private void OnMouseDown()
+    {
+        if (!Application.isPlaying)
+            return;
+        
+        var explosionHitColliders = new Collider[10];
+        // Get affected tiles
+        int hitCount = Physics.OverlapSphereNonAlloc(transform.position, 2f, explosionHitColliders);
+
+        var cutOffY = transform.position.y - ((LevelController.TileSize / 2f) + 0.05f);
+        Draw.Circle(transform.position,Vector3.up, Color.green, 2f);
+
+        for (int i = 0; i < hitCount; i++)
+        {
+            var tile = explosionHitColliders[i].GetComponent<DestructibleTile>();
+            if (tile != null && tile.transform.position.y >= cutOffY)
+            {
+                Draw.Circle(tile.transform.position, Vector3.up,  Color.pink, LevelController.TileSize);
+                // Debug.Log($"Tile damage {Damage}");
+                // Debug.Break();
+                tile.ApplyDamage(1);
+            }
+
+        }
+    }*/
+
 #endif
 }
