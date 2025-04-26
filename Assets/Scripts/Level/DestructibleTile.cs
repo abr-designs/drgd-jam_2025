@@ -1,4 +1,5 @@
 using System;
+using GGJ.Collectables;
 using Interfaces;
 using NaughtyAttributes;
 using Unity.Profiling;
@@ -36,12 +37,18 @@ public class DestructibleTile : MonoBehaviour, IHaveHealth
         if (Health <= 0)
         {
             Health = spawnHealth;
-            DestroyTile();
+            bool spawnLoot = true;
+            DestroyTile(spawnLoot);
         }
     }
 
-    private void DestroyTile()
+    private void DestroyTile(bool spawnLoot = false)
     {
+        if (spawnLoot)
+        { 
+            SpawnCollectable();
+        }
+
         var previousPosition = transform.position;
         // move position down by tile scale
         transform.position = previousPosition + (Vector3.down * LevelController.TileSize);
@@ -56,6 +63,12 @@ public class DestructibleTile : MonoBehaviour, IHaveHealth
         OnYLevelChanged?.Invoke((int)transform.position.y);
         
         TilesController.CheckShouldAdjustNeighors(transform);
+    }
+
+    private void SpawnCollectable()
+    {
+        Debug.Log("Spawn Collectable");
+        CollectableController.CreateCollectable(transform.position, 1);
     }
 
     private void RandomizeTileRotation()
