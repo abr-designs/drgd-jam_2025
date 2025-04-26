@@ -85,7 +85,7 @@ public class InventorySystem : MonoBehaviour
             }
         }
 
-        Debug.Log(ToString());
+        //Debug.Log(ToString());
     }
 
     public void InsertNewItemStackToInventory(ItemStack newItemStack, int index) {

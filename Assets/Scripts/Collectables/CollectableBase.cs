@@ -3,6 +3,7 @@ using Samples.CharacterController3D.Scripts;
 using System;
 using Audio.SoundFX;
 using UnityEngine;
+using GGJ.Collectables;
 
 [Serializable]
 public struct CollectableBehaviourData
@@ -55,10 +56,14 @@ public class CollectableBase : MonoBehaviour
     private float _pickupCountdown;
     private float _moveSpeed;
 
+    public float maxDistanceFromGround = 1f;
+    public float raycastDistance = 100f;
+    public float moveSpeed = 5f;
+    public LayerMask groundLayer; // Assign the ground layer here
 
     //Unity Functions
     //============================================================================================================//
-        
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -108,22 +113,29 @@ public class CollectableBase : MonoBehaviour
                 if (dirToPlayer.magnitude < _behaviourData.pickupDistance)
                     _currentState = STATE.MOVE_TO_PLAYER;
 
+
+
+                // check position from ground
+                if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, raycastDistance, groundLayer))
+                {
+                    float distance = hit.distance;
+
+                    if (distance > maxDistanceFromGround)
+                    {
+                        // Move toward the ground smoothly
+                        Vector3 targetPosition = hit.point + Vector3.up * maxDistanceFromGround;
+                        transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+                        //transform.position = targetPosition;
+                    }
+                }
+
                 Slow();
                 break;
             //------------------------------------------------//
             case STATE.MOVE_TO_PLAYER:
                 if (dirToPlayer.magnitude < 0.5f)
                 {
-                    //TODO Pickup
-                    //_playerHealth.AddHealth(healthToAdd);
-                    //_inventorySystem.InsertItemStackToInventory(itemStack);
-                    InventorySystem.Instance.InsertItemStackToInventory(itemStack);
-                    SFX.OBJECT_PICKUP.PlaySound();
-
-                    // we need to broadcast that the item has been collected
-                    //OnItemCollected?.Invoke(this, EventArgs.Empty);
-
-                    Destroy(gameObject);
+                    PickUpByPlayer();
                     return;
                 }
                     
@@ -153,6 +165,29 @@ public class CollectableBase : MonoBehaviour
         _pickupCountdown = pickupDelay;
             
         _currentState = STATE.LAUNCHING;
+    }
+
+    private void PickUpByPlayer()
+    {
+        InventorySystem.Instance.InsertItemStackToInventory(itemStack);
+        SFX.OBJECT_PICKUP.PlaySound();
+
+        // we need to broadcast that the item has been collected
+        //OnItemCollected?.Invoke(this, EventArgs.Empty);
+
+        // remove from CollectableController list
+        //CollectableController.Instance.collectables.Remove(this);
+        //CollectableController.Instance.RemoveCollectable(this);
+
+        //Destroy(gameObject);
+
+        DestroyCollectable();
+    }
+
+    public void DestroyCollectable()
+    {
+        CollectableController.Instance.RemoveCollectable(this);
+        Destroy(gameObject);
     }
         
     //============================================================================================================//
