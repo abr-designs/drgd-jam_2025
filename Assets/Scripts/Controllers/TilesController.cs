@@ -1,11 +1,18 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.Serialization;
 using Utilities;
+using Utilities.Debugging;
+using Debug = UnityEngine.Debug;
 
+/// <summary>
+/// Used to prevent vertical gaps in tiles
+/// </summary>
 public class TilesController : HiddenSingleton<TilesController>
 {
     private static int s_GridX = -1;
@@ -31,6 +38,8 @@ public class TilesController : HiddenSingleton<TilesController>
 
     private Dictionary<Transform, int> m_transformIndicies;
 
+    [SerializeField]
+    private bool debugLogs;
 
     //Unity Functions
     //============================================================================================================//
@@ -94,35 +103,20 @@ public class TilesController : HiddenSingleton<TilesController>
             GetTileIndex(tileCoordinate + s_NW),
         };
 
-        //Debugging
-        //------------------------------------------------//
-        var debug = $"Checking around [{tile?.gameObject?.name}]:\n";
-        for (int i = 0; i < 8; i++)
-        {
-            if (neighbors[i] < 0)
-                continue;
-            
-            var tempIndex = neighbors[i];
-            var tempTile = allTiles[tempIndex];
-            var yPos = (int)tempTile.position.y;
-
-            debug += $"- [{tempIndex}]{tempTile?.gameObject?.name} @ {yPos}\n";
-            Debug.DrawLine(tempTile.position, tile.position, Color.blue, 0.1f);
-        }
+        DebugState(tile, neighbors);
         
-        Debug.Log(debug);
         //------------------------------------------------//
 
         for (int i = 7; i >= 0; i--)
         {
+            var tempIndex = neighbors[i];
+            
             //If its not within the grid space, skip it
-            if (neighbors[i] < 0)
+            if (tempIndex < 0 || tempIndex >= s_GridSize)
             {
                 neighbors.RemoveAt(i);
                 continue;
             }
-
-            var tempIndex = neighbors[i];
             
             Assert.IsTrue(tempIndex >= 0 && tempIndex < s_GridSize, $"[{tempIndex}] Outside of Range!!!");
             
@@ -130,13 +124,10 @@ public class TilesController : HiddenSingleton<TilesController>
             var yPos = (int)tempTile.position.y;
             
             //If it doesn't need to be adjusted, skip it
-            if (Math.Abs(Math.Abs(yPos) - Math.Abs(tileYPosition)) <= LevelController.TileSize)
-            {
-                neighbors.RemoveAt(i);
+            if (Math.Abs(Math.Abs(yPos) - Math.Abs(tileYPosition)) > LevelController.TileSize) 
                 continue;
-            }
             
-            Debug.Log($"<color=red>[{tempTile.gameObject.name}] is {yPos} && [{tile.gameObject.name}] is {tileYPosition}</color>");
+            neighbors.RemoveAt(i);
         }
 
         if (neighbors.Count <= 0) 
@@ -174,7 +165,7 @@ public class TilesController : HiddenSingleton<TilesController>
         if (x < 0 || y < 0)
             return -1;
         
-        if (x > s_GridX || y > s_GridY)
+        if (x >= s_GridX || y >= s_GridY)
             return -1;
         
         return Math.Clamp((x * s_GridY) + y, 0, s_GridSize);
@@ -198,6 +189,47 @@ public class TilesController : HiddenSingleton<TilesController>
     
     //Editor Functions
     //============================================================================================================//
+
+    [Conditional("UNITY_EDITOR")]
+    private void DebugState(Transform tile, List<int> neighbors)
+    {
+        if (!debugLogs)
+            return;
+        
+        var tileYPosition = tile.position.y;
+        //Debugging
+        //------------------------------------------------//
+        var debug = $"Checking around [{tile?.gameObject?.name}]:\n";
+        for (int i = 0; i < 8; i++)
+        {
+            var tempIndex = neighbors[i];
+            
+            if (tempIndex < 0 || tempIndex >= s_GridSize)
+                continue;
+            
+            try
+            {
+                var tempTile = allTiles[tempIndex];
+                var yPos = (int)tempTile.position.y;
+
+                if (Math.Abs(Math.Abs(yPos) - Math.Abs(tileYPosition)) <= LevelController.TileSize)
+                    debug += $"- <color=red>[{tempIndex}]{tempTile?.gameObject?.name} @ {yPos}</color>\n";
+                else 
+                    debug += $"- [{tempIndex}]{tempTile?.gameObject?.name} @ {yPos}\n";
+
+                var dir = tile.position - tempTile.position;
+                Draw.Arrow(tempTile.position, dir.normalized * dir.magnitude, Color.blue, 0.1f);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"Out of Range for [{tempIndex}]");
+                throw;
+            }
+
+        }
+        
+        Debug.Log(debug);
+    }
     
 #if UNITY_EDITOR
     [Header("Debugging")]
