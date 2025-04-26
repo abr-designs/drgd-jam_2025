@@ -1,6 +1,7 @@
 using Audio;
 using System.Collections.Generic;
 using UnityEngine;
+using Utilities.Debugging;
 
 public class DynamiteManager : MonoBehaviour
 {
@@ -64,11 +65,13 @@ public class DynamiteManager : MonoBehaviour
         // Raycast to get ground target                        
         Ray ray = new Ray(worldPos, Vector3.down);
         int hitCount = Physics.RaycastNonAlloc(ray, _raycastHits, 100f);
+        Debug.DrawRay(worldPos, Vector3.down * 100f, Color.yellow, 1f);
 
         // Not hitting is a problem
         Debug.Assert(hitCount > 0, "Dynamite raycast did not hit ground");
 
         Vector3 targetPoint = _raycastHits[0].point;
+        Debug.DrawRay(worldPos, Vector3.down * _raycastHits[0].distance, Color.green, 1f);
         
         var dyn = Instantiate(dynamitePrefab, targetPoint + Vector3.up * 10f, Quaternion.identity, transform);
         var ind = Instantiate(indicatorPrefab, transform, true);

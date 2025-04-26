@@ -40,6 +40,7 @@ public class Dynamite : MonoBehaviour
         Vector3 startScale = new Vector3(5f, 0.2f, 5f);
         _indicator.transform.localScale = Vector3.Lerp(startScale, endScale, t);
 
+        //FIXME This isn't accounting for the acceleration time when checking the collision point
         _velocity += Physics.gravity * (_gravityMult * Time.deltaTime);
         transform.position += _velocity * Time.deltaTime;
 
@@ -79,17 +80,17 @@ public class Dynamite : MonoBehaviour
         SFXManager.Instance.PlaySound(SFX.EXPLOSION);
 
         // Get affected tiles
-        int hitCount = Physics.OverlapSphereNonAlloc(transform.position, ExplodeRadius, explosionHitColliders, _explodeMask);
+        int hitCount = Physics.OverlapSphereNonAlloc(_target, ExplodeRadius, explosionHitColliders, _explodeMask);
 
-        var cutOffY = _target.y - (LevelController.TileSize / 2f + 0.05f);
-        Draw.Circle(transform.position, Color.green, ExplodeRadius);
+        var cutOffY = _target.y - ((LevelController.TileSize / 2f) + 0.05f);
+        Draw.Circle(_target,Vector3.up, Color.green, ExplodeRadius);
 
         for (int i = 0; i < hitCount; i++)
         {
             var tile = explosionHitColliders[i].GetComponent<DestructibleTile>();
             if (tile != null && tile.transform.position.y >= cutOffY)
             {
-                Draw.Circle(tile.transform.position, Color.pink, LevelController.TileSize);
+                Draw.Circle(tile.transform.position, Vector3.up,  Color.pink, LevelController.TileSize);
                 // Debug.Log($"Tile damage {Damage}");
                 // Debug.Break();
                 tile.ApplyDamage(Damage);

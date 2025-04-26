@@ -52,6 +52,8 @@ public class DestructibleTile : MonoBehaviour, IHaveHealth
 
         // broadcast
         OnYLevelChanged?.Invoke((int)transform.position.y);
+        
+        TilesController.CheckShouldAdjustNeighors(transform);
     }
 
     private void RandomizeTileRotation()
