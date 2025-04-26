@@ -1558,7 +1558,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1452421055741247519}
   m_Layer: 0
-  m_Name: 'StackedWallLayer[1]'
+  m_Name: StackedWallLayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
