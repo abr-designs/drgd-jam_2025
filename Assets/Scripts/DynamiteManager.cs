@@ -1,3 +1,4 @@
+using Audio;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -63,6 +64,8 @@ public class DynamiteManager : MonoBehaviour
         var ind = Instantiate(indicatorPrefab);
         ind.transform.parent = transform;
         dyn.Spawn(targetPoint, GravityMultiplier, ind, LevelLayerMask);
+
+        SFXManager.Instance.PlaySound(SFX.DROPING, 0.25f); // hardcoded quieter volume
 
     }
 

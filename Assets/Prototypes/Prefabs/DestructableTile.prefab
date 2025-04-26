@@ -100,8 +100,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 778875fa82c285b4c83d3d0ef8ab1987, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileScale: 2
   spawnHealth: 1
+  onDestroyVFX: 1
 --- !u!65 &6461007160854961606
 BoxCollider:
   m_ObjectHideFlags: 0

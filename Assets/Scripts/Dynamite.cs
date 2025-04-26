@@ -1,3 +1,4 @@
+using Audio;
 using UnityEngine;
 using Utilities.Debugging;
 
@@ -64,6 +65,8 @@ public class Dynamite : MonoBehaviour
 
     private Collider[] _explodeHits = new Collider[10];
     private void DoExplode() {
+
+        SFXManager.Instance.PlaySound(SFX.EXPLOSION);
 
         // Get affected tiles
         int hitCount = Physics.OverlapSphereNonAlloc(transform.position, ExplodeRadius, _explodeHits, _explodeMask);
