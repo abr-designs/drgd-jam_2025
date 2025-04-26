@@ -1,6 +1,7 @@
 using Audio;
 using Samples.CharacterController3D.Scripts;
 using System;
+using Audio.SoundFX;
 using UnityEngine;
 
 [Serializable]
@@ -117,7 +118,7 @@ public class CollectableBase : MonoBehaviour
                     //_playerHealth.AddHealth(healthToAdd);
                     //_inventorySystem.InsertItemStackToInventory(itemStack);
                     InventorySystem.Instance.InsertItemStackToInventory(itemStack);
-                    SFXManager.Instance.PlaySound(SFX.OBJECT_PICKUP);
+                    SFX.OBJECT_PICKUP.PlaySound();
 
                     // we need to broadcast that the item has been collected
                     //OnItemCollected?.Invoke(this, EventArgs.Empty);
