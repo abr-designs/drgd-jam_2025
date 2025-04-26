@@ -11,10 +11,8 @@ namespace GGJ.Collectables
     {
         private static CollectableController _instance;
 
-        [SerializeField]
-        private CollectableBase collectablePrefab;
-        [SerializeField]
-        private List<CollectableBase> collectablePrefabs;
+        [SerializeField] private Transform collectablesContainer;
+        [SerializeField] private List<CollectableBase> collectablePrefabs;
 
         [SerializeField, Min(0f)]
         private float launchSpeed;
@@ -49,7 +47,7 @@ namespace GGJ.Collectables
             for (int i = 0; i < count; i++)
             {
                 GameObject selectedPrefab = SelectRandomPrefab();
-                var newCollectable = Instantiate(selectedPrefab, position, quaternion.identity, transform);
+                var newCollectable = Instantiate(selectedPrefab, position, quaternion.identity, collectablesContainer);
                 CollectableBase collectable = newCollectable.GetComponent<CollectableBase>();
 
                 var dir = Random.insideUnitCircle.normalized;
@@ -75,26 +73,14 @@ namespace GGJ.Collectables
         private int spawnCount;
         [SerializeField]
         private Vector3 spawnPosition;
-        
-        [ContextMenu("Spawn Test Collectables")]
-        private void SpawnCollectables()
-        {
-            //if (Application.isPlaying == false)
-            //    return;
-            
-            for (int i = 0; i < spawnCount; i++)
-            {
-                var newCollectable = Instantiate(collectablePrefab, spawnPosition, quaternion.identity, transform);
-
-                var dir = Random.insideUnitCircle.normalized;
-                
-                newCollectable.Launch(collectableBehaviourData, new Vector3(dir.x, 0, dir.y), launchSpeed, pickupDelay);
-            }
-        }
+        [SerializeField] private bool requireApplicationPlaying = true;
 
         [Button]
         private void SpawnCollectable()
         {
+            if (requireApplicationPlaying && Application.isPlaying == false)
+                return;
+            
             CreateCollectables(spawnPosition, spawnCount, 0);
         }
 

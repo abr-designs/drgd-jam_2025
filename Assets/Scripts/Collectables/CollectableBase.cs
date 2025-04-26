@@ -62,15 +62,10 @@ public class CollectableBase : MonoBehaviour
     private void Start()
     {
         if (_playerTransform != null)
-        {
             return;
-        }
-        else
-        {
-            _characterController = FindAnyObjectByType<CharacterController3D>();
-            _playerTransform = _characterController.transform;
-        }
 
+        _characterController = FindAnyObjectByType<CharacterController3D>();
+        _playerTransform = _characterController.transform;
     }
 
     //TODO Set this up as a state machine
