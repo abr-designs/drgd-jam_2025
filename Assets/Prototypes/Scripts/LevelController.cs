@@ -6,6 +6,8 @@ using Utilities;
 
 public class LevelController : HiddenSingleton<LevelController>
 {
+    public static event Action<int> OnWorldYChanged; 
+    
     public static int TileSize => Instance.tileSize;
     [SerializeField, Min(1)]
     private int tileSize;
@@ -15,9 +17,10 @@ public class LevelController : HiddenSingleton<LevelController>
     private int startingYLevel;
     private int m_currentYLevel;
 
-    [SerializeField]
-    private Transform levelStackPrefab;
 
+    
+    [SerializeField, Header("Level Wall Spawner")]
+    private Transform levelStackPrefab;
     private List<Transform> m_trackedLayerStacks;
     
     //Unity Functions
@@ -31,6 +34,7 @@ public class LevelController : HiddenSingleton<LevelController>
     {
         m_trackedLayerStacks = new List<Transform>();
         m_currentYLevel = startingYLevel;
+        OnWorldYChanged?.Invoke(m_currentYLevel);
     }
 
     private void OnDisable()
@@ -52,6 +56,7 @@ public class LevelController : HiddenSingleton<LevelController>
 
         m_currentYLevel = newYLevel;
         CreateNewLayerStack(m_currentYLevel);
+        OnWorldYChanged?.Invoke(m_currentYLevel);
     }
 
     private void CreateNewLayerStack(int targetYPosition)
