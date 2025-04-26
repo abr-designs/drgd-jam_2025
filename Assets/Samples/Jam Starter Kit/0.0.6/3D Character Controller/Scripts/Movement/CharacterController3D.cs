@@ -1,3 +1,4 @@
+using Audio;
 using System;
 using UnityEngine;
 
@@ -227,6 +228,8 @@ namespace Samples.CharacterController3D.Scripts
             m_jumpBufferTimer = 0f;
             VerticalVelocity = characterMovementData.InitialJumpVelocity;
             m_numberOfJumpsUsed += numberOfJumpsUsed;
+
+            SFXManager.Instance.PlaySound(SFX.JUMP);
         }
 
         private void Jump()
