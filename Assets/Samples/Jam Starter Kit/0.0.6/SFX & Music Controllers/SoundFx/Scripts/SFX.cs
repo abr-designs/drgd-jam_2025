@@ -6,5 +6,6 @@
         JUMP = 1,
         EXPLOSION = 2,
         DROPING = 3,
+        OBJECT_PICKUP = 4,
     }
 }
