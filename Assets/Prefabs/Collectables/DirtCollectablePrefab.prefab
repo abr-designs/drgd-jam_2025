@@ -49,6 +49,16 @@ MonoBehaviour:
   itemStack:
     itemSo: {fileID: 11400000, guid: 89cebaea36971774eaff40af3ee50b48, type: 2}
     quantity: 1
+  lootTable:
+    lootItemList:
+    - itemType: {fileID: 11400000, guid: 89cebaea36971774eaff40af3ee50b48, type: 2}
+      quantity: 1
+      weight: 1
+      dropRate: 1
+    - itemType: {fileID: 11400000, guid: 0d98f7c3eb0787241bd670725d9da027, type: 2}
+      quantity: 1
+      weight: 1
+      dropRate: 1
   maxDistanceFromGround: 1
   raycastDistance: 100
   moveSpeed: 5

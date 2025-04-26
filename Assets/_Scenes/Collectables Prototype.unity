@@ -1338,6 +1338,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -2
       objectReference: {fileID: 0}
+    - target: {fileID: 6996066188867910651, guid: e6481c0ce04255147bd3fd5b65fdf4bc, type: 3}
+      propertyPath: lootTable.lootItemList.Array.data[1].weight
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7433297470957913502, guid: e6481c0ce04255147bd3fd5b65fdf4bc, type: 3}
       propertyPath: m_LocalPosition.y
       value: -2
