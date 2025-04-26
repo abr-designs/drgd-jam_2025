@@ -5553,7 +5553,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &410451511
 Transform:
   m_ObjectHideFlags: 0
@@ -10021,7 +10021,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &867273568
 Transform:
   m_ObjectHideFlags: 0
@@ -12193,7 +12193,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1067944820
 Transform:
   m_ObjectHideFlags: 0
@@ -13315,6 +13315,63 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1130574872}
   m_Mesh: {fileID: -6864927501807787473, guid: d775a0f0e5e406a42b4455cb70be6183, type: 3}
+--- !u!1 &1132628877
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1132628879}
+  - component: {fileID: 1132628878}
+  m_Layer: 0
+  m_Name: DynamiteManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1132628878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1132628877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d219a5384cbdae4f91ab8ca8876657d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SpawnRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 16
+    height: 16
+  SpawnRate: 0.5
+  GravityMultiplier: 1
+  LevelLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  dynamitePrefab: {fileID: 3910126737517379331, guid: e371d5ee4b56c174cbe0fe2031533cc3, type: 3}
+  indicatorPrefab: {fileID: 6557073079331992831, guid: bb0233c1debd26949a3bb628efb4cbbb, type: 3}
+--- !u!4 &1132628879
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1132628877}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1139806891
 GameObject:
   m_ObjectHideFlags: 0
@@ -25134,7 +25191,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2015444554
 Transform:
   m_ObjectHideFlags: 0
@@ -26180,3 +26237,4 @@ SceneRoots:
   - {fileID: 430295282}
   - {fileID: 1366785268}
   - {fileID: 95705164}
+  - {fileID: 1132628879}
