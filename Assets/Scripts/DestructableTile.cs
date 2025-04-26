@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class DestructableTile : MonoBehaviour
 {
-    public float tileScale = 2.0f;
     [SerializeField] private float spawnHealth = 1.0f;
     public float Health { get; private set; }
     public static event Action<int> OnYLevelChanged;
@@ -25,7 +24,7 @@ public class DestructableTile : MonoBehaviour
     public void DestroyTile()
     {
         // move position down by tile scale
-        transform.position = transform.position + Vector3.down * tileScale;
+        transform.position += Vector3.down * LevelController.TileSize;
 
         // rotate block to shake up monotony
         RandomizeTileRotation();
