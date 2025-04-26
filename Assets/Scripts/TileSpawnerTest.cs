@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 
 public class TileSpawnerTest : MonoBehaviour
@@ -30,7 +32,8 @@ public class TileSpawnerTest : MonoBehaviour
             {
                 for (int z = 0; z < rowResolution; z += 1)
                 {
-                    GameObject tile = Instantiate(tileTypes[randomTileIndex], transform);
+                    var tile = PrefabUtility.InstantiatePrefab(tileTypes[randomTileIndex], transform) as GameObject;
+                    tile.name = $"{tileTypes[randomTileIndex].name}_[{x}, {z}]";
                     tile.transform.localPosition = new Vector3(x, -y, z) * tileScale;
                 }
             }
