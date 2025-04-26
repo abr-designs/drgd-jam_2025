@@ -1,4 +1,5 @@
 using UnityEngine;
+using Utilities.Debugging;
 
 public class Dynamite : MonoBehaviour
 {
@@ -11,6 +12,10 @@ public class Dynamite : MonoBehaviour
 
     private Rigidbody _rb;
     private Vector3 _velocity = Vector3.zero;
+
+    private LayerMask _explodeMask;
+    public float ExplodeRadius = 2f;
+    public float Damage = 1f;
 
     private void Start()
     {
@@ -33,17 +38,19 @@ public class Dynamite : MonoBehaviour
         // Check if this has hit the ground
         if(_timeLeft <= 0)
         {
-            DestroyImmediate(gameObject);
-            DestroyImmediate(_indicator.gameObject);
+            DoExplode();
+            Destroy(gameObject);
+            Destroy(_indicator.gameObject);
         }
 
     }
 
-    public void Spawn(Vector3 targetPoint, float gravityMult, GameObject indicator ) {
+    public void Spawn(Vector3 targetPoint, float gravityMult, GameObject indicator, LayerMask explodeMask ) {
 
         _indicator = indicator;
         _target = targetPoint;
         _gravityMult = gravityMult;
+        _explodeMask = explodeMask;
 
         _indicator.transform.position = _target;
 
@@ -52,6 +59,30 @@ public class Dynamite : MonoBehaviour
 
         _totalTime = Mathf.Sqrt( (2f * dist) / Mathf.Abs(Physics.gravity.y*_gravityMult));
         _timeLeft = _totalTime;
+
+    }
+
+    private Collider[] _explodeHits = new Collider[10];
+    private void DoExplode() {
+
+        // Get affected tiles
+        int hitCount = Physics.OverlapSphereNonAlloc(transform.position, ExplodeRadius, _explodeHits, _explodeMask);
+        
+        var cutOffY = _target.y - (LevelController.TileSize/2f + 0.05f);
+        Draw.Circle(transform.position, Color.green, ExplodeRadius);
+        
+        for(int i=0;i<hitCount;i++) {
+
+            var tile = _explodeHits[i].GetComponent<DestructableTile>();
+            if(tile != null && tile.transform.position.y >= cutOffY) {
+                Draw.Circle(tile.transform.position, Color.pink, LevelController.TileSize);
+                // Debug.Log($"Tile damage {Damage}");
+                // Debug.Break();
+                tile.ApplyDamage(Damage);
+            }
+
+        }
+
 
     }
 

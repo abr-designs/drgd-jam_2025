@@ -62,7 +62,7 @@ public class DynamiteManager : MonoBehaviour
         dyn.transform.position = targetPoint + Vector3.up * 10f;
         var ind = Instantiate(indicatorPrefab);
         ind.transform.parent = transform;
-        dyn.Spawn(targetPoint, GravityMultiplier, ind);
+        dyn.Spawn(targetPoint, GravityMultiplier, ind, LevelLayerMask);
 
     }
 
