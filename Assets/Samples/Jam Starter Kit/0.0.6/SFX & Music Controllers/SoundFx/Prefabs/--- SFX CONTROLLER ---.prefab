@@ -175,11 +175,42 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sfxAudioMixer: {fileID: -5126370574719963628, guid: ce08768a569db8b429bc3e45071f1f19, type: 2}
-  sfxAudioSource: {fileID: 6565548158353040769}
+  sfxAudioSource: {fileID: 0}
   sfxSourcePrefab: {fileID: 144211660340659278, guid: c7877577d67448743b4632fe48819da7, type: 3}
   sfxDatas:
   - name: NONE
     type: 0
-    audioClips: []
-    volume: 0
+    audioClips:
+    - {fileID: 0}
+    - {fileID: 0}
+    volume: 1
     maxPlaying: 0
+  - name: JUMP
+    type: 1
+    audioClips:
+    - {fileID: 8300000, guid: dd58b69de93bb794b855d1e124f6df48, type: 3}
+    - {fileID: 8300000, guid: a07f0cad7cf018c43a169f3f6b264225, type: 3}
+    volume: 1
+    maxPlaying: 1
+  - name: EXPLOSION
+    type: 2
+    audioClips:
+    - {fileID: 8300000, guid: 288d4fc9321c3104e9b0d3ab98998f47, type: 3}
+    - {fileID: 8300000, guid: 56f4d47be20215d4693e4edcc7888eb1, type: 3}
+    volume: 1
+    maxPlaying: 1
+  - name: DROPPING
+    type: 3
+    audioClips:
+    - {fileID: 8300000, guid: 0a399da3295720942a504b4e3100e57e, type: 3}
+    - {fileID: 8300000, guid: acd75a3e9a94b434d9f3134c07471937, type: 3}
+    volume: 0.1
+    maxPlaying: 1
+  - name: Object Pickup
+    type: 4
+    audioClips:
+    - {fileID: 8300000, guid: fe941de6713b7ce45908e8d102b32b0f, type: 3}
+    - {fileID: 8300000, guid: 1b48eea59ecdcba42aaf776a405aa3d4, type: 3}
+    - {fileID: 8300000, guid: 9b690ec8b95a24c419a55e6b64038ba5, type: 3}
+    volume: 0.1
+    maxPlaying: 1

@@ -49,6 +49,12 @@ MonoBehaviour:
   itemStack:
     itemSo: {fileID: 11400000, guid: 0d98f7c3eb0787241bd670725d9da027, type: 2}
     quantity: 1
+  maxDistanceFromGround: 1
+  raycastDistance: 100
+  moveSpeed: 5
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 1
 --- !u!1001 &4236275516718638363
 PrefabInstance:
   m_ObjectHideFlags: 0
