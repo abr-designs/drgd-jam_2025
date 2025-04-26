@@ -1,3 +1,4 @@
+using Audio;
 using UnityEngine;
 
 public class Dynamite : MonoBehaviour
@@ -33,6 +34,7 @@ public class Dynamite : MonoBehaviour
         // Check if this has hit the ground
         if(_timeLeft <= 0)
         {
+            SFXManager.Instance.PlaySound(SFX.EXPLOSION);
             DestroyImmediate(gameObject);
             DestroyImmediate(_indicator.gameObject);
         }
