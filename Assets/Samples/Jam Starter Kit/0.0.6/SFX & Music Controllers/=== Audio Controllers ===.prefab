@@ -113,15 +113,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5075773765866298905, guid: 64e020dcbf081c04aaa5df70cab3190b, type: 3}
       propertyPath: startMusic
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 5075773765866298905, guid: 64e020dcbf081c04aaa5df70cab3190b, type: 3}
+      propertyPath: musicAudioMixer
+      value: 
+      objectReference: {fileID: 24100000, guid: ce08768a569db8b429bc3e45071f1f19, type: 2}
     - target: {fileID: 5075773765866298905, guid: 64e020dcbf081c04aaa5df70cab3190b, type: 3}
       propertyPath: musicDatas.Array.size
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5075773765866298905, guid: 64e020dcbf081c04aaa5df70cab3190b, type: 3}
       propertyPath: musicDatas.Array.data[1].name
-      value: MENU
+      value: GAME
       objectReference: {fileID: 0}
     - target: {fileID: 5075773765866298905, guid: 64e020dcbf081c04aaa5df70cab3190b, type: 3}
       propertyPath: musicDatas.Array.data[1].type
@@ -130,11 +134,11 @@ PrefabInstance:
     - target: {fileID: 5075773765866298905, guid: 64e020dcbf081c04aaa5df70cab3190b, type: 3}
       propertyPath: musicDatas.Array.data[0].audioClip
       value: 
-      objectReference: {fileID: 8300000, guid: 59e88014204ccdd44b418c2fb50ff670, type: 3}
+      objectReference: {fileID: 8300000, guid: e4fd6a0ed6c6e154abf0513f9a94ea31, type: 3}
     - target: {fileID: 5075773765866298905, guid: 64e020dcbf081c04aaa5df70cab3190b, type: 3}
       propertyPath: musicDatas.Array.data[1].audioClip
       value: 
-      objectReference: {fileID: 8300000, guid: 81cdbdab3ffa7fc42ac010466e248b90, type: 3}
+      objectReference: {fileID: 8300000, guid: 95e4e40efe557fb40814303c8356f6e8, type: 3}
     - target: {fileID: 5075773765866298905, guid: 64e020dcbf081c04aaa5df70cab3190b, type: 3}
       propertyPath: musicDatas.Array.data[0].targetVolume
       value: 0.7
@@ -149,7 +153,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7852912579961033763, guid: 64e020dcbf081c04aaa5df70cab3190b, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8624088634518845020, guid: 64e020dcbf081c04aaa5df70cab3190b, type: 3}
       propertyPath: m_LocalPosition.x
