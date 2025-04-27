@@ -141,9 +141,24 @@ public class Dynamite : MonoBehaviour
         }
     }
 
+
+    private RaycastHit[] _raycastHits = new RaycastHit[5];
     private void OnBlockChange(int newY) {
 
+        if(!_indicator) return;
+
         if(Time.frameCount == _lastFrameCheck) return;
+
+        // Do a new raycast and check  
+        Vector3 startPos = _indicator.transform.position + Vector3.up * LevelController.TileSize * 5f;      
+        Ray ray = new Ray(startPos, Vector3.down);
+        int hitCount = Physics.RaycastNonAlloc(ray, _raycastHits, LevelController.TileSize * 10f);
+
+        Debug.DrawRay(startPos, Vector3.down * LevelController.TileSize * 10f, Color.purple, 1f);
+        Debug.Assert(hitCount > 0, "Indicator was unable to find a tile beneath!");
+
+        Vector3 newPos = _raycastHits[0].point;
+        _indicator.transform.position = newPos;
 
         _lastFrameCheck = Time.frameCount;
 

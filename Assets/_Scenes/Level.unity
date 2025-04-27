@@ -658,6 +658,26 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 519d8250ea9277a41ae991afa685c481, type: 3}
+--- !u!4 &1153908867 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3041843301772305469, guid: 519d8250ea9277a41ae991afa685c481, type: 3}
+  m_PrefabInstance: {fileID: 1153908866}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1153908868 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 839244711368908976, guid: 519d8250ea9277a41ae991afa685c481, type: 3}
+  m_PrefabInstance: {fileID: 1153908866}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1153908869 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6199994060161892632, guid: 519d8250ea9277a41ae991afa685c481, type: 3}
+  m_PrefabInstance: {fileID: 1153908866}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1153908870 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5521030581801028092, guid: 519d8250ea9277a41ae991afa685c481, type: 3}
+  m_PrefabInstance: {fileID: 1153908866}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1181504328
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -709,19 +729,19 @@ PrefabInstance:
     - target: {fileID: 5532229508301729137, guid: 8c4a15e0380f87549b6ea81f6ed3d716, type: 3}
       propertyPath: 'dynamiteThrowers.Array.data[0]'
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1153908870}
     - target: {fileID: 5532229508301729137, guid: 8c4a15e0380f87549b6ea81f6ed3d716, type: 3}
       propertyPath: 'dynamiteThrowers.Array.data[1]'
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1153908869}
     - target: {fileID: 5532229508301729137, guid: 8c4a15e0380f87549b6ea81f6ed3d716, type: 3}
       propertyPath: 'dynamiteThrowers.Array.data[2]'
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1153908868}
     - target: {fileID: 5532229508301729137, guid: 8c4a15e0380f87549b6ea81f6ed3d716, type: 3}
       propertyPath: 'dynamiteThrowers.Array.data[3]'
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1153908867}
     - target: {fileID: 6718848166253620183, guid: 8c4a15e0380f87549b6ea81f6ed3d716, type: 3}
       propertyPath: m_Name
       value: DynamiteManager

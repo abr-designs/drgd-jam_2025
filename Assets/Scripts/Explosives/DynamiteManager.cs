@@ -95,7 +95,7 @@ public class DynamiteManager : HiddenSingleton<DynamiteManager>
         Vector3 targetPoint = _raycastHits[0].point;
         Debug.DrawRay(worldPos, Vector3.down * _raycastHits[0].distance, Color.green, 1f);
 
-        var dyn = Instantiate(dynamitePrefab);
+        var dyn = Instantiate(dynamitePrefab, transform, true);
         var ind = Instantiate(indicatorPrefab, transform, true);
 
         bool isThrowing = transform.position.y > LevelController.TileSize * -5f;
