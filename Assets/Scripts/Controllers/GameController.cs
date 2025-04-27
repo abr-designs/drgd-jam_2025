@@ -6,6 +6,7 @@ using GameInput;
 using UI;
 using UnityEngine;
 using UnityEngine.Assertions;
+using Utilities;
 using Utilities.Animations;
 using Utilities.WaitForAnimations;
 using Utilities.WaitForAnimations.Base;
@@ -19,9 +20,20 @@ public class GameController : MonoBehaviour
         DEATH,
         DAY_END,
     }
+
+    private enum GAME_STATE
+    {
+        NONE = 0,
+        MAIN_MENU,
+        GAME,
+        STORE
+    }
+
+    //[SerializeField, Obsolete]
+    //private DynamiteManager DynamiteManager;
     
-    [SerializeField]
-    private GameObject mainMenuGameObject;
+    //[SerializeField]
+    //private GameObject mainMenuGameObject;
 
     [SerializeField, Min(0f), Header("Intro Cinematic")]
     private float introAnimationTime = 2f;
@@ -32,19 +44,47 @@ public class GameController : MonoBehaviour
     private float dayStartAnimationTime = 2f;
     [SerializeField]
     private WaitForAnimationBase dayStartCinematicAnimator;
+
+    private DynamiteManager m_dynamiteManager;
+    
+    //private MainMenuUI m_mainMenuUI;
+    //private GameCanvasController m_gameCanvasController;
+    //private UpgradeStoreController m_upgradeStoreController;
+
+    private GameObject[] m_canvases;
     
     //============================================================================================================//
-    private void OnEnable()
-    {
-        
-    }
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
     {
-        Assert.IsNotNull(mainMenuGameObject);
-        mainMenuGameObject.SetActive(true);
+        //------------------------------------------------//
+        m_dynamiteManager = FindAnyObjectByType<DynamiteManager>();
+        
+        var mainMenuUI = FindAnyObjectByType<MainMenuUI>();
+        var gameCanvasController = FindAnyObjectByType<GameCanvasController>();
+        var upgradeStoreController = FindAnyObjectByType<UpgradeStoreController>();
+
+        m_canvases = new[]
+        {
+            null, //NONE
+            mainMenuUI.gameObject, //MAIN_MENU
+            gameCanvasController.gameObject, //GAME
+            upgradeStoreController.gameObject //STORE
+        };
+        
+        Assert.IsNotNull(m_dynamiteManager, "m_dynamiteManager is null!");
+        
+        Assert.IsNotNull(mainMenuUI, "mainMenuUI is null!");
+        Assert.IsNotNull(gameCanvasController, "gameCanvasController is null!");
+        Assert.IsNotNull(upgradeStoreController, "upgradeStoreController is null!");
+        
+        //------------------------------------------------//
+        
+        ShowCanvas(GAME_STATE.MAIN_MENU);
         
         GameInputDelegator.SetInputLock(true);
+        m_dynamiteManager.enabled = false;
 
         var coroutines = new []
         {
@@ -56,8 +96,17 @@ public class GameController : MonoBehaviour
         StartCoroutine(SessionCoroutine(0, coroutines));
     }
 
-    private void OnDisable()
+    //Show Canvas
+    //============================================================================================================//
+
+    private void ShowCanvas(GAME_STATE gameState)
     {
+        var gameStateIndex = (int)gameState;
+
+        for (int i = 1; i < m_canvases.Length; i++)
+        {
+            m_canvases[i].SetActive(i == gameStateIndex);
+        }
     }
 
     //Coroutines
@@ -102,11 +151,10 @@ public class GameController : MonoBehaviour
 
     private IEnumerator GameLoopCoroutine()
     {
-        
-        //------------------------------------------------//
-
         while (true)
         {
+            ShowCanvas(GAME_STATE.GAME);
+            DayController.IncrementDay();
             //Start a Game Day
             if (dayStartCinematicAnimator)
                 yield return dayStartCinematicAnimator.DoAnimation(dayStartAnimationTime, ANIM_DIR.START_TO_END);
@@ -117,17 +165,24 @@ public class GameController : MonoBehaviour
             DayController.StartGameDay();
             GameInputDelegator.SetInputLock(false);
             
-            //TODO Start the drop rate for the explosives
-            
-            
+            //Start the drop rate for explosives
+            m_dynamiteManager.enabled = true;
+
             //Wait for the player death announcement
             yield return StartCoroutine(WaitForDeathCoroutine(
                 type =>
                 {
                     //TODO Maybe do something specific depending on how the day ended
+
+                    //Lock the player inputs
+                    GameInputDelegator.SetInputLock(true);
+            
+                    //Stop the drop rate for explosives
+                    m_dynamiteManager.enabled = false;
                 }));
             
-            //TODO Display the store
+            //Display the store
+            ShowCanvas(GAME_STATE.STORE);
             //Wait for the store to finish
             yield return StartCoroutine(WaitForStoreCloseCoroutine());
         }
@@ -158,10 +213,10 @@ public class GameController : MonoBehaviour
         var storeFinished = false;
         void OnStoreClosed() => storeFinished = true;
         
-        UpgradeStore.OnStoreClosed += OnStoreClosed;
+        UpgradeStoreController.OnStoreClosed += OnStoreClosed;
         yield return new WaitUntil(() => storeFinished);
         
-        UpgradeStore.OnStoreClosed -= OnStoreClosed;
+        UpgradeStoreController.OnStoreClosed -= OnStoreClosed;
     }
     
 }

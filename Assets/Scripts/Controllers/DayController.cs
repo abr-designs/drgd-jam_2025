@@ -1,4 +1,5 @@
 using System;
+using NaughtyAttributes;
 using UnityEngine;
 using Utilities;
 
@@ -7,8 +8,12 @@ namespace Controllers
     public class DayController : HiddenSingleton<DayController>
     {
         public static event Action OnDayFinished;
-        public static event Action<float> OnTimeLeftChanged; 
+        public static event Action<float> OnTimeLeftChanged;
+        public static event Action<int> OnDayChanged;
 
+        [SerializeField, ReadOnly]
+        private int currentDay;
+        
         [SerializeField, Min(0f)]
         private float timeForDay;
 
@@ -34,6 +39,17 @@ namespace Controllers
         {
             Instance?.StartDay();
         }
+        
+        public static void IncrementDay()
+        {
+            Instance?.TryIncrementDay();
+        }
+
+        private void TryIncrementDay()
+        {
+            currentDay++;
+            OnDayChanged?.Invoke(currentDay);
+        }
 
         private void UpdateTimerValue()
         {
@@ -46,6 +62,7 @@ namespace Controllers
         {
             m_dayActive = true;
             m_timeLeft = timeForDay;
+            
         }
 
         private void EndDay()

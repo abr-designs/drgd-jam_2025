@@ -50,7 +50,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b44b341364d625e43a68987d9b28d777, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainMenuGameObject: {fileID: 0}
   introAnimationTime: 2
   introCinematicAnimator: {fileID: 0}
   dayStartAnimationTime: 1
@@ -67,6 +66,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 601917b913b3421e8c8aa8ded1626d4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentDay: 0
   timeForDay: 15
 --- !u!1001 &3285461471085986467
 PrefabInstance:
