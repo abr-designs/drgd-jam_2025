@@ -17,9 +17,12 @@ public class CollectableBase : MonoBehaviour
 {
     public enum COLLECTABLE_TYPE
     {
-        NONE,
-        DIRT,
-        GOLD
+        NONE = 0,
+        DIRT = 1,
+        GOLD = 2,
+        COPPER_WIRE = 3,
+        GEAR = 4,
+        SPRING = 5,
     }
 
     private enum STATE
@@ -59,6 +62,7 @@ public class CollectableBase : MonoBehaviour
     public float maxDistanceFromGround = 1f;
     public float raycastDistance = 100f;
     public float moveSpeed = 5f;
+    private float rotationSpeed = 50f;
     public LayerMask groundLayer; // Assign the ground layer here
 
     //Unity Functions
@@ -79,7 +83,9 @@ public class CollectableBase : MonoBehaviour
     private void Update()
     {
         //------------------------------------------------//
-            
+        
+        transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime);
+
         void Slow()
         {
             _velocity -= _velocity * (Time.deltaTime * _behaviourData.drag);
@@ -111,9 +117,12 @@ public class CollectableBase : MonoBehaviour
             case STATE.WAITING_FOR_PLAYER:
                 //Distance check
                 if (dirToPlayer.magnitude < _behaviourData.pickupDistance)
-                    _currentState = STATE.MOVE_TO_PLAYER;
+                {
+                    // need to check if the play has room forthe item in their inventory
+                    if(InventorySystem.Instance.TryCheckHaveInventorySpace(itemStack))
+                        _currentState = STATE.MOVE_TO_PLAYER;
 
-
+                }
 
                 // check position from ground
                 if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, raycastDistance, groundLayer))

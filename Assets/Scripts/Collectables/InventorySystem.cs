@@ -65,10 +65,31 @@ public class InventorySystem : MonoBehaviour, IHaveUpgrade
         return countOfItems;
     }
 
+    public bool TryCheckHaveInventorySpace(ItemStack newItemStack)
+    {
+        if (items.Count > maxDistinctItems)
+            return false;
+
+        for (int i = 0; i < items.Count; i += 1)
+        {
+            if (items[i].itemSo == newItemStack.itemSo)
+            {
+                // check current quantity of existing item stack
+                if (items[i].quantity + newItemStack.quantity > items[i].itemSo.maxHoldCount)
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
     public void InsertItemStackToInventory(ItemStack newItemStack)
     {
         if (items.Count > maxDistinctItems)
             return;
+
         int itemStackIndex = -1;
         for (int i = 0; i < items.Count; i += 1)
         {
