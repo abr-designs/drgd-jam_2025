@@ -10,17 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f81fec1480002bf439ab4776b3b745a5, type: 3}
-  m_Name: 5 Stone with Gears
+  m_Name: 6 Stone with Metal
   m_EditorClassIdentifier: 
-  name: Stone with Gears
-  mesh: {fileID: -4614289458419098355, guid: cd4de52d62b1dfd4d854f9c100782fca, type: 3}
+  name: Stone with Metal
+  mesh: {fileID: -6430797981765340209, guid: d2940576e1c0f774e971a05de40a2382, type: 3}
   lootTable:
     lootItemList:
     - itemType: {fileID: 0}
       quantity: 0
-      weight: 4
+      weight: 8
       dropRate: 0.8
+    - itemType: {fileID: 11400000, guid: 9422f247f8646b54fb13072b5c27e29f, type: 2}
+      quantity: 1
+      weight: 1
+      dropRate: 0.1
     - itemType: {fileID: 11400000, guid: 871d15ccf8c978b499e826b24abec332, type: 2}
       quantity: 1
       weight: 1
-      dropRate: 0.2
+      dropRate: 0.1

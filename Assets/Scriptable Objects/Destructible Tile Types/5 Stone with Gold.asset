@@ -10,17 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f81fec1480002bf439ab4776b3b745a5, type: 3}
-  m_Name: 6 Stone with Springs
+  m_Name: 5 Stone with Gold
   m_EditorClassIdentifier: 
-  name: Stone with Springs
-  mesh: {fileID: -6430797981765340209, guid: d2940576e1c0f774e971a05de40a2382, type: 3}
+  name: Stone with Gold
+  mesh: {fileID: -4614289458419098355, guid: cd4de52d62b1dfd4d854f9c100782fca, type: 3}
   lootTable:
     lootItemList:
-    - itemType: {fileID: 0}
-      quantity: 0
-      weight: 4
-      dropRate: 0.8
-    - itemType: {fileID: 11400000, guid: 9422f247f8646b54fb13072b5c27e29f, type: 2}
+    - itemType: {fileID: 11400000, guid: 74088355211d37d429a88f38d10356d3, type: 2}
       quantity: 1
       weight: 1
-      dropRate: 0.2
+      dropRate: 0.5
