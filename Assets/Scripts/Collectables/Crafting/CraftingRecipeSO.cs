@@ -5,6 +5,8 @@ using UnityEngine;
 public class CraftingRecipeSO : ScriptableObject {
 
     public new string name;
+    [TextArea]
+    public string description;
     public List<ItemStack> inputItemStackList;
     public List<ItemStack> outputItemStackList;
 
