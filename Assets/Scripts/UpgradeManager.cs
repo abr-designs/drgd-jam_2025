@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using Interfaces;
+using UnityEditor;
 using UnityEngine;
 using Utilities;
 
@@ -11,40 +13,104 @@ public class UpgradeManager : HiddenSingleton<UpgradeManager>
     [Serializable]
     public class UpgradeData
     {
-        public upgradeType upgradetype;
+        public UpgradeType upgradeType;
         public float[] levelValues;
+        public UpgradeRecipeSO[] levelRecipes;
 
     }
+    //[Serializable]
+    //public class UpgradeRecipeApplication
+    //{
+    //    public UpgradeType upgradetype;
+    //    public int levelValues;
+
+    //}
     public UpgradeData[] upgrades;
-    public PlayerHealth playerhealth;
-    public InventorySystem inventorysystem;
-    public static void applyUpgrade(upgradeType upgradeType, int level)
+    private PlayerHealth playerHealth;
+    private InventorySystem inventorySystem;
+
+    [SerializeField] private List<UpgradeRecipeSO> upgradeRecipes;
+    private Dictionary<UpgradeType, int> upgradeLevels;
+    
+    private void Start()
     {
-        Instance.applyUpgrade2(upgradeType, level);
+        // find references
+        playerHealth = FindAnyObjectByType<PlayerHealth>();
+        inventorySystem = FindAnyObjectByType<InventorySystem>();
+
+        // set initial upgrade values
+        InitializeUpgradeLevels();
+    }
+
+    private void InitializeUpgradeLevels()
+    {
+        // set initial values to zero
+        upgradeLevels = new Dictionary<UpgradeType, int>();
+        foreach (UpgradeType value in Enum.GetValues(typeof(UpgradeType)))
+        {
+            upgradeLevels.Add(value, 0);
+        }
+
+        /*// call apply the upgrade
+        foreach (KeyValuePair<UpgradeType, int> pair in upgradeLevels)
+        {
+            TryApplyUpgrade(pair.Key, pair.Value);
+        }*/
+    }
+
+    public static int GetUpgradeLevel(UpgradeType upgradeType)
+    {
+        return Instance.upgradeLevels[upgradeType];
+    }
+
+    public static UpgradeRecipeSO GetUpgradeRecipe(UpgradeType upgradeType, int level)
+    {
+        return Instance?.TryGetUpgradeRecipe(upgradeType, level);
+    }
+    
+    public UpgradeRecipeSO TryGetUpgradeRecipe(UpgradeType upgradeType, int level)
+    {
+        foreach(UpgradeRecipeSO upgradeRecipeSO in upgradeRecipes)
+        {
+            if(upgradeRecipeSO.outputUpgradeType == upgradeType && upgradeRecipeSO.level == level)
+            {
+                return upgradeRecipeSO;
+            }
+        }
+
+        return null;
+    }
+
+
+    public static void TryApplyUpgrade(UpgradeType upgradeType, int level)
+    {
+        Instance.ApplyUpgrade(upgradeType, level);
 
     }
-    private void applyUpgrade2(upgradeType upgradeType, int level)
+    private void ApplyUpgrade(UpgradeType upgradeType, int level)
     {
-        UpgradeData targetUpgrade = findUpgradeData(upgradeType);
-        float multiplier = targetUpgrade.levelValues[level];
+        UpgradeData targetUpgrade = FindUpgradeData(upgradeType);
+        float multiplier = targetUpgrade.levelValues[level - 1];
         switch (upgradeType)
         {
-            case upgradeType.ShieldUpgrade:
-                playerhealth.ApplyUpgrade(multiplier);
+            case UpgradeType.ShieldUpgrade:
+                playerHealth.ApplyUpgrade(multiplier);
                 break;
-            case upgradeType.RollUpgrade:
+            case UpgradeType.RollUpgrade:
                 //playerRoll.ApplyUpgrade(multiplier);
                 break;
-            case upgradeType.CapacityUpgrade:
-                inventorysystem.ApplyUpgrade(multiplier);
+            case UpgradeType.CapacityUpgrade:
+                inventorySystem.ApplyUpgrade(multiplier);
                 break;
         }
+
+        upgradeLevels[upgradeType] = level;
     }
-    private UpgradeData findUpgradeData(upgradeType upgradetype)
+    private UpgradeData FindUpgradeData(UpgradeType upgradeType)
     {
         for (int i = 0; i < upgrades.Length; i++)
         {
-            if (upgrades[i].upgradetype == upgradetype)
+            if (upgrades[i].upgradeType == upgradeType)
             {
                 return upgrades[i];
             }

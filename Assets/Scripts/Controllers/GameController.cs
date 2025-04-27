@@ -165,6 +165,7 @@ public class GameController : MonoBehaviour
             
             //Display the store
             ShowCanvas(GAME_STATE.STORE);
+            UpgradeStoreController.ShowStore(true);
             //Wait for the store to finish
             yield return StartCoroutine(WaitForStoreCloseCoroutine());
         }

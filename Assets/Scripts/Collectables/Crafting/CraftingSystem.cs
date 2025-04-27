@@ -41,12 +41,39 @@ public class CraftingSystem : MonoBehaviour
 
     }
 
-    private bool CheckInventoryQuantityForRecipe(CraftingRecipeSO recipe) {
+    public bool TryCraftingUpgrade(UpgradeRecipeSO recipe)
+    {
+        if (recipe == null)
+            return false;
+
+        if (!CheckInventoryQuantityForRecipe(recipe))
+        {
+            Debug.LogWarning($"You do not have the required items to craft {recipe.name}");
+            return false;
+        }
+
+        // remove used items
+        RemoveCraftingRecipeIngredients(recipe);
+
+        // produce upgrade
+        UpgradeManager.TryApplyUpgrade(recipe.outputUpgradeType, recipe.level);
+
+        SFX.CLICK_UI_BUTTON.PlaySound();
+
+        Debug.Log($"Consumed resources for upgrade {recipe.name}");
+
+        return true;
+    }
+
+    public bool CheckInventoryQuantityForRecipe(CraftingRecipeSO recipe)
+    {
 
         bool haveQuantity = true;
 
-        foreach (ItemStack itemStack in recipe.inputItemStackList) {
-            if (InventorySystem.Instance.GetCountOfItem(itemStack.itemSo) < itemStack.quantity) {
+        foreach (ItemStack itemStack in recipe.inputItemStackList)
+        {
+            if (InventorySystem.Instance.GetCountOfItem(itemStack.itemSo) < itemStack.quantity)
+            {
                 haveQuantity = false;
                 break;
             }
@@ -55,9 +82,36 @@ public class CraftingSystem : MonoBehaviour
         return haveQuantity;
     }
 
-    private void RemoveCraftingRecipeIngredients(CraftingRecipeSO recipe) {
+    public bool CheckInventoryQuantityForRecipe(UpgradeRecipeSO recipe)
+    {
 
-        foreach (ItemStack itemStack in recipe.inputItemStackList) {
+        bool haveQuantity = true;
+
+        foreach (ItemStack itemStack in recipe.inputItemStackList)
+        {
+            if (InventorySystem.Instance.GetCountOfItem(itemStack.itemSo) < itemStack.quantity)
+            {
+                haveQuantity = false;
+                break;
+            }
+        }
+
+        return haveQuantity;
+    }
+
+    private void RemoveCraftingRecipeIngredients(CraftingRecipeSO recipe)
+    {
+        foreach (ItemStack itemStack in recipe.inputItemStackList)
+        {
+            InventorySystem.Instance.RemoveItem(itemStack);
+        }
+    }
+
+    private void RemoveCraftingRecipeIngredients(UpgradeRecipeSO recipe)
+    {
+
+        foreach (ItemStack itemStack in recipe.inputItemStackList)
+        {
             InventorySystem.Instance.RemoveItem(itemStack);
         }
     }
@@ -76,10 +130,10 @@ public class CraftingSystem : MonoBehaviour
 
     [SerializeField, Header("DEBUGGING")]
     private bool requireApplicationPlaying = true;
-    [SerializeField] private CraftingRecipeSO debugCraftingRecipe;
+    [SerializeField] private UpgradeRecipeSO debugUpgradeRecipe;
 
     [Button]
-    private void CraftDebugRecipe()
+    private void CraftUpgradeRecipe()
     {
         if (requireApplicationPlaying && Application.isPlaying == false)
         {
@@ -87,7 +141,7 @@ public class CraftingSystem : MonoBehaviour
             return;
         }
 
-        TryCraftingRecipe(debugCraftingRecipe);
+        TryCraftingUpgrade(debugUpgradeRecipe);
     }
 
 #endif
