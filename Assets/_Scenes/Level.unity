@@ -570,17 +570,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6199994060161892632, guid: 519d8250ea9277a41ae991afa685c481, type: 3}
   m_PrefabInstance: {fileID: 1153908866}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1727172085 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5532229508301729137, guid: 8c4a15e0380f87549b6ea81f6ed3d716, type: 3}
-  m_PrefabInstance: {fileID: 1181504328}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d219a5384cbdae4f91ab8ca8876657d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1791602469
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1527,14 +1516,6 @@ PrefabInstance:
     - target: {fileID: 5057988794729028270, guid: 8557751bb14511c43ae02b7e58ad683b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8382418398607897643, guid: 8557751bb14511c43ae02b7e58ad683b, type: 3}
-      propertyPath: DynamiteManager
-      value: 
-      objectReference: {fileID: 1727172085}
-    - target: {fileID: 8382418398607897643, guid: 8557751bb14511c43ae02b7e58ad683b, type: 3}
-      propertyPath: mainMenuGameObject
-      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

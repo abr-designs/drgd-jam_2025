@@ -140,21 +140,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5057988794729028270}
     m_Modifications:
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[2].depthStart
+      value: -12
+      objectReference: {fileID: 0}
     - target: {fileID: 5975953323253631039, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
       propertyPath: m_Name
       value: === TILE DEPTH CONTROLLER ===
       objectReference: {fileID: 0}
     - target: {fileID: 9081299278232257682, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 15.88075
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9081299278232257682, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.39861
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9081299278232257682, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 17
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9081299278232257682, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
       propertyPath: m_LocalRotation.w

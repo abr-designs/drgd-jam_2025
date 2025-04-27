@@ -18,7 +18,6 @@ public class LevelController : HiddenSingleton<LevelController>
     
     [SerializeField, Header("Level Wall Spawner")]
     private Transform levelStackPrefab;
-    [SerializeField] private Transform destructibleTilePrefab;
     private List<Transform> m_trackedLayerStacks;
 
     //Unity Functions
@@ -74,7 +73,8 @@ public class LevelController : HiddenSingleton<LevelController>
         newLayerStack.gameObject.name = $"{levelStackPrefab}-instance_[{m_trackedLayerStacks.Count}]";
         m_trackedLayerStacks.Add(newLayerStack);
 
-
+        StackedWallLayer stackedWallLayer = newLayerStack.GetComponent<StackedWallLayer>();
+        stackedWallLayer.EvaluateTileDepth();
     }
     
 }
