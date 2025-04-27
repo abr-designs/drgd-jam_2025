@@ -82,7 +82,7 @@ public class CraftingSystem : MonoBehaviour
         return haveQuantity;
     }
 
-    private bool CheckInventoryQuantityForRecipe(UpgradeRecipeSO recipe)
+    public bool CheckInventoryQuantityForRecipe(UpgradeRecipeSO recipe)
     {
 
         bool haveQuantity = true;
@@ -101,7 +101,6 @@ public class CraftingSystem : MonoBehaviour
 
     private void RemoveCraftingRecipeIngredients(CraftingRecipeSO recipe)
     {
-
         foreach (ItemStack itemStack in recipe.inputItemStackList)
         {
             InventorySystem.Instance.RemoveItem(itemStack);
@@ -131,20 +130,7 @@ public class CraftingSystem : MonoBehaviour
 
     [SerializeField, Header("DEBUGGING")]
     private bool requireApplicationPlaying = true;
-    [SerializeField] private CraftingRecipeSO debugCraftingRecipe;
     [SerializeField] private UpgradeRecipeSO debugUpgradeRecipe;
-
-    [Button]
-    private void CraftDebugRecipe()
-    {
-        if (requireApplicationPlaying && Application.isPlaying == false)
-        {
-            Debug.LogError("Application must be playing");
-            return;
-        }
-
-        TryCraftingRecipe(debugCraftingRecipe);
-    }
 
     [Button]
     private void CraftUpgradeRecipe()

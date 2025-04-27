@@ -18,13 +18,13 @@ public class UpgradeManager : HiddenSingleton<UpgradeManager>
         public UpgradeRecipeSO[] levelRecipes;
 
     }
-    [Serializable]
-    public class UpgradeRecipeApplication
-    {
-        public UpgradeType upgradetype;
-        public int levelValues;
+    //[Serializable]
+    //public class UpgradeRecipeApplication
+    //{
+    //    public UpgradeType upgradetype;
+    //    public int levelValues;
 
-    }
+    //}
     public UpgradeData[] upgrades;
     private PlayerHealth playerHealth;
     private InventorySystem inventorySystem;
