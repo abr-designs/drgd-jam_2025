@@ -6,6 +6,12 @@ using Utilities.Debugging;
 [RequireComponent(typeof(Rigidbody))]
 public class Dynamite : MonoBehaviour
 {
+    public enum DYNAMITE_BEHAVIOUR
+    {
+        Thrown = 0,
+        Dropped
+    }
+
     [SerializeField] private float ExplodeRadius = 2f;
     [SerializeField] private int Damage = 1;
 
@@ -13,39 +19,43 @@ public class Dynamite : MonoBehaviour
     private Vector3 _target;
     private float _gravityMult;
 
-    private float _totalTime = 1f;
-    private float _timeLeft = 0f;
-
     private Rigidbody _rigidbody;
-    private Vector3 _velocity = Vector3.zero;
 
     private LayerMask _explodeMask;
 
     private Collider[] explosionHitColliders = new Collider[30];
 
+    // Used to mark which frame we have already done an indicator check on
+    private int _lastFrameCheck = 0;
+
     //Unity Functions
     //============================================================================================================//
-    private void Start()
+
+    private void OnEnable()
     {
-        _rigidbody = GetComponent<Rigidbody>();
+        // Listen for block change events (to change indicator)
+        DestructibleTile.OnYLevelChanged += OnBlockChange;
+    }
+    private void OnDisable()
+    {
+        // Listen for block change events (to change indicator)
+        DestructibleTile.OnYLevelChanged -= OnBlockChange;
+    }
+
+    private void FixedUpdate()
+    {
+        if (!_rigidbody) return;
+
+        Vector3 grav = Physics.gravity * _gravityMult;
+        _rigidbody.AddForce(grav, ForceMode.Acceleration);
     }
 
     private void Update()
     {
         if (_indicator == null) return;
 
-        _timeLeft -= Time.deltaTime;
-        float t = 1f - Mathf.Clamp01(_timeLeft / _totalTime);
-        Vector3 endScale = new Vector3(0.1f, 0.2f, .1f);
-        Vector3 startScale = new Vector3(5f, 0.2f, 5f);
-        _indicator.transform.localScale = Vector3.Lerp(startScale, endScale, t);
-
-        //FIXME This isn't accounting for the acceleration time when checking the collision point
-        _velocity += Physics.gravity * (_gravityMult * Time.deltaTime);
-        transform.position += _velocity * Time.deltaTime;
-
         // Check if this has hit the ground
-        if (_timeLeft <= 0)
+        if (_target.y >= transform.position.y)
         {
             Explode();
             Destroy(gameObject);
@@ -56,23 +66,58 @@ public class Dynamite : MonoBehaviour
 
     //============================================================================================================//
 
-    public void Spawn(Vector3 targetPoint, float gravityMult, GameObject indicator, LayerMask explodeMask)
+    // Used for thrown behaviour
+    private void Launch(float timeToTarget)
+    {
+        Vector3 startPos = transform.position;
+        Vector3 targetPos = _target;
+
+        // distance to target
+        Vector3 direction = targetPos - startPos;
+        
+        float hDist = new Vector2(direction.x, direction.z).magnitude;
+        float vDist = direction.y;
+
+        float gravity = Mathf.Abs(Physics.gravity.y) * _gravityMult;
+
+        float velocityXZ = hDist / timeToTarget;
+        float velocityY = (vDist/timeToTarget) + (0.5f * gravity * timeToTarget);
+
+        Vector3 result = new Vector3(direction.x,0,direction.z).normalized * velocityXZ;
+        result.y = velocityY;
+
+        _rigidbody.linearVelocity = result;
+    }
+
+    public void Spawn(Vector3 targetPoint, float gravityMult, GameObject indicator, LayerMask explodeMask, float timeToTarget = 3f,
+        DYNAMITE_BEHAVIOUR behaviour = DYNAMITE_BEHAVIOUR.Dropped)
     {
         SFXManager.Instance.PlaySound(SFX.DROPING, 0.25f); // hardcoded quieter volume
-        
+
         _indicator = indicator;
         _target = targetPoint;
         _gravityMult = gravityMult;
         _explodeMask = explodeMask;
 
+        _rigidbody = GetComponent<Rigidbody>();
+        _rigidbody.useGravity = false;
+
+        // Add a random torque
+        Vector3 randomTorque = new Vector3(
+            Random.Range(-1f, 1f),
+            Random.Range(-1f, 1f),
+            Random.Range(-1f, 1f)
+        ).normalized * 5f;
+
+        _rigidbody.AddTorque(randomTorque, ForceMode.Impulse);
+
         _indicator.transform.position = _target;
+        _indicator.transform.localScale = new Vector3(ExplodeRadius, 0.1f, ExplodeRadius);
 
-        // Calculate time
-        float dist = transform.position.y - targetPoint.y;
+        // If it was thrown we need to calculate an initial launch force
+        if (behaviour == DYNAMITE_BEHAVIOUR.Thrown) Launch(timeToTarget);
 
-        _totalTime = Mathf.Sqrt((2f * dist) / Mathf.Abs(Physics.gravity.y * _gravityMult));
-        _timeLeft = _totalTime;
-
+        
     }
 
     private void Explode()
@@ -84,15 +129,23 @@ public class Dynamite : MonoBehaviour
 
         float halfTile = LevelController.TileSize / 2f;
         var cutOffY = _target.y - (halfTile + 0.01f);
-        Draw.Circle(_target,Vector3.up, Color.green, ExplodeRadius);
+        Draw.Circle(_target, Vector3.up, Color.green, ExplodeRadius);
 
         for (int i = 0; i < hitCount; i++)
         {
             var healthObj = explosionHitColliders[i].GetComponent<IHaveHealth>();
-            if (healthObj != null) {
-                healthObj.ApplyDamage(Damage);            
+            if (healthObj != null)
+            {
+                healthObj.ApplyDamage(Damage);
             }
         }
+    }
+
+    private void OnBlockChange(int newY) {
+
+        if(Time.frameCount == _lastFrameCheck) return;
+
+        _lastFrameCheck = Time.frameCount;
 
     }
     //============================================================================================================//
