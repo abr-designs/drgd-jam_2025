@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class UpgradeUIElement : MonoBehaviour
 {
-    private static InventorySystem s_inventorySystem;
+    private static CraftingSystem s_craftingSystem;
     
     [SerializeField]
     private Button buyButton;
@@ -21,18 +21,19 @@ public class UpgradeUIElement : MonoBehaviour
 
     private bool m_initialized;
 
-    private CraftingRecipeSO m_craftingRecipeSo;
-    private Action<CraftingRecipeSO> m_onBuyPressed;
+    private UpgradeRecipeSO m_craftingRecipeSo;
+    private Action<UpgradeRecipeSO> m_onBuyPressed;
     private Dictionary<InventoryItemSO, ItemUIElement> m_itemUIElements;
     
     //============================================================================================================//
 
-    public void Init(CraftingRecipeSO craftingRecipeSo, Action<CraftingRecipeSO> onBuyPressed)
+    public void Init(UpgradeRecipeSO craftingRecipeSo, Action<UpgradeRecipeSO> onBuyPressed)
     {
         if(m_initialized)
             return;
-        
-        s_inventorySystem ??= InventorySystem.Instance;
+
+        gameObject.name = $"UpgradeUIElement_Instance_{craftingRecipeSo.name}";
+        s_craftingSystem ??= FindAnyObjectByType<CraftingSystem>();
         
         m_onBuyPressed = onBuyPressed;
         buyButton.onClick.AddListener(() => m_onBuyPressed?.Invoke(m_craftingRecipeSo));
@@ -41,14 +42,14 @@ public class UpgradeUIElement : MonoBehaviour
         m_initialized = true;
     }
 
-    public void UpdateUIElement(CraftingRecipeSO craftingRecipeSo)
+    public void UpdateUIElement(UpgradeRecipeSO craftingRecipeSo)
     {
         titleText.text = craftingRecipeSo.name;
         descriptionText.text = craftingRecipeSo.description;
         
         m_craftingRecipeSo = craftingRecipeSo;
         InitCostElements(craftingRecipeSo.inputItemStackList);
-        buyButton.interactable = CanAfford(craftingRecipeSo.inputItemStackList);
+        buyButton.interactable = s_craftingSystem.CheckInventoryQuantityForRecipe(craftingRecipeSo);
     }
 
     private void InitCostElements(List<ItemStack> items)
@@ -80,18 +81,4 @@ public class UpgradeUIElement : MonoBehaviour
         
         
     }
-
-    private static bool CanAfford(List<ItemStack> items)
-    {
-        for (var i = 0; i < items.Count; i++)
-        {
-            var item = items[i];
-            if (s_inventorySystem.GetCountOfItem(item.itemSo) < item.quantity)
-                return false;
-
-        }
-
-        return true;
-    }
-
 }

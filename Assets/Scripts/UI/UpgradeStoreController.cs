@@ -21,17 +21,19 @@ namespace UI
         private RectTransform upgradeElementContainTransform;
 
         [SerializeField]
-        private upgradeType[] upgrades;
-        [SerializeField, Obsolete]
-        private CraftingRecipeSO[] craftingRecipeSos;
+        private UpgradeType[] upgrades;
+        /*[SerializeField, Obsolete]
+        private CraftingRecipeSO[] craftingRecipeSos;*/
 
-        private Dictionary<upgradeType, UpgradeUIElement> m_upgradeUIElements;
+        private Dictionary<UpgradeType, UpgradeUIElement> m_upgradeUIElements;
+        private CraftingSystem m_craftingSystem;
         
         //Unity Functions
         //============================================================================================================//
         private void Start()
         {
             SetupButtons();
+            m_craftingSystem = FindAnyObjectByType<CraftingSystem>();
         }
 
         //Static Functions
@@ -47,30 +49,37 @@ namespace UI
 
         private void SetupStore()
         {
-            m_upgradeUIElements ??= new Dictionary<upgradeType, UpgradeUIElement>();
+            m_upgradeUIElements ??= new Dictionary<UpgradeType, UpgradeUIElement>();
             
             for ( int i = 0; i < upgrades.Length; i++)
             {
                 var upgradeType = upgrades[i];
-                //TODO Get current level
+                
+                //Get current level
+                var currentLevel = UpgradeManager.GetUpgradeLevel(upgradeType);
+                
                 //TODO Get Recipe for level + 1
+                var craftingRecipe = UpgradeManager.GetUpgradeRecipe(upgradeType, currentLevel + 1);
 
                 if (!m_upgradeUIElements.TryGetValue(upgradeType, out var existingElement))
                 {
                     existingElement = Instantiate(upgradeUIElementPrefab, upgradeElementContainTransform, false);
                     m_upgradeUIElements.Add(upgradeType, existingElement);
                     
-                    existingElement.Init(craftingRecipeSos[i], OnBuyPressed);
+                    existingElement.Init(craftingRecipe, OnBuyPressed);
                 }
                 else
-                    existingElement.UpdateUIElement(craftingRecipeSos[i]);
+                    existingElement.UpdateUIElement(craftingRecipe);
             }
             
         }
 
-        private void OnBuyPressed(CraftingRecipeSO craftingRecipeSo)
+        private void OnBuyPressed(UpgradeRecipeSO craftingRecipeSo)
         {
-            //TODO Purchase Item
+            if (!m_craftingSystem.TryCraftingUpgrade(craftingRecipeSo))
+                throw new Exception();
+
+            SetupStore();
         }
         
 

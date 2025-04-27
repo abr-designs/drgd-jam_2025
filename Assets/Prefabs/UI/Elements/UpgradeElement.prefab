@@ -368,7 +368,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea131e3fc001af64ebc2759f6e4769bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundWhenPressed: 8
+  soundWhenPressed: 5
 --- !u!114 &3965663940285970320
 MonoBehaviour:
   m_ObjectHideFlags: 0

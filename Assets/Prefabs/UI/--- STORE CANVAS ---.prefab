@@ -374,7 +374,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea131e3fc001af64ebc2759f6e4769bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundWhenPressed: 8
+  soundWhenPressed: 5
 --- !u!114 &6501271995804764763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -660,10 +660,6 @@ MonoBehaviour:
   upgradeUIElementPrefab: {fileID: 7803688716150887337, guid: b722e13b3fc2daf4c945ec2a9a1b2357, type: 3}
   upgradeElementContainTransform: {fileID: 9048968054347507486}
   upgrades: 000000000100000002000000
-  craftingRecipeSos:
-  - {fileID: 11400000, guid: b1ee192d2818e264dae448665cdf56d5, type: 2}
-  - {fileID: 11400000, guid: b1ee192d2818e264dae448665cdf56d5, type: 2}
-  - {fileID: 11400000, guid: b1ee192d2818e264dae448665cdf56d5, type: 2}
 --- !u!223 &5564316323645824217
 Canvas:
   m_ObjectHideFlags: 0
