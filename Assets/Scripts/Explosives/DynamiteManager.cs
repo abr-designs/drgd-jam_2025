@@ -3,6 +3,7 @@ using UnityEngine;
 using Utilities;
 using NaughtyAttributes;
 using Random = UnityEngine.Random;
+using Utilities.Recycling;
 
 public class DynamiteManager : HiddenSingleton<DynamiteManager>
 {
@@ -32,8 +33,7 @@ public class DynamiteManager : HiddenSingleton<DynamiteManager>
 
     [SerializeField, Header("Prefabs")]
     private Dynamite dynamitePrefab;
-    [SerializeField]
-    private GameObject indicatorPrefab;
+    
 
     [SerializeField]
     private Thrower[] dynamiteThrowers;
@@ -98,8 +98,8 @@ public class DynamiteManager : HiddenSingleton<DynamiteManager>
         Vector3 targetPoint = _raycastHits[0].point;
         Debug.DrawRay(worldPos, Vector3.down * _raycastHits[0].distance, Color.green, 1f);
 
-        var dyn = Instantiate(dynamitePrefab, transform, true);
-        var ind = Instantiate(indicatorPrefab, transform, true);
+        if (Recycler.TryGrab<Dynamite>(transform, Vector3.zero, Quaternion.identity, out var dyn) == false)
+            dyn = Instantiate(dynamitePrefab, transform, true);
 
         var newThrowingState = transform.position.y > LevelController.TileSize * -5f;
 
@@ -122,7 +122,7 @@ public class DynamiteManager : HiddenSingleton<DynamiteManager>
             pos.y = Mathf.Min(pos.y, maxY);
             dyn.transform.position = pos;
 
-            dyn.Spawn(targetPoint, GravityMultiplier, ind, ExplodeLayerMask, LevelLayerMask, ThrowTargetTime, Dynamite.DYNAMITE_BEHAVIOUR.Thrown);
+            dyn.Init(targetPoint, GravityMultiplier, ExplodeLayerMask, LevelLayerMask, ThrowTargetTime, Dynamite.DYNAMITE_BEHAVIOUR.Thrown);
             thrower.Throw();
         }
         else
@@ -130,7 +130,7 @@ public class DynamiteManager : HiddenSingleton<DynamiteManager>
             float grav = Mathf.Abs(Physics.gravity.y) * GravityMultiplier;
             dyn.transform.position = targetPoint + Vector3.up * 0.5f * grav * Mathf.Pow(ThrowTargetTime*1.5f,2);
 
-            dyn.Spawn(targetPoint, GravityMultiplier, ind, ExplodeLayerMask, LevelLayerMask, ThrowTargetTime, Dynamite.DYNAMITE_BEHAVIOUR.Dropped);
+            dyn.Init(targetPoint, GravityMultiplier, ExplodeLayerMask, LevelLayerMask, ThrowTargetTime, Dynamite.DYNAMITE_BEHAVIOUR.Dropped);
         }
 
     }
