@@ -46,17 +46,84 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultTileTypeSo: {fileID: 11400000, guid: 5c4c9bc129d627448a86876d18ce0822, type: 2}
   depthLevelList:
-  - depthStart: 0
+  - name: Layers 0-6
+    depthStart: 0
     tileProbabilityList:
-    - tileTypeSo: {fileID: 11400000, guid: 5c4c9bc129d627448a86876d18ce0822, type: 2}
+    - name: Dirt - 99%
+      tileTypeSo: {fileID: 11400000, guid: 5c4c9bc129d627448a86876d18ce0822, type: 2}
+      weight: 99
+    - name: Stone with Gold - 1%
+      tileTypeSo: {fileID: 11400000, guid: 95f1710281fcc304181c1c1a1a0a510e, type: 2}
       weight: 1
-  - depthStart: -6
+  - name: Layers 6-12
+    depthStart: -6
     tileProbabilityList:
-    - tileTypeSo: {fileID: 11400000, guid: 5c4c9bc129d627448a86876d18ce0822, type: 2}
-      weight: 2
-    - tileTypeSo: {fileID: 11400000, guid: a009a9bebf3d0904490f2cfe2060cfed, type: 2}
+    - name: Dirt - 60%
+      tileTypeSo: {fileID: 11400000, guid: 5c4c9bc129d627448a86876d18ce0822, type: 2}
+      weight: 30
+    - name: Sand - 24%
+      tileTypeSo: {fileID: 11400000, guid: 074b730166e0373448071893599d4371, type: 2}
+      weight: 12
+    - name: Stone - 14%
+      tileTypeSo: {fileID: 11400000, guid: b8ae5b5ea64ef1b459b10563402a4e57, type: 2}
+      weight: 7
+    - name: Stone with Gold - 2%
+      tileTypeSo: {fileID: 11400000, guid: 95f1710281fcc304181c1c1a1a0a510e, type: 2}
       weight: 1
-  - depthStart: -12
+  - name: Layers 12-18
+    depthStart: -12
     tileProbabilityList:
-    - tileTypeSo: {fileID: 11400000, guid: a009a9bebf3d0904490f2cfe2060cfed, type: 2}
+    - name: Dirt - 10%
+      tileTypeSo: {fileID: 11400000, guid: 5c4c9bc129d627448a86876d18ce0822, type: 2}
+      weight: 5
+    - name: Sand - 49%
+      tileTypeSo: {fileID: 11400000, guid: 074b730166e0373448071893599d4371, type: 2}
+      weight: 25
+    - name: Stone - 20%
+      tileTypeSo: {fileID: 11400000, guid: b8ae5b5ea64ef1b459b10563402a4e57, type: 2}
+      weight: 10
+    - name: Stone with Copper - 10%
+      tileTypeSo: {fileID: 11400000, guid: 0caf4c9aff02e9147967f22c0b523932, type: 2}
+      weight: 5
+    - name: Stone with Gold - 10%
+      tileTypeSo: {fileID: 11400000, guid: 95f1710281fcc304181c1c1a1a0a510e, type: 2}
+      weight: 5
+    - name: Stone with Metal - 2%
+      tileTypeSo: {fileID: 11400000, guid: 63e8bf79ee461ff49a08bfd23c6ea9af, type: 2}
+      weight: 1
+  - name: Layers 18-24
+    depthStart: -18
+    tileProbabilityList:
+    - name: Sand - 11%
+      tileTypeSo: {fileID: 11400000, guid: 074b730166e0373448071893599d4371, type: 2}
+      weight: 5
+    - name: Stone - 33%
+      tileTypeSo: {fileID: 11400000, guid: b8ae5b5ea64ef1b459b10563402a4e57, type: 2}
+      weight: 15
+    - name: Stone with Copper - 22%
+      tileTypeSo: {fileID: 11400000, guid: 0caf4c9aff02e9147967f22c0b523932, type: 2}
+      weight: 10
+    - name: Stone with Gold - 2%
+      tileTypeSo: {fileID: 11400000, guid: 95f1710281fcc304181c1c1a1a0a510e, type: 2}
+      weight: 1
+    - name: Stone with Metal - 22%
+      tileTypeSo: {fileID: 11400000, guid: 63e8bf79ee461ff49a08bfd23c6ea9af, type: 2}
+      weight: 10
+    - name: Deepstone - 11%
+      tileTypeSo: {fileID: 11400000, guid: a009a9bebf3d0904490f2cfe2060cfed, type: 2}
+      weight: 5
+  - name: Layers 24+
+    depthStart: -24
+    tileProbabilityList:
+    - name: Stone - 7%
+      tileTypeSo: {fileID: 11400000, guid: b8ae5b5ea64ef1b459b10563402a4e57, type: 2}
+      weight: 5
+    - name: Deepstone - 66%
+      tileTypeSo: {fileID: 11400000, guid: a009a9bebf3d0904490f2cfe2060cfed, type: 2}
+      weight: 50
+    - name: Lava - 26%
+      tileTypeSo: {fileID: 11400000, guid: 2691c4c4237bb534982bb648701e6a52, type: 2}
+      weight: 20
+    - name: Stone with Gold - 1%
+      tileTypeSo: {fileID: 11400000, guid: 95f1710281fcc304181c1c1a1a0a510e, type: 2}
       weight: 1
