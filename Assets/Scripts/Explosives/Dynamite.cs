@@ -1,6 +1,7 @@
 using System;
 using Audio;
 using Interfaces;
+using UnityEditor.PackageManager;
 using UnityEngine;
 using Utilities.Debugging;
 using Utilities.Recycling;
@@ -22,8 +23,8 @@ public class Dynamite : MonoBehaviour, IRecyclable
 
     public static int ActiveCount { get; private set; }
 
-    [SerializeField] private float ExplodeRadius = 2f;
-    [SerializeField] private int Damage = 1;
+    public float ExplodeRadius = 2f;
+    public int Damage = 1;
 
     [SerializeField]
     private GameObject indicatorPrefab;
@@ -67,12 +68,14 @@ public class Dynamite : MonoBehaviour, IRecyclable
         if (_target.y >= transform.position.y)
         {
             Explode();
-            Recycler.RecycleEnum(INDICATORS.TARGET, _indicator);
-            Recycler.Recycle(this);
+            if (_indicator)
+                Recycler.RecycleEnum(INDICATORS.TARGET, _indicator);
+            if (!IsRecycled)
+                Recycler.Recycle(this);
         }
 
     }
-    
+
     private void FixedUpdate()
     {
         if (!_rigidbody) return;
@@ -80,7 +83,7 @@ public class Dynamite : MonoBehaviour, IRecyclable
         Vector3 grav = Physics.gravity * _gravityMult;
         _rigidbody.AddForce(grav, ForceMode.Acceleration);
     }
-    
+
     private void OnDisable()
     {
         ActiveCount--;
@@ -89,11 +92,13 @@ public class Dynamite : MonoBehaviour, IRecyclable
 
     //Callbacks
     //============================================================================================================//
-    
+
     private void OnPlayerDied()
     {
-        Recycler.RecycleEnum(INDICATORS.TARGET, _indicator);
-        Recycler.Recycle(this);
+        if (_indicator)
+            Recycler.RecycleEnum(INDICATORS.TARGET, _indicator);
+        if (!IsRecycled)
+            Recycler.Recycle(this);
     }
 
     //============================================================================================================//
@@ -106,16 +111,16 @@ public class Dynamite : MonoBehaviour, IRecyclable
 
         // distance to target
         Vector3 direction = targetPos - startPos;
-        
+
         float hDist = new Vector2(direction.x, direction.z).magnitude;
         float vDist = direction.y;
 
         float gravity = Mathf.Abs(Physics.gravity.y) * _gravityMult;
 
         float velocityXZ = hDist / timeToTarget;
-        float velocityY = (vDist/timeToTarget) + (0.5f * gravity * timeToTarget);
+        float velocityY = (vDist / timeToTarget) + (0.5f * gravity * timeToTarget);
 
-        Vector3 result = new Vector3(direction.x,0,direction.z).normalized * velocityXZ;
+        Vector3 result = new Vector3(direction.x, 0, direction.z).normalized * velocityXZ;
         result.y = velocityY;
 
         _rigidbody.linearVelocity = result;
@@ -131,6 +136,7 @@ public class Dynamite : MonoBehaviour, IRecyclable
             _indicator = Instantiate(indicatorPrefab, transform.parent, true);
 
         _indicator.transform.position = _target;
+        _indicator.transform.localScale = new Vector3(ExplodeRadius, ExplodeRadius*.1f, ExplodeRadius) * 2f;
         _indicatorMat = _indicator.GetComponent<MeshRenderer>().material;
 
         _gravityMult = gravityMult;
@@ -149,13 +155,9 @@ public class Dynamite : MonoBehaviour, IRecyclable
 
         _rigidbody.AddTorque(randomTorque, ForceMode.Impulse);
 
-        _indicator.transform.position = _target;
-        _indicator.transform.localScale = new Vector3(ExplodeRadius, 1f, ExplodeRadius);
-
         // If it was thrown we need to calculate an initial launch force
         if (behaviour == DYNAMITE_BEHAVIOUR.Thrown) Launch(timeToTarget);
 
-        
     }
 
     private void Explode()
@@ -181,18 +183,19 @@ public class Dynamite : MonoBehaviour, IRecyclable
 
 
     private RaycastHit[] _raycastHits = new RaycastHit[5];
-    private void CheckIndicator() {
+    private void CheckIndicator()
+    {
 
-        if(!_indicator) return;
+        if (!_indicator) return;
 
         // Color the material based on the distance left
         float dist = Mathf.Abs(transform.position.y - _indicator.transform.position.y);
-        _indicatorMat.SetColor("_BaseColor",Color.Lerp(Color.red, Color.white, dist/10.0f));
+        _indicatorMat.SetColor("_BaseColor", Color.Lerp(Color.red, Color.white, dist / 10.0f));
 
-        if(Time.frameCount - _lastFrameCheck <= 10) return;
+        if (Time.frameCount - _lastFrameCheck <= 10) return;
 
         // Do a new raycast and check  
-        Vector3 startPos = _indicator.transform.position + Vector3.up * LevelController.TileSize * 5f;      
+        Vector3 startPos = _indicator.transform.position + Vector3.up * LevelController.TileSize * 5f;
         Ray ray = new Ray(startPos, Vector3.down);
         int hitCount = Physics.RaycastNonAlloc(ray, _raycastHits, LevelController.TileSize * 10f, _levelMask);
 
@@ -207,9 +210,14 @@ public class Dynamite : MonoBehaviour, IRecyclable
     }
 
 
-    public void OnRecycled() {
+    public void OnRecycled()
+    {
+        try {
         _rigidbody.linearVelocity = Vector3.zero;
         _indicator = null;
+        } catch (Exception e) {
+            Debug.Log(gameObject, gameObject);
+        }
     }
 
     //============================================================================================================//
