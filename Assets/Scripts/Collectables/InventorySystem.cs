@@ -23,6 +23,11 @@ public class ItemStack
 
 public class InventorySystem : MonoBehaviour, IHaveUpgrade
 {
+    public static event Action<ItemStack> OnSelectNewItemStackAction;
+    public static event Action<ItemStack> OnNewItemStackAdded;
+    public static event Action<ItemStack> OnNewItemStackChanged;
+    
+    
     private static InventorySystem _instance;
     public static InventorySystem Instance { get { return _instance; } }
 
@@ -33,7 +38,6 @@ public class InventorySystem : MonoBehaviour, IHaveUpgrade
 
     int currentSelectedIndex = 0;
 
-    public static event Action<ItemStack> OnSelectNewItemStackAction;
 
     private void Awake()
     {
@@ -111,6 +115,8 @@ public class InventorySystem : MonoBehaviour, IHaveUpgrade
         if (itemStackIndex > -1)
         {
             items[itemStackIndex].quantity += newItemStack.quantity;
+            
+            OnNewItemStackChanged?.Invoke(items[itemStackIndex]);
         }
         else
         {
@@ -125,6 +131,8 @@ public class InventorySystem : MonoBehaviour, IHaveUpgrade
                 // inventory is empty, insert as first item
                 InsertNewItemStackToInventoryAtEnd(newItemStack);
             }
+            
+            OnNewItemStackAdded?.Invoke(newItemStack);
         }
 
         //Debug.Log(ToString());
@@ -174,6 +182,7 @@ public class InventorySystem : MonoBehaviour, IHaveUpgrade
         {
             items[itemStackIndex].quantity -= quantity;
 
+            OnNewItemStackChanged?.Invoke(items[itemStackIndex]);
             if (items[itemStackIndex].quantity <= 0)
             {
                 // drop item from inventory

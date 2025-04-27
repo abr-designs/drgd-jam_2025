@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Dirt
   maxHoldCount: 999
-  inventoryIconSprite: {fileID: 21300000, guid: e2513cc77eff0a84aaffd46e3333ff02, type: 3}
+  inventoryIconSprite: {fileID: 21300000, guid: 9b64b73ccd76acb4da34df894bceae3d, type: 3}
   collectablePrefab: {fileID: 4950491224260487683, guid: f5aa989b888c0064eb2148a9a6252fe7, type: 3}

@@ -23,6 +23,7 @@ public class PlayerHealth : MonoBehaviour, IHaveHealth, IHaveUpgrade
     private void Awake()
     {
         Health = spawnHealth;
+        OnPlayerHealthChange?.Invoke(Health, StartingHealth);
     }
 
     //PlayerHealth Functions
@@ -39,6 +40,7 @@ public class PlayerHealth : MonoBehaviour, IHaveHealth, IHaveUpgrade
 
             SFX.PLAYER_DIED.PlaySound();
 
+            OnPlayerHealthChange?.Invoke(Health, StartingHealth);
             OnPlayerDied?.Invoke();
         }
         else
