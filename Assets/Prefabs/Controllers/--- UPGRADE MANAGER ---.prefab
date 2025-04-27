@@ -78,7 +78,10 @@ MonoBehaviour:
   upgradeRecipes:
   - {fileID: 11400000, guid: 94b898aaf5195234ba785e986a31f1a5, type: 2}
   - {fileID: 11400000, guid: 1ebdea26bef82f24ba8e78f77cb24bac, type: 2}
+  - {fileID: 11400000, guid: 48c025144ff28f84fb3be320423293ff, type: 2}
   - {fileID: 11400000, guid: 6af3e94d691a67841bda92ab1e8768ea, type: 2}
   - {fileID: 11400000, guid: 45060dd4ded844b4ca6806495ab368f4, type: 2}
+  - {fileID: 11400000, guid: 13b77687274852a4faf9e001773534c7, type: 2}
   - {fileID: 11400000, guid: 8dcf5d4057a328244a489a79ba42aeca, type: 2}
   - {fileID: 11400000, guid: 769f6f29e5c26d54793f418cf9ba5221, type: 2}
+  - {fileID: 11400000, guid: dd077db79cf578c4fbd4c1ff79b40945, type: 2}
