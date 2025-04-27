@@ -154,7 +154,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4194971721073177248}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -175,7 +175,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sfxAudioMixer: {fileID: -5126370574719963628, guid: ce08768a569db8b429bc3e45071f1f19, type: 2}
-  sfxAudioSource: {fileID: 0}
+  sfxAudioSource: {fileID: 6565548158353040769}
   sfxSourcePrefab: {fileID: 144211660340659278, guid: c7877577d67448743b4632fe48819da7, type: 3}
   sfxDatas:
   - name: NONE
@@ -204,7 +204,7 @@ MonoBehaviour:
     audioClips:
     - {fileID: 8300000, guid: 0a399da3295720942a504b4e3100e57e, type: 3}
     - {fileID: 8300000, guid: acd75a3e9a94b434d9f3134c07471937, type: 3}
-    volume: 0.1
+    volume: 1
     maxPlaying: 1
   - name: Object Pickup
     type: 4
@@ -212,11 +212,23 @@ MonoBehaviour:
     - {fileID: 8300000, guid: fe941de6713b7ce45908e8d102b32b0f, type: 3}
     - {fileID: 8300000, guid: 1b48eea59ecdcba42aaf776a405aa3d4, type: 3}
     - {fileID: 8300000, guid: 9b690ec8b95a24c419a55e6b64038ba5, type: 3}
-    volume: 0.1
+    volume: 1
     maxPlaying: 1
   - name: CLICK_UI_BUTTON
     type: 5
     audioClips:
     - {fileID: 8300000, guid: 3042e9024d4fb8f488f33a593e029f4c, type: 3}
-    volume: 0.1
+    volume: 1
+    maxPlaying: 1
+  - name: PLAYER HIT
+    type: 6
+    audioClips:
+    - {fileID: 8300000, guid: 3042e9024d4fb8f488f33a593e029f4c, type: 3}
+    volume: 1
+    maxPlaying: 1
+  - name: PLAYER DIED
+    type: 7
+    audioClips:
+    - {fileID: 8300000, guid: 3042e9024d4fb8f488f33a593e029f4c, type: 3}
+    volume: 1
     maxPlaying: 1
