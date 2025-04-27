@@ -40,6 +40,7 @@ public class PlayerHealth : MonoBehaviour, IHaveHealth, IHaveUpgrade
 
             SFX.PLAYER_DIED.PlaySound();
 
+            OnPlayerHealthChange?.Invoke(Health, StartingHealth);
             OnPlayerDied?.Invoke();
         }
         else
