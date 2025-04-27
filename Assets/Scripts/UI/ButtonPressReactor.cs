@@ -30,7 +30,7 @@ public class ButtonPressReactor : MonoBehaviour
 
     private void OnDisable()
     {
-        m_transformAnimator.Stop();
+        m_transformAnimator?.Stop();
         
         transform.localScale = m_startScale;
         transform.localRotation = m_startRotation;
