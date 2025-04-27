@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: Capacity3 Upgrade Recipe
   m_EditorClassIdentifier: 
   name: Capacity3 Upgrade
+  description: 
   inputItemStackList:
   - itemSo: {fileID: 11400000, guid: 9422f247f8646b54fb13072b5c27e29f, type: 2}
-    quantity: 5
+    quantity: 10
   - itemSo: {fileID: 11400000, guid: 0d98f7c3eb0787241bd670725d9da027, type: 2}
-    quantity: 5
+    quantity: 10
   - itemSo: {fileID: 11400000, guid: 871d15ccf8c978b499e826b24abec332, type: 2}
-    quantity: 5
+    quantity: 10
   outputUpgradeType: 2
   level: 3

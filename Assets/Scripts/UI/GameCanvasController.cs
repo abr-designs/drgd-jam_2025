@@ -43,6 +43,8 @@ public class GameCanvasController : HiddenSingleton<GameCanvasController>
         
         InventorySystem.OnNewItemStackAdded += OnNewItemStackAdded;
         InventorySystem.OnNewItemStackChanged += OnNewItemStackChanged;
+
+        RefreshInventoryCounts();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -66,6 +68,20 @@ public class GameCanvasController : HiddenSingleton<GameCanvasController>
     //Item Inventory
     //============================================================================================================//
 
+    private void RefreshInventoryCounts()
+    {
+        if (InventorySystem.Instance == null)
+            return;
+
+        if (m_itemUIElements == null)
+            return;
+
+        foreach (var pair in m_itemUIElements)
+        {
+            TryUpdateItemUIElement(pair.Key, InventorySystem.Instance.GetCountOfItem(pair.Key));
+
+        }
+    }
 
     private void TryAddNewItemUIElement(InventoryItemSO inventoryItem, int count)
     {

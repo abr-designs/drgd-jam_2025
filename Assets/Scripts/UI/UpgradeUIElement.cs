@@ -44,6 +44,19 @@ public class UpgradeUIElement : MonoBehaviour
 
     public void UpdateUIElement(UpgradeRecipeSO craftingRecipeSo)
     {
+        if (craftingRecipeSo == null)
+        {
+            titleText.text = "MAXED";
+            descriptionText.text = "";
+            buyButton.interactable = false;
+            //Set existing Inactive
+            foreach (var itemUiElement in m_itemUIElements.Values)
+            {
+                itemUiElement.gameObject.SetActive(false);
+            }
+            return;
+        }
+
         titleText.text = craftingRecipeSo.name;
         descriptionText.text = craftingRecipeSo.description;
         
