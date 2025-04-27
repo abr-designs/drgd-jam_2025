@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f189c616c94c65846bbbcb507d918c67, type: 3}
   m_Name: Clock
   m_EditorClassIdentifier: 
-  name: 
-  maxHoldCount: 0
+  name: Clock
+  maxHoldCount: 999
   inventoryIconSprite: {fileID: 0}
   collectablePrefab: {fileID: 0}

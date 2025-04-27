@@ -216,8 +216,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8474390320086256997, guid: 9ae64bdf400f3ac4280958bd36b23f62, type: 3}
+      propertyPath: sfxAudioSource
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8474390320086256997, guid: 9ae64bdf400f3ac4280958bd36b23f62, type: 3}
       propertyPath: sfxDatas.Array.size
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8474390320086256997, guid: 9ae64bdf400f3ac4280958bd36b23f62, type: 3}
       propertyPath: sfxDatas.Array.data[0].type
@@ -249,7 +253,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8474390320086256997, guid: 9ae64bdf400f3ac4280958bd36b23f62, type: 3}
       propertyPath: sfxDatas.Array.data[4].name
-      value: OBJECT_PICKUP
+      value: Object Pickup
       objectReference: {fileID: 0}
     - target: {fileID: 8474390320086256997, guid: 9ae64bdf400f3ac4280958bd36b23f62, type: 3}
       propertyPath: sfxDatas.Array.data[4].type
@@ -269,7 +273,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8474390320086256997, guid: 9ae64bdf400f3ac4280958bd36b23f62, type: 3}
       propertyPath: sfxDatas.Array.data[4].volume
-      value: 1
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 8474390320086256997, guid: 9ae64bdf400f3ac4280958bd36b23f62, type: 3}
       propertyPath: sfxDatas.Array.data[1].maxPlaying

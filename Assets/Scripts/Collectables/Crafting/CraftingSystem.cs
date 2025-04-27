@@ -80,7 +80,7 @@ public class CraftingSystem : MonoBehaviour
         if (requireApplicationPlaying && Application.isPlaying == false)
             return;
 
-        Debug.Log("Craft Gold");
+        Debug.Log("Craft Debug Recipe");
         TryCraftingRecipe(debugCraftingRecipe);
     }
 
