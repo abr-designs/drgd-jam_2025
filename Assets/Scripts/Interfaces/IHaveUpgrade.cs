@@ -1,17 +1,15 @@
 namespace Interfaces
 {
-    public enum upgradeType
+    public enum UpgradeType
     {
-        ShieldUpgrade,
-
-        RollUpgrade,
-
-        CapacityUpgrade
+        ShieldUpgrade = 0,
+        RollUpgrade = 1,
+        CapacityUpgrade = 2,
     }
+
     public interface IHaveUpgrade
     {
         float multiplier { get; }
-
 
         void ApplyUpgrade(float newMultiplier);
     }

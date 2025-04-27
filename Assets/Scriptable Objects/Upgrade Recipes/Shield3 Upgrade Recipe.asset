@@ -9,10 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f189c616c94c65846bbbcb507d918c67, type: 3}
-  m_Name: RollUpgrade1
+  m_Script: {fileID: 11500000, guid: 85578f3bfdab29d49b4517db305e7dfc, type: 3}
+  m_Name: Shield3 Upgrade Recipe
   m_EditorClassIdentifier: 
-  name: ShieldUpgrade1
-  maxHoldCount: 999
-  inventoryIconSprite: {fileID: 0}
-  collectablePrefab: {fileID: 0}
+  name: Shield3 Upgrade
+  inputItemStackList:
+  - itemSo: {fileID: 11400000, guid: 0d98f7c3eb0787241bd670725d9da027, type: 2}
+    quantity: 15
+  outputUpgradeType: 0
+  level: 3
