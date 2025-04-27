@@ -23,6 +23,7 @@ public class PlayerHealth : MonoBehaviour, IHaveHealth, IHaveUpgrade
     private void Awake()
     {
         Health = spawnHealth;
+        OnPlayerHealthChange?.Invoke(Health, StartingHealth);
     }
 
     //PlayerHealth Functions
