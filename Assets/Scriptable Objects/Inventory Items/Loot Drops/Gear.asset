@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Gear
   m_EditorClassIdentifier: 
   name: Gear
-  maxHoldCount: 999
+  maxHoldCount: 5
   inventoryIconSprite: {fileID: 0}
-  collectablePrefab: {fileID: 0}
+  collectablePrefab: {fileID: 4950491224260487683, guid: fc2b2791c122dfe4ab973c7cfd99ca74, type: 3}

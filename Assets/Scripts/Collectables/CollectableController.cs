@@ -103,6 +103,7 @@ namespace GGJ.Collectables
         public void RemoveCollectable(CollectableBase collectable)
         {
             collectables.Remove(collectable);
+            Destroy(collectable.gameObject);
             //Debug.Log($"collectables contains {collectables.Count}");
         }
 

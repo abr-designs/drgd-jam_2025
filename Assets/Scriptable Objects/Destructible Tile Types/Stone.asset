@@ -16,7 +16,19 @@ MonoBehaviour:
   mesh: {fileID: -2797060080492445358, guid: 83bd76c8aede24d429f0084c722e4e09, type: 3}
   lootTable:
     lootItemList:
+    - itemType: {fileID: 0}
+      quantity: 0
+      weight: 35
+      dropRate: 0.875
     - itemType: {fileID: 11400000, guid: 0d98f7c3eb0787241bd670725d9da027, type: 2}
       quantity: 1
       weight: 1
-      dropRate: 1
+      dropRate: 0.025
+    - itemType: {fileID: 11400000, guid: 871d15ccf8c978b499e826b24abec332, type: 2}
+      quantity: 1
+      weight: 2
+      dropRate: 0.05
+    - itemType: {fileID: 11400000, guid: 9422f247f8646b54fb13072b5c27e29f, type: 2}
+      quantity: 1
+      weight: 2
+      dropRate: 0.05

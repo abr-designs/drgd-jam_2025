@@ -1,8 +1,5 @@
-using Audio;
-using System.Collections.Generic;
 using UnityEngine;
 using Utilities;
-using Utilities.Debugging;
 using NaughtyAttributes;
 
 public class DynamiteManager : HiddenSingleton<DynamiteManager>
@@ -25,6 +22,8 @@ public class DynamiteManager : HiddenSingleton<DynamiteManager>
     private float ThrowTargetTime = 3f;
 
 
+    [SerializeField]
+    private LayerMask ExplodeLayerMask;
     [SerializeField]
     private LayerMask LevelLayerMask;
     private RaycastHit[] _raycastHits = new RaycastHit[10];
@@ -63,13 +62,13 @@ public class DynamiteManager : HiddenSingleton<DynamiteManager>
 
     public static void StartSpawning()
     {
-        Instance._isSpawning = true;
+        DynamiteManager.Instance._isSpawning = true;
     }
 
     public static void StopSpawning()
     {
         // TODO -- maybe cleanup any active dynamite?
-        Instance._isSpawning = false;
+        DynamiteManager.Instance._isSpawning = false;
     }
 
     private void SpawnNew()
@@ -95,7 +94,7 @@ public class DynamiteManager : HiddenSingleton<DynamiteManager>
         Vector3 targetPoint = _raycastHits[0].point;
         Debug.DrawRay(worldPos, Vector3.down * _raycastHits[0].distance, Color.green, 1f);
 
-        var dyn = Instantiate(dynamitePrefab);
+        var dyn = Instantiate(dynamitePrefab, transform, true);
         var ind = Instantiate(indicatorPrefab, transform, true);
 
         bool isThrowing = transform.position.y > LevelController.TileSize * -5f;
@@ -112,14 +111,14 @@ public class DynamiteManager : HiddenSingleton<DynamiteManager>
             pos.y = Mathf.Min(pos.y, maxY);
             dyn.transform.position = pos;
 
-            dyn.Spawn(targetPoint, GravityMultiplier, ind, LevelLayerMask, ThrowTargetTime, Dynamite.DYNAMITE_BEHAVIOUR.Thrown);
+            dyn.Spawn(targetPoint, GravityMultiplier, ind, ExplodeLayerMask, LevelLayerMask, ThrowTargetTime, Dynamite.DYNAMITE_BEHAVIOUR.Thrown);
         }
         else
         {
             float grav = Mathf.Abs(Physics.gravity.y) * GravityMultiplier;
             dyn.transform.position = targetPoint + Vector3.up * 0.5f * grav * Mathf.Pow(ThrowTargetTime*1.5f,2);
 
-            dyn.Spawn(targetPoint, GravityMultiplier, ind, LevelLayerMask, ThrowTargetTime, Dynamite.DYNAMITE_BEHAVIOUR.Dropped);
+            dyn.Spawn(targetPoint, GravityMultiplier, ind, ExplodeLayerMask, LevelLayerMask, ThrowTargetTime, Dynamite.DYNAMITE_BEHAVIOUR.Dropped);
         }
 
     }
