@@ -5,14 +5,16 @@ using NaughtyAttributes;
 using UnityEngine;
 using VisualFX;
 
-public class DestructibleTile : MonoBehaviour, IHaveHealth, IHasLootTable
+public class DestructibleTile : MonoBehaviour, IHaveHealth, IHaveLootTable
 {
     public static event Action<int> OnYLevelChanged;
     
     public int Health { get; private set; }
     public int StartingHealth => spawnHealth;
 
-    public LootTable lootTable;
+    public LootTable LootTable => lootTable;
+    [SerializeField]
+    private LootTable lootTable;
 
     [SerializeField] 
     private int spawnHealth = 1;
@@ -78,6 +80,7 @@ public class DestructibleTile : MonoBehaviour, IHaveHealth, IHasLootTable
         //transform.Rotate(Vector3.up * rotation);
         transform.rotation = Quaternion.Euler(0f, rotation, 0f);
     }
+
 
     public void CalculateDropRates()
     {

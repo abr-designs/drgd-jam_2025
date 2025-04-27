@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEditor;
 
 [Serializable]
-public struct LootTable
+public class LootTable
 {
     public List<LootItem> lootItemList;
 
