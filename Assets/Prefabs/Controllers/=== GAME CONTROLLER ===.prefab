@@ -321,6 +321,42 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2195559353417472666, guid: c69be863e9c09d741afa343eb8443290, type: 3}
+      propertyPath: 'upgrades.Array.data[2].levelValues.Array.data[0]'
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2195559353417472666, guid: c69be863e9c09d741afa343eb8443290, type: 3}
+      propertyPath: 'upgrades.Array.data[2].levelValues.Array.data[1]'
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2195559353417472666, guid: c69be863e9c09d741afa343eb8443290, type: 3}
+      propertyPath: 'upgrades.Array.data[2].levelValues.Array.data[2]'
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2195559353417472666, guid: c69be863e9c09d741afa343eb8443290, type: 3}
+      propertyPath: 'upgrades.Array.data[0].levelRecipes.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 8dcf5d4057a328244a489a79ba42aeca, type: 2}
+    - target: {fileID: 2195559353417472666, guid: c69be863e9c09d741afa343eb8443290, type: 3}
+      propertyPath: 'upgrades.Array.data[0].levelRecipes.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 769f6f29e5c26d54793f418cf9ba5221, type: 2}
+    - target: {fileID: 2195559353417472666, guid: c69be863e9c09d741afa343eb8443290, type: 3}
+      propertyPath: 'upgrades.Array.data[0].levelRecipes.Array.data[2]'
+      value: 
+      objectReference: {fileID: 11400000, guid: dd077db79cf578c4fbd4c1ff79b40945, type: 2}
+    - target: {fileID: 2195559353417472666, guid: c69be863e9c09d741afa343eb8443290, type: 3}
+      propertyPath: 'upgrades.Array.data[2].levelRecipes.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 94b898aaf5195234ba785e986a31f1a5, type: 2}
+    - target: {fileID: 2195559353417472666, guid: c69be863e9c09d741afa343eb8443290, type: 3}
+      propertyPath: 'upgrades.Array.data[2].levelRecipes.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 1ebdea26bef82f24ba8e78f77cb24bac, type: 2}
+    - target: {fileID: 2195559353417472666, guid: c69be863e9c09d741afa343eb8443290, type: 3}
+      propertyPath: 'upgrades.Array.data[2].levelRecipes.Array.data[2]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 48c025144ff28f84fb3be320423293ff, type: 2}
     - target: {fileID: 8110202265054156113, guid: c69be863e9c09d741afa343eb8443290, type: 3}
       propertyPath: m_Name
       value: --- UPGRADE MANAGER ---
