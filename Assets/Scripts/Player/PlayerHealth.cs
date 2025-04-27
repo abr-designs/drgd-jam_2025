@@ -4,13 +4,15 @@ using Audio.SoundFX;
 using Interfaces;
 using UnityEngine;
 
-public class PlayerHealth : MonoBehaviour, IHaveHealth
+public class PlayerHealth : MonoBehaviour, IHaveHealth, IHaveUpgrade
 {
     public static event Action OnPlayerDied;
-    public static event Action<int,int> OnPlayerHealthChange;
+    public static event Action<int, int> OnPlayerHealthChange;
 
     public int Health { get; private set; }
-    public int StartingHealth => spawnHealth;
+    public int StartingHealth => spawnHealth + (int)multiplier;
+
+    public float multiplier { get; private set; }
 
     [SerializeField]
     private int spawnHealth = 3;
@@ -29,7 +31,7 @@ public class PlayerHealth : MonoBehaviour, IHaveHealth
     public void ApplyDamage(int damage)
     {
         Health -= damage;
-        OnPlayerHealthChange?.Invoke(Health,StartingHealth);
+        OnPlayerHealthChange?.Invoke(Health, StartingHealth);
         if (Health <= 0)
         {
             Health = StartingHealth;
@@ -45,6 +47,8 @@ public class PlayerHealth : MonoBehaviour, IHaveHealth
         }
     }
 
-
-
+    public void ApplyUpgrade(float newMultiplier)
+    {
+        multiplier = newMultiplier;
+    }
 }
