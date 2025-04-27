@@ -10,11 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 85578f3bfdab29d49b4517db305e7dfc, type: 3}
-  m_Name: Shield1 Upgrade Recipe
+  m_Name: Roll2 Upgrade Recipe
   m_EditorClassIdentifier: 
-  name: Shield1 Upgrade
+  name: Roll2 Upgrade
   inputItemStackList:
   - itemSo: {fileID: 11400000, guid: 0d98f7c3eb0787241bd670725d9da027, type: 2}
     quantity: 3
-  outputUpgradeType: 0
-  level: 1
+  - itemSo: {fileID: 11400000, guid: 871d15ccf8c978b499e826b24abec332, type: 2}
+    quantity: 3
+  outputUpgradeType: 1
+  level: 2

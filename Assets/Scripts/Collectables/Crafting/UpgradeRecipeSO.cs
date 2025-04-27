@@ -1,3 +1,4 @@
+using Interfaces;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +7,7 @@ public class UpgradeRecipeSO : ScriptableObject {
 
     public new string name;
     public List<ItemStack> inputItemStackList;
-    public UpgradeManager.UpgradeData outputUpgradeData;
+    public UpgradeType outputUpgradeType;
+    public int level;
 
 }

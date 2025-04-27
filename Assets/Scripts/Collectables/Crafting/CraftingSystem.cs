@@ -56,8 +56,7 @@ public class CraftingSystem : MonoBehaviour
         RemoveCraftingRecipeIngredients(recipe);
 
         // produce upgrade
-        //AddCraftingRecipeOutput(recipe);
-        //
+        UpgradeManager.TryApplyUpgrade(recipe.outputUpgradeType, recipe.level);
 
         SFX.CLICK_UI_BUTTON.PlaySound();
 
