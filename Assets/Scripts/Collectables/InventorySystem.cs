@@ -31,10 +31,10 @@ public class InventorySystem : MonoBehaviour, IHaveUpgrade
     private static InventorySystem _instance;
     public static InventorySystem Instance { get { return _instance; } }
 
-    public float multiplier { get; private set; }
+    public float upgradeAdditiveCapacity { get; private set; }
 
     private List<ItemStack> items = new List<ItemStack>();
-    int maxDistinctItems = 3;
+    [SerializeField] private int maxDistinctItems = 3;
 
     int currentSelectedIndex = 0;
 
@@ -79,7 +79,7 @@ public class InventorySystem : MonoBehaviour, IHaveUpgrade
             if (items[i].itemSo == newItemStack.itemSo)
             {
                 // check current quantity of existing item stack
-                if (items[i].quantity + newItemStack.quantity > items[i].itemSo.maxHoldCount)
+                if (items[i].quantity + newItemStack.quantity > (items[i].itemSo.maxHoldCount + upgradeAdditiveCapacity))
                 {
                     return false;
                 }
@@ -99,12 +99,12 @@ public class InventorySystem : MonoBehaviour, IHaveUpgrade
         {
             if (items[i].itemSo == newItemStack.itemSo)
             {
-                // check current quantity of existing item stack
-                if (items[i].quantity + newItemStack.quantity > items[i].itemSo.maxHoldCount)
-                {
-                    itemStackIndex = -1;
-                    break;
-                }
+                //// check current quantity of existing item stack
+                //if (items[i].quantity + newItemStack.quantity > items[i].itemSo.maxHoldCount)
+                //{
+                //    itemStackIndex = -1;
+                //    break;
+                //}
 
                 itemStackIndex = i;
                 break;
@@ -218,7 +218,9 @@ public class InventorySystem : MonoBehaviour, IHaveUpgrade
 
     public void ApplyUpgrade(float newMultiplier)
     {
-        multiplier = newMultiplier;
-        maxDistinctItems = 3 + (int)multiplier;
+        upgradeAdditiveCapacity = newMultiplier;
+        maxDistinctItems = 3 + (int)upgradeAdditiveCapacity; // starting value is 3
+
+        Debug.Log($"Increased inventory capacity bonus quantity to {upgradeAdditiveCapacity}");
     }
 }

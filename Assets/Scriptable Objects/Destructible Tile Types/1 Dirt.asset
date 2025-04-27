@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f81fec1480002bf439ab4776b3b745a5, type: 3}
+  m_Name: 1 Dirt
+  m_EditorClassIdentifier: 
+  name: Dirt
+  mesh: {fileID: 6202518890732439607, guid: 326695dc8ca50994e954685c38953bcc, type: 3}
+  lootTable:
+    lootItemList:
+    - itemType: {fileID: 0}
+      quantity: 0
+      weight: 47
+      dropRate: 0.94
+    - itemType: {fileID: 11400000, guid: 0d98f7c3eb0787241bd670725d9da027, type: 2}
+      quantity: 1
+      weight: 1
+      dropRate: 0.02
+    - itemType: {fileID: 11400000, guid: 871d15ccf8c978b499e826b24abec332, type: 2}
+      quantity: 1
+      weight: 1
+      dropRate: 0.02
+    - itemType: {fileID: 11400000, guid: 9422f247f8646b54fb13072b5c27e29f, type: 2}
+      quantity: 1
+      weight: 1
+      dropRate: 0.02
