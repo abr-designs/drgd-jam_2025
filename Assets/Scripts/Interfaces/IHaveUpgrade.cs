@@ -6,8 +6,11 @@ namespace Interfaces
 
         RollUpgrade,
 
-        CapacityUpgrade
+        CapacityUpgrade,
+
+        HealthUpgrade,
     }
+
     public interface IHaveUpgrade
     {
         float multiplier { get; }
