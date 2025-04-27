@@ -9,15 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6740eed6d56e90b458c1e3cddf0ea7a9, type: 3}
-  m_Name: ShieldUpgrade1
+  m_Script: {fileID: 11500000, guid: 85578f3bfdab29d49b4517db305e7dfc, type: 3}
+  m_Name: Capacity2 Upgrade Recipe
   m_EditorClassIdentifier: 
-  name: ShieldUpgrade1
+  name: Capacity2 Upgrade
   inputItemStackList:
   - itemSo: {fileID: 11400000, guid: 9422f247f8646b54fb13072b5c27e29f, type: 2}
-    quantity: 1
-  - itemSo: {fileID: 11400000, guid: 89cebaea36971774eaff40af3ee50b48, type: 2}
-    quantity: 1
-  outputItemStackList:
+    quantity: 3
+  - itemSo: {fileID: 11400000, guid: 0d98f7c3eb0787241bd670725d9da027, type: 2}
+    quantity: 3
   - itemSo: {fileID: 11400000, guid: 871d15ccf8c978b499e826b24abec332, type: 2}
-    quantity: 1
+    quantity: 3
+  outputUpgradeType: 2
+  level: 2
