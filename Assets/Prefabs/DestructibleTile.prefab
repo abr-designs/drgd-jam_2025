@@ -60,7 +60,7 @@ MonoBehaviour:
     - itemType: {fileID: 11400000, guid: 0d98f7c3eb0787241bd670725d9da027, type: 2}
       quantity: 1
       weight: 1
-      dropRate: 0.1
+      dropRate: 0.0001
   spawnHealth: 1
   onDestroyVFX: 1
 --- !u!33 &4881529383321450506

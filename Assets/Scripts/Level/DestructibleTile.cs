@@ -8,15 +8,16 @@ using VisualFX;
 public class DestructibleTile : MonoBehaviour, IHaveHealth, IHaveLootTable
 {
     public static event Action<int> OnYLevelChanged;
-    
+
     public int Health { get; private set; }
     public int StartingHealth => spawnHealth;
 
     public LootTable LootTable => lootTable;
     [SerializeField]
     private LootTable lootTable;
+    private MeshFilter meshFilter;
 
-    [SerializeField] 
+    [SerializeField]
     private int spawnHealth = 1;
 
     [SerializeField]
@@ -28,11 +29,12 @@ public class DestructibleTile : MonoBehaviour, IHaveHealth, IHaveLootTable
     private void Awake()
     {
         Health = spawnHealth;
+        meshFilter = GetComponent<MeshFilter>();
     }
 
     //DestructableTile Functions
     //============================================================================================================//
-    
+
     public void ApplyDamage(int damage)
     {
         Health -= damage;
@@ -47,13 +49,19 @@ public class DestructibleTile : MonoBehaviour, IHaveHealth, IHaveLootTable
     private void DestroyTile(bool spawnLoot = false)
     {
         if (spawnLoot)
-        { 
+        {
             SpawnCollectable();
         }
 
         var previousPosition = transform.position;
         // move position down by tile scale
         transform.position = previousPosition + (Vector3.down * LevelController.TileSize);
+
+        // try changing tile class based on depth
+        int tileDepthValue = (int)transform.position.y;
+        TileTypeSO newTileDepthType = TileDepthTypeController.Instance.GetTileTypeForDepth(tileDepthValue);
+        meshFilter.mesh = newTileDepthType.mesh;
+        lootTable = newTileDepthType.lootTable;
 
         // rotate block to shake up monotony
         RandomizeTileRotation();
@@ -63,7 +71,7 @@ public class DestructibleTile : MonoBehaviour, IHaveHealth, IHaveLootTable
 
         // broadcast
         OnYLevelChanged?.Invoke((int)transform.position.y);
-        
+
         TilesController.CheckShouldAdjustNeighors(transform);
     }
 

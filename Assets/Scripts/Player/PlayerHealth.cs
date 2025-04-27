@@ -1,4 +1,6 @@
 using System;
+using Audio;
+using Audio.SoundFX;
 using Interfaces;
 using UnityEngine;
 
@@ -32,7 +34,14 @@ public class PlayerHealth : MonoBehaviour, IHaveHealth
         {
             Health = StartingHealth;
             Debug.Log("Player DIED!");
+
+            SFX.PLAYER_DIED.PlaySound();
+
             OnPlayerDied?.Invoke();
+        }
+        else
+        {
+            SFX.PLAYER_HIT.PlaySound();
         }
     }
 
