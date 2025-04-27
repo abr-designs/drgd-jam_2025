@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 
 [Serializable]
 public class LootTable
@@ -68,6 +70,7 @@ public class LootItem {
 }
 
 
+#if UNITY_EDITOR
 [CustomPropertyDrawer(typeof(LootItem))]
 public class LootItemDrawerUIE : PropertyDrawer {
 
@@ -82,3 +85,4 @@ public class LootItemDrawerUIE : PropertyDrawer {
         EditorGUI.GetPropertyHeight(property, label, true);// + 10;
 
 }
+#endif

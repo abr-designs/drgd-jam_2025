@@ -2317,10 +2317,6 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8635680423198873833, guid: 8557751bb14511c43ae02b7e58ad683b, type: 3}
-      propertyPath: musicAudioMixer
-      value: 
-      objectReference: {fileID: 24100000, guid: ce08768a569db8b429bc3e45071f1f19, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
