@@ -38,47 +38,61 @@ namespace GGJ.Collectables
 
         //============================================================================================================//
         
-        public static void TryCreateCollectable(Vector3 position, int count)
+        public static void TryCreateCollectable(LootTable lootTable, Vector3 position)
         {
-            if (Random.value > dropProbability)
+            GameObject lootPrefab = null;
+
+            ItemStack newItemStack = lootTable.GetRandomLootItem();
+            if (newItemStack == null)
                 return;
 
-            CreateCollectable(position, count);
+            InventoryItemSO spawnItemSO = newItemStack.itemSo;
+            if (spawnItemSO == null)
+                return;
+
+            lootPrefab = spawnItemSO.collectablePrefab.gameObject;
+            if (lootPrefab == null)
+                return;
+
+            CreateCollectable(lootPrefab, position);
         }
 
-        public static void CreateCollectable(Vector3 position, int count)
+        public static void CreateCollectable(GameObject lootPrefab, Vector3 position)
         {
-            _instance.CreateCollectables(position, count, _instance.pickupDelay);
+            _instance.CreateCollectables(lootPrefab, position, _instance.pickupDelay);
         }
-        public static void CreateCollectable(Vector3 position, int count, float delay)
+        public static void CreateCollectable(GameObject lootPrefab, Vector3 position, float delay)
         {
-            _instance.CreateCollectables(position, count, delay);
+            _instance.CreateCollectables(lootPrefab, position, delay);
         }
 
-        private void CreateCollectables(Vector3 position, int count, float delay)
+        private void CreateCollectables(Vector3 position, float delay)
         {
-            for (int i = 0; i < count; i++)
+            GameObject selectedPrefab = SelectRandomPrefab();
+            _instance.CreateCollectables(selectedPrefab, position, delay);
+        }
+
+        private void CreateCollectables(GameObject lootPrefab, Vector3 position, float delay)
+        {
+            if (collectables.Count >= maxCollectibles)
             {
-                if (collectables.Count >= maxCollectibles)
-                {
-                    //Debug.Log("Too many");
-                    RemoveCollectable(collectables[0]);
-                    return;
-                }
-
-                GameObject selectedPrefab = SelectRandomPrefab();
-                var newCollectable = Instantiate(selectedPrefab, position, quaternion.identity, collectablesContainer);
-                CollectableBase collectable = newCollectable.GetComponent<CollectableBase>();
-                collectables.Add(collectable);
-                //Debug.Log($"collectables contains {collectables.Count}");
-
-                var dir = Random.insideUnitCircle.normalized;
-
-                //float vertical = Random.Range(2, 5);
-                dir = Vector2.zero;
-                collectable.Launch(collectableBehaviourData, new Vector3(dir.x, 0, dir.y), launchSpeed, delay);
-                //newCollectable.Launch(collectableBehaviourData, new Vector3(dir.x, vertical, dir.y), launchSpeed, delay);
+                //Debug.Log("Too many");
+                RemoveCollectable(collectables[0]);
+                return;
             }
+
+            //GameObject selectedPrefab = SelectRandomPrefab();
+            var newCollectable = Instantiate(lootPrefab, position, quaternion.identity, collectablesContainer);
+            CollectableBase collectable = newCollectable.GetComponent<CollectableBase>();
+            collectables.Add(collectable);
+            //Debug.Log($"collectables contains {collectables.Count}");
+
+            var dir = Random.insideUnitCircle.normalized;
+
+            //float vertical = Random.Range(2, 5);
+            dir = Vector2.zero;
+            collectable.Launch(collectableBehaviourData, new Vector3(dir.x, 0, dir.y), launchSpeed, delay);
+            //newCollectable.Launch(collectableBehaviourData, new Vector3(dir.x, vertical, dir.y), launchSpeed, delay);
         }
 
         private GameObject SelectRandomPrefab()
@@ -109,7 +123,7 @@ namespace GGJ.Collectables
             if (requireApplicationPlaying && Application.isPlaying == false)
                 return;
             
-            CreateCollectables(spawnPosition, spawnCount, 0);
+            CreateCollectables(spawnPosition, spawnCount);
         }
 
 #endif
