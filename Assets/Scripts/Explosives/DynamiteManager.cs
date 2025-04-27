@@ -1,10 +1,12 @@
+using System;
 using UnityEngine;
 using Utilities;
 using NaughtyAttributes;
+using Random = UnityEngine.Random;
 
 public class DynamiteManager : HiddenSingleton<DynamiteManager>
 {
-
+    public static event Action OnStopThrowing;
     //Spawning
     //------------------------------------------------//
     [SerializeField, Header("Spawning")]
@@ -34,7 +36,9 @@ public class DynamiteManager : HiddenSingleton<DynamiteManager>
     private GameObject indicatorPrefab;
 
     [SerializeField]
-    private Transform[] dynamiteThrowers;
+    private Thrower[] dynamiteThrowers;
+
+    private bool isThrowing = true;
 
     //Unity Functions
     //============================================================================================================//
@@ -97,8 +101,15 @@ public class DynamiteManager : HiddenSingleton<DynamiteManager>
         var dyn = Instantiate(dynamitePrefab, transform, true);
         var ind = Instantiate(indicatorPrefab, transform, true);
 
-        bool isThrowing = transform.position.y > LevelController.TileSize * -5f;
+        var newThrowingState = transform.position.y > LevelController.TileSize * -5f;
 
+        if (newThrowingState != isThrowing)
+        {
+            OnStopThrowing?.Invoke();
+            isThrowing = newThrowingState;
+        }
+        
+        
         if (isThrowing)
         {
             // Pick random thrower
@@ -106,12 +117,13 @@ public class DynamiteManager : HiddenSingleton<DynamiteManager>
             var thrower = dynamiteThrowers.PickRandomElement();
 
             // Cap the thrower positions based on the current mine location
-            Vector3 pos = thrower.position;
+            Vector3 pos = thrower.transform.position;
             float maxY = transform.position.y + LevelController.TileSize * 10f;
             pos.y = Mathf.Min(pos.y, maxY);
             dyn.transform.position = pos;
 
             dyn.Spawn(targetPoint, GravityMultiplier, ind, ExplodeLayerMask, LevelLayerMask, ThrowTargetTime, Dynamite.DYNAMITE_BEHAVIOUR.Thrown);
+            thrower.Throw();
         }
         else
         {
