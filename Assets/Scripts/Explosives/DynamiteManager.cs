@@ -4,6 +4,7 @@ using Utilities;
 using NaughtyAttributes;
 using Random = UnityEngine.Random;
 using Utilities.Recycling;
+using Controllers;
 
 public class DynamiteManager : HiddenSingleton<DynamiteManager>
 {
@@ -15,6 +16,15 @@ public class DynamiteManager : HiddenSingleton<DynamiteManager>
     [SerializeField]
     private float SpawnRate = 0.5f;
     private float _spawnTimer = 0f;
+
+    [SerializeField]
+    private int clusterAmount = 3;
+
+    [SerializeField]
+    private float BatchCooldown = 0.1f;
+    private int _batchCounter = 0;
+    private float _batchTimer = 0f;
+
 
     private bool _isSpawning = false;
 
@@ -33,15 +43,30 @@ public class DynamiteManager : HiddenSingleton<DynamiteManager>
 
     [SerializeField, Header("Prefabs")]
     private Dynamite dynamitePrefab;
-    
+
 
     [SerializeField]
     private Thrower[] dynamiteThrowers;
 
     private bool isThrowing = true;
 
+    // Determines how hard to make dynamite
+    private int _difficulty = 1;
+
     //Unity Functions
     //============================================================================================================//
+
+    private void OnEnable()
+    {
+        DayController.OnDayChanged += OnNewDay;
+    }
+
+    private void OnDisable()
+    {
+        DayController.OnDayChanged -= OnNewDay;
+    }
+
+
     private void Start()
     {
         _spawnTimer = SpawnRate;
@@ -54,8 +79,23 @@ public class DynamiteManager : HiddenSingleton<DynamiteManager>
         _spawnTimer -= Time.deltaTime;
         if (_spawnTimer <= 0)
         {
-            SpawnNew();
-            _spawnTimer = SpawnRate;
+            _batchTimer -= Time.deltaTime;
+
+            if (_batchCounter < clusterAmount)
+            {
+                if (_batchTimer < 0f)
+                {
+                    SpawnNew();
+                    _batchCounter++;
+                    _batchTimer = BatchCooldown;
+                }
+            }
+            else
+            {
+                _batchCounter = 0;
+                _spawnTimer = SpawnRate;
+            }
+
         }
 
 
@@ -108,8 +148,8 @@ public class DynamiteManager : HiddenSingleton<DynamiteManager>
             OnStopThrowing?.Invoke();
             isThrowing = newThrowingState;
         }
-        
-        
+
+
         if (isThrowing)
         {
             // Pick random thrower
@@ -128,12 +168,26 @@ public class DynamiteManager : HiddenSingleton<DynamiteManager>
         else
         {
             float grav = Mathf.Abs(Physics.gravity.y) * GravityMultiplier;
-            dyn.transform.position = targetPoint + Vector3.up * 0.5f * grav * Mathf.Pow(ThrowTargetTime*1.5f,2);
+            dyn.transform.position = targetPoint + Vector3.up * 0.5f * grav * Mathf.Pow(ThrowTargetTime * 1.5f, 2);
 
             dyn.Init(targetPoint, GravityMultiplier, ExplodeLayerMask, LevelLayerMask, ThrowTargetTime, Dynamite.DYNAMITE_BEHAVIOUR.Dropped);
         }
 
+        // Setup dynamite difficulty options
+        int bonus = Math.Min(_difficulty/3,3); // bonus is 0,1,2 or 3
+        dyn.Damage = Random.Range(1,2+bonus);
+        dyn.ExplodeRadius = dyn.Damage * 1.5f;
+
     }
+
+    private void OnNewDay(int dayNumber) {
+        _difficulty = dayNumber;
+
+        // Adjust difficulty settings
+        clusterAmount = 3 + Mathf.Min(dayNumber,8);
+
+    }
+
 
     //Unity Editor Functions
     //============================================================================================================//
