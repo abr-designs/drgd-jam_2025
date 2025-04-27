@@ -21,7 +21,7 @@ namespace GGJ.Collectables
         [SerializeField, Min(0f)]
         private float pickupDelay = 1f;
 
-        [SerializeField, Space(10f)] 
+        [SerializeField, Space(10f)]
         private CollectableBehaviourData collectableBehaviourData;
 
         public List<CollectableBase> collectables;
@@ -37,7 +37,7 @@ namespace GGJ.Collectables
         }
 
         //============================================================================================================//
-        
+
         public static void TryCreateCollectable(LootTable lootTable, Vector3 position)
         {
             GameObject lootPrefab = null;
@@ -105,12 +105,12 @@ namespace GGJ.Collectables
             collectables.Remove(collectable);
             //Debug.Log($"collectables contains {collectables.Count}");
         }
-        
+
         //Unity Editor
         //============================================================================================================//
-        
+
 #if UNITY_EDITOR
-        
+
         [SerializeField, Min(1), Header("DEBUGGING")]
         private int spawnCount;
         [SerializeField]
@@ -122,7 +122,7 @@ namespace GGJ.Collectables
         {
             if (requireApplicationPlaying && Application.isPlaying == false)
                 return;
-            
+
             CreateCollectables(spawnPosition, spawnCount);
         }
 

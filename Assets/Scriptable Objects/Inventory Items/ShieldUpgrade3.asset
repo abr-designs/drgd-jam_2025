@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f189c616c94c65846bbbcb507d918c67, type: 3}
-  m_Name: Gold
+  m_Name: ShieldUpgrade3
   m_EditorClassIdentifier: 
-  name: Gold
+  name: ShieldUpgrade3
   maxHoldCount: 999
-  inventoryIconSprite: {fileID: 21300000, guid: 246d3bdadd1383c4f91e008db8e381ea, type: 3}
-  collectablePrefab: {fileID: 4950491224260487683, guid: 9af59168e2182d04aa9b4b529d938833, type: 3}
+  inventoryIconSprite: {fileID: 0}
+  collectablePrefab: {fileID: 0}
