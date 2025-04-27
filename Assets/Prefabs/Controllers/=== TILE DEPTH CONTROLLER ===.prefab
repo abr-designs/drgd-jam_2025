@@ -44,15 +44,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e00074b484fc3245bd591323778f240, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultTileTypeSo: {fileID: 0}
+  defaultTileTypeSo: {fileID: 11400000, guid: 5c4c9bc129d627448a86876d18ce0822, type: 2}
   depthLevelList:
   - depthStart: 0
     tileProbabilityList:
     - tileTypeSo: {fileID: 11400000, guid: 5c4c9bc129d627448a86876d18ce0822, type: 2}
       weight: 1
-  - depthStart: 2
+  - depthStart: -6
     tileProbabilityList:
     - tileTypeSo: {fileID: 11400000, guid: 5c4c9bc129d627448a86876d18ce0822, type: 2}
+      weight: 2
+    - tileTypeSo: {fileID: 11400000, guid: a009a9bebf3d0904490f2cfe2060cfed, type: 2}
       weight: 1
+  - depthStart: -8
+    tileProbabilityList:
     - tileTypeSo: {fileID: 11400000, guid: a009a9bebf3d0904490f2cfe2060cfed, type: 2}
       weight: 1

@@ -58,10 +58,7 @@ public class DestructibleTile : MonoBehaviour, IHaveHealth, IHaveLootTable
         transform.position = previousPosition + (Vector3.down * LevelController.TileSize);
 
         // try changing tile class based on depth
-        int tileDepthValue = (int)transform.position.y;
-        TileTypeSO newTileDepthType = TileDepthTypeController.Instance.GetTileTypeForDepth(tileDepthValue);
-        meshFilter.mesh = newTileDepthType.mesh;
-        lootTable = newTileDepthType.lootTable;
+        ChangeTileDepthClass();
 
         // rotate block to shake up monotony
         RandomizeTileRotation();
@@ -77,15 +74,21 @@ public class DestructibleTile : MonoBehaviour, IHaveHealth, IHaveLootTable
 
     private void SpawnCollectable()
     {
-        //CollectableController.TryCreateCollectable(lootTable, transform.position, 1);
         CollectableController.TryCreateCollectable(lootTable, transform.position);
+    }
+
+    private void ChangeTileDepthClass()
+    {
+        int tileDepthValue = (int)transform.position.y;
+        TileTypeSO newTileDepthType = TileDepthTypeController.Instance.GetTileTypeForDepth(tileDepthValue);
+        meshFilter.mesh = newTileDepthType.mesh;
+        lootTable = newTileDepthType.lootTable;
     }
 
     private void RandomizeTileRotation()
     {
         int randomRotationFactor = UnityEngine.Random.Range(0, 4);
         float rotation = randomRotationFactor * 90f;
-        //transform.Rotate(Vector3.up * rotation);
         transform.rotation = Quaternion.Euler(0f, rotation, 0f);
     }
 
