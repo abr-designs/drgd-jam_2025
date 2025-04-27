@@ -503,6 +503,266 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5057988794729028270}
     m_Modifications:
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[0].name
+      value: Layers 0-6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[1].name
+      value: Layers 6-12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[2].name
+      value: Layers 12-18
+      objectReference: {fileID: 0}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[3].name
+      value: Layers 18-24
+      objectReference: {fileID: 0}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[4].name
+      value: Layers 24+
+      objectReference: {fileID: 0}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[3].depthStart
+      value: -18
+      objectReference: {fileID: 0}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[4].depthStart
+      value: -24
+      objectReference: {fileID: 0}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[1].tileProbabilityList.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[2].tileProbabilityList.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[3].tileProbabilityList.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[4].tileProbabilityList.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[1].tileProbabilityList.Array.data[0].name
+      value: Dirt - 67%
+      objectReference: {fileID: 0}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[1].tileProbabilityList.Array.data[1].name
+      value: Sand - 27%
+      objectReference: {fileID: 0}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[1].tileProbabilityList.Array.data[2].name
+      value: Stone - 7%
+      objectReference: {fileID: 0}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[2].tileProbabilityList.Array.data[0].name
+      value: Dirt - 17%
+      objectReference: {fileID: 0}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[2].tileProbabilityList.Array.data[1].name
+      value: Sand - 42%
+      objectReference: {fileID: 0}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[2].tileProbabilityList.Array.data[2].name
+      value: Stone - 17%
+      objectReference: {fileID: 0}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[2].tileProbabilityList.Array.data[3].name
+      value: Stone with Copper - 8%
+      objectReference: {fileID: 0}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[2].tileProbabilityList.Array.data[4].name
+      value: Stone with Gears - 8%
+      objectReference: {fileID: 0}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[2].tileProbabilityList.Array.data[5].name
+      value: Stone with Springs - 8%
+      objectReference: {fileID: 0}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[3].tileProbabilityList.Array.data[0].name
+      value: Sand - 9%
+      objectReference: {fileID: 0}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[3].tileProbabilityList.Array.data[1].name
+      value: Stone - 27%
+      objectReference: {fileID: 0}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[3].tileProbabilityList.Array.data[2].name
+      value: Stone with Copper - 18%
+      objectReference: {fileID: 0}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[3].tileProbabilityList.Array.data[3].name
+      value: Stone with Gears - 18%
+      objectReference: {fileID: 0}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[3].tileProbabilityList.Array.data[4].name
+      value: Stone with Springs - 18%
+      objectReference: {fileID: 0}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[3].tileProbabilityList.Array.data[5].name
+      value: Deepstone - 9%
+      objectReference: {fileID: 0}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[4].tileProbabilityList.Array.data[0].name
+      value: Stone - 14%
+      objectReference: {fileID: 0}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[4].tileProbabilityList.Array.data[1].name
+      value: Deepstone - 71%
+      objectReference: {fileID: 0}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[4].tileProbabilityList.Array.data[2].name
+      value: Lava - 14%
+      objectReference: {fileID: 0}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[1].tileProbabilityList.Array.data[0].weight
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[1].tileProbabilityList.Array.data[1].weight
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[1].tileProbabilityList.Array.data[2].weight
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[2].tileProbabilityList.Array.data[0].weight
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[2].tileProbabilityList.Array.data[1].weight
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[2].tileProbabilityList.Array.data[2].weight
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[2].tileProbabilityList.Array.data[3].weight
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[2].tileProbabilityList.Array.data[4].weight
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[2].tileProbabilityList.Array.data[5].weight
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[3].tileProbabilityList.Array.data[0].weight
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[3].tileProbabilityList.Array.data[1].weight
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[3].tileProbabilityList.Array.data[2].weight
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[3].tileProbabilityList.Array.data[3].weight
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[3].tileProbabilityList.Array.data[4].weight
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[3].tileProbabilityList.Array.data[5].weight
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[4].tileProbabilityList.Array.data[0].weight
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[4].tileProbabilityList.Array.data[1].weight
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[4].tileProbabilityList.Array.data[2].weight
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[1].tileProbabilityList.Array.data[1].tileTypeSo
+      value: 
+      objectReference: {fileID: 11400000, guid: 074b730166e0373448071893599d4371, type: 2}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[1].tileProbabilityList.Array.data[2].tileTypeSo
+      value: 
+      objectReference: {fileID: 11400000, guid: b8ae5b5ea64ef1b459b10563402a4e57, type: 2}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[2].tileProbabilityList.Array.data[0].tileTypeSo
+      value: 
+      objectReference: {fileID: 11400000, guid: 5c4c9bc129d627448a86876d18ce0822, type: 2}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[2].tileProbabilityList.Array.data[1].tileTypeSo
+      value: 
+      objectReference: {fileID: 11400000, guid: 074b730166e0373448071893599d4371, type: 2}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[2].tileProbabilityList.Array.data[2].tileTypeSo
+      value: 
+      objectReference: {fileID: 11400000, guid: b8ae5b5ea64ef1b459b10563402a4e57, type: 2}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[2].tileProbabilityList.Array.data[3].tileTypeSo
+      value: 
+      objectReference: {fileID: 11400000, guid: 0caf4c9aff02e9147967f22c0b523932, type: 2}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[2].tileProbabilityList.Array.data[4].tileTypeSo
+      value: 
+      objectReference: {fileID: 11400000, guid: 95f1710281fcc304181c1c1a1a0a510e, type: 2}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[2].tileProbabilityList.Array.data[5].tileTypeSo
+      value: 
+      objectReference: {fileID: 11400000, guid: 63e8bf79ee461ff49a08bfd23c6ea9af, type: 2}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[3].tileProbabilityList.Array.data[0].tileTypeSo
+      value: 
+      objectReference: {fileID: 11400000, guid: 074b730166e0373448071893599d4371, type: 2}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[3].tileProbabilityList.Array.data[1].tileTypeSo
+      value: 
+      objectReference: {fileID: 11400000, guid: b8ae5b5ea64ef1b459b10563402a4e57, type: 2}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[3].tileProbabilityList.Array.data[2].tileTypeSo
+      value: 
+      objectReference: {fileID: 11400000, guid: 0caf4c9aff02e9147967f22c0b523932, type: 2}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[3].tileProbabilityList.Array.data[3].tileTypeSo
+      value: 
+      objectReference: {fileID: 11400000, guid: 95f1710281fcc304181c1c1a1a0a510e, type: 2}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[3].tileProbabilityList.Array.data[4].tileTypeSo
+      value: 
+      objectReference: {fileID: 11400000, guid: 63e8bf79ee461ff49a08bfd23c6ea9af, type: 2}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[3].tileProbabilityList.Array.data[5].tileTypeSo
+      value: 
+      objectReference: {fileID: 11400000, guid: a009a9bebf3d0904490f2cfe2060cfed, type: 2}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[4].tileProbabilityList.Array.data[0].tileTypeSo
+      value: 
+      objectReference: {fileID: 11400000, guid: b8ae5b5ea64ef1b459b10563402a4e57, type: 2}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[4].tileProbabilityList.Array.data[1].tileTypeSo
+      value: 
+      objectReference: {fileID: 11400000, guid: a009a9bebf3d0904490f2cfe2060cfed, type: 2}
+    - target: {fileID: 1012863482039369974, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
+      propertyPath: depthLevelList.Array.data[4].tileProbabilityList.Array.data[2].tileTypeSo
+      value: 
+      objectReference: {fileID: 11400000, guid: 2691c4c4237bb534982bb648701e6a52, type: 2}
     - target: {fileID: 5975953323253631039, guid: c4da7aeaa9454f648a66fa07b24dcd83, type: 3}
       propertyPath: m_Name
       value: === TILE DEPTH CONTROLLER ===
