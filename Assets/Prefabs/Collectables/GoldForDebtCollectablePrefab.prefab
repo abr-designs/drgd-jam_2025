@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8961553476093911887}
   - component: {fileID: 7687521655831638182}
   m_Layer: 6
-  m_Name: GoldCollectablePrefab
+  m_Name: GoldForDebtCollectablePrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -48,7 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _type: 2
   itemStack:
-    itemSo: {fileID: 11400000, guid: 4cec0094ef0300b4a856f8ffc737a60a, type: 2}
+    itemSo: {fileID: 11400000, guid: 74088355211d37d429a88f38d10356d3, type: 2}
     quantity: 1
   maxDistanceFromGround: 1
   raycastDistance: 100
@@ -63,7 +63,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5762493328588042425}
-  m_Mesh: {fileID: -4614289458419098355, guid: cd4de52d62b1dfd4d854f9c100782fca, type: 3}
+  m_Mesh: {fileID: 3721714261551542517, guid: 4c4d14e10ac907e4ca3e0ceed3ebe4b1, type: 3}
 --- !u!23 &7687521655831638182
 MeshRenderer:
   m_ObjectHideFlags: 0
