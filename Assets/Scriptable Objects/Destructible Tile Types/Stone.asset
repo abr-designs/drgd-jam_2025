@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f81fec1480002bf439ab4776b3b745a5, type: 3}
+  m_Name: Stone
+  m_EditorClassIdentifier: 
+  name: Stone
+  mesh: {fileID: -2797060080492445358, guid: 83bd76c8aede24d429f0084c722e4e09, type: 3}
+  lootTable:
+    lootItemList:
+    - itemType: {fileID: 11400000, guid: 0d98f7c3eb0787241bd670725d9da027, type: 2}
+      quantity: 1
+      weight: 1
+      dropRate: 1

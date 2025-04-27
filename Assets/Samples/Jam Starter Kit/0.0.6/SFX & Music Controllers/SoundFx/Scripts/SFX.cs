@@ -8,5 +8,7 @@
         DROPING = 3,
         OBJECT_PICKUP = 4,
         CLICK_UI_BUTTON = 5,
+        PLAYER_HIT = 6,
+        PLAYER_DIED = 7,
     }
 }

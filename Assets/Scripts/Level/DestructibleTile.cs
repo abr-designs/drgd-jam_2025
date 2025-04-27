@@ -8,15 +8,16 @@ using VisualFX;
 public class DestructibleTile : MonoBehaviour, IHaveHealth, IHaveLootTable
 {
     public static event Action<int> OnYLevelChanged;
-    
+
     public int Health { get; private set; }
     public int StartingHealth => spawnHealth;
 
     public LootTable LootTable => lootTable;
     [SerializeField]
     private LootTable lootTable;
+    private MeshFilter meshFilter;
 
-    [SerializeField] 
+    [SerializeField]
     private int spawnHealth = 1;
 
     [SerializeField]
@@ -28,11 +29,12 @@ public class DestructibleTile : MonoBehaviour, IHaveHealth, IHaveLootTable
     private void Awake()
     {
         Health = spawnHealth;
+        meshFilter = GetComponent<MeshFilter>();
     }
 
     //DestructableTile Functions
     //============================================================================================================//
-    
+
     public void ApplyDamage(int damage)
     {
         Health -= damage;
@@ -47,13 +49,16 @@ public class DestructibleTile : MonoBehaviour, IHaveHealth, IHaveLootTable
     private void DestroyTile(bool spawnLoot = false)
     {
         if (spawnLoot)
-        { 
+        {
             SpawnCollectable();
         }
 
         var previousPosition = transform.position;
         // move position down by tile scale
         transform.position = previousPosition + (Vector3.down * LevelController.TileSize);
+
+        // try changing tile class based on depth
+        ChangeTileDepthClass();
 
         // rotate block to shake up monotony
         //RandomizeTileRotation();
@@ -63,21 +68,27 @@ public class DestructibleTile : MonoBehaviour, IHaveHealth, IHaveLootTable
 
         // broadcast
         OnYLevelChanged?.Invoke((int)transform.position.y);
-        
+
         TilesController.CheckShouldAdjustNeighors(transform);
     }
 
     private void SpawnCollectable()
     {
-        //CollectableController.TryCreateCollectable(lootTable, transform.position, 1);
         CollectableController.TryCreateCollectable(lootTable, transform.position);
+    }
+
+    private void ChangeTileDepthClass()
+    {
+        int tileDepthValue = (int)transform.position.y;
+        TileTypeSO newTileDepthType = TileDepthTypeController.Instance.GetTileTypeForDepth(tileDepthValue);
+        meshFilter.mesh = newTileDepthType.mesh;
+        lootTable = newTileDepthType.lootTable;
     }
 
     private void RandomizeTileRotation()
     {
         int randomRotationFactor = UnityEngine.Random.Range(0, 4);
         float rotation = randomRotationFactor * 90f;
-        //transform.Rotate(Vector3.up * rotation);
         transform.rotation = Quaternion.Euler(0f, rotation, 0f);
     }
 
