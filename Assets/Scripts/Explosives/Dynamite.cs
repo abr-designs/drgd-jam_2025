@@ -67,8 +67,8 @@ public class Dynamite : MonoBehaviour, IRecyclable
         if (_target.y >= transform.position.y)
         {
             Explode();
-            Recycler.Recycle(this);
             Recycler.RecycleEnum(INDICATORS.TARGET, _indicator);
+            Recycler.Recycle(this);
         }
 
     }
@@ -92,8 +92,8 @@ public class Dynamite : MonoBehaviour, IRecyclable
     
     private void OnPlayerDied()
     {
-        Destroy(gameObject);
-        Destroy(_indicator.gameObject);
+        Recycler.RecycleEnum(INDICATORS.TARGET, _indicator);
+        Recycler.Recycle(this);
     }
 
     //============================================================================================================//
@@ -209,6 +209,7 @@ public class Dynamite : MonoBehaviour, IRecyclable
 
     public void OnRecycled() {
         _rigidbody.linearVelocity = Vector3.zero;
+        _indicator = null;
     }
 
     //============================================================================================================//
