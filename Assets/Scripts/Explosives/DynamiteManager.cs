@@ -1,8 +1,5 @@
-using Audio;
-using System.Collections.Generic;
 using UnityEngine;
 using Utilities;
-using Utilities.Debugging;
 using NaughtyAttributes;
 
 public class DynamiteManager : HiddenSingleton<DynamiteManager>
@@ -25,6 +22,8 @@ public class DynamiteManager : HiddenSingleton<DynamiteManager>
     private float ThrowTargetTime = 3f;
 
 
+    [SerializeField]
+    private LayerMask ExplodeLayerMask;
     [SerializeField]
     private LayerMask LevelLayerMask;
     private RaycastHit[] _raycastHits = new RaycastHit[10];
@@ -112,14 +111,14 @@ public class DynamiteManager : HiddenSingleton<DynamiteManager>
             pos.y = Mathf.Min(pos.y, maxY);
             dyn.transform.position = pos;
 
-            dyn.Spawn(targetPoint, GravityMultiplier, ind, LevelLayerMask, ThrowTargetTime, Dynamite.DYNAMITE_BEHAVIOUR.Thrown);
+            dyn.Spawn(targetPoint, GravityMultiplier, ind, ExplodeLayerMask, LevelLayerMask, ThrowTargetTime, Dynamite.DYNAMITE_BEHAVIOUR.Thrown);
         }
         else
         {
             float grav = Mathf.Abs(Physics.gravity.y) * GravityMultiplier;
             dyn.transform.position = targetPoint + Vector3.up * 0.5f * grav * Mathf.Pow(ThrowTargetTime*1.5f,2);
 
-            dyn.Spawn(targetPoint, GravityMultiplier, ind, LevelLayerMask, ThrowTargetTime, Dynamite.DYNAMITE_BEHAVIOUR.Dropped);
+            dyn.Spawn(targetPoint, GravityMultiplier, ind, ExplodeLayerMask, LevelLayerMask, ThrowTargetTime, Dynamite.DYNAMITE_BEHAVIOUR.Dropped);
         }
 
     }
