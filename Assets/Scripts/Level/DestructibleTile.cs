@@ -56,7 +56,7 @@ public class DestructibleTile : MonoBehaviour, IHaveHealth, IHaveLootTable
         transform.position = previousPosition + (Vector3.down * LevelController.TileSize);
 
         // rotate block to shake up monotony
-        RandomizeTileRotation();
+        //RandomizeTileRotation();
 
         if (onDestroyVFX != VFX.NONE)
             onDestroyVFX.PlayAtLocation(previousPosition);
