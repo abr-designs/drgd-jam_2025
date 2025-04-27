@@ -65,7 +65,7 @@ public class GameCanvasController : HiddenSingleton<GameCanvasController>
         for (int i = 0; i < healthStack.Length; i++)
         {
             healthStack[i].gameObject.SetActive(maxHealth >= i);
-            healthStack[i].sprite = currentHealth - 1 >= i ? hasHealthSprite : noHealthSprite;
+            healthStack[i].sprite = currentHealth >= i ? hasHealthSprite : noHealthSprite;
         }
     }
     
