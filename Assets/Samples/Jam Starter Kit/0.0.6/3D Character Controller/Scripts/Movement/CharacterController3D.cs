@@ -88,16 +88,17 @@ namespace Samples.CharacterController3D.Scripts
             RaycastHit hit;
             if (Physics.Raycast(transform.position, m_adjustMovementDirection, out hit, rayDist))
             {
-                Debug.Log("Hit: " + hit.collider.name);
+
                 if (!m_isJumping && !m_isFalling)
                     DoJump(1);
             }
+            Debug.Log(speedFactor);
         }
 
         private void FixedUpdate()
         {
             Jump();
-
+            Roll();
             ApplyMoveForce(m_adjustMovementDirection,
                 m_3dBalancer.Grounded
                     ? characterMovementData.GroundAcceleration
@@ -163,6 +164,7 @@ namespace Samples.CharacterController3D.Scripts
             {
                 m_jumpBufferTimer = characterMovementData.JumpBufferTime;
                 m_jumpReleasedDuringBuffer = false;
+                m_rollTime = m_rollCooldown;
             }
 
             if (jumpReleasedThisFrame)
@@ -190,9 +192,11 @@ namespace Samples.CharacterController3D.Scripts
             //Initiate Jump with Jump buffering & coyote time
             //------------------------------------------------//
 
+            if (m_rollTime > 0f && !m_isRolling)
+                DoRoll();
             if (m_jumpBufferTimer > 0f && !m_isJumping && (m_3dBalancer.Grounded || m_coyoteTimer > 0f))
             {
-                DoJump(1);
+                // DoJump(1);
 
                 if (m_jumpReleasedDuringBuffer)
                 {
@@ -237,8 +241,8 @@ namespace Samples.CharacterController3D.Scripts
             {
                 m_isRolling = true;
             }
-            m_rollTime = m_rollCooldown;
-            //HorizontalVelocity 
+            //  m_rollTime = m_rollCooldown;
+
         }
         // Set velocity and animations for jump
         private void DoJump(int numberOfJumpsUsed)
@@ -354,7 +358,11 @@ namespace Samples.CharacterController3D.Scripts
         }
 
         #endregion
-
+        private void Roll()
+        {
+            if (m_rollTime > 0)
+                speedFactor = 2f;
+        }
         //Timers
         //============================================================================================================//
 
@@ -371,7 +379,7 @@ namespace Samples.CharacterController3D.Scripts
             {
                 m_coyoteTimer = characterMovementData.JumpCoyoteTime;
             }
-            m_rollCooldown -= Time.deltaTime;
+            m_rollTime -= Time.deltaTime;
         }
 
         #endregion
