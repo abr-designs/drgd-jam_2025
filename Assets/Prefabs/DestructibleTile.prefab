@@ -105,15 +105,15 @@ MonoBehaviour:
     - itemType: {fileID: 0}
       quantity: 0
       weight: 5
-      dropRate: 0.625
+      dropRate: 0.5
     - itemType: {fileID: 11400000, guid: 89cebaea36971774eaff40af3ee50b48, type: 2}
       quantity: 1
-      weight: 2
-      dropRate: 0.25
+      weight: 4
+      dropRate: 0.4
     - itemType: {fileID: 11400000, guid: 0d98f7c3eb0787241bd670725d9da027, type: 2}
       quantity: 1
       weight: 1
-      dropRate: 0.125
+      dropRate: 0.1
   spawnHealth: 1
   onDestroyVFX: 1
 --- !u!65 &6461007160854961606

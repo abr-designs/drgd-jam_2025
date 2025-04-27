@@ -135,7 +135,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7777109018335714303, guid: d880fbacf2e96044abf72ff550afb8f3, type: 3}
       propertyPath: sfxDatas.Array.data[5].type
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7777109018335714303, guid: d880fbacf2e96044abf72ff550afb8f3, type: 3}
       propertyPath: sfxDatas.Array.data[0].volume

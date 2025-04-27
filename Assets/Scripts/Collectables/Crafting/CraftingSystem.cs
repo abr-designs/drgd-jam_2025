@@ -23,7 +23,7 @@ public class CraftingSystem : MonoBehaviour
             return false;
 
         if (!CheckInventoryQuantityForRecipe(recipe)) {
-            Debug.LogWarning($"You do not have the required items to craft {recipe.recipeName}");
+            Debug.LogWarning($"You do not have the required items to craft {recipe.name}");
             return false;
         }
 
@@ -32,6 +32,10 @@ public class CraftingSystem : MonoBehaviour
 
         // add new item to inventory
         AddCraftingRecipeOutput(recipe);
+
+        SFX.CLICK_UI_BUTTON.PlaySound();
+
+        Debug.Log($"Crafted {recipe.name}");
 
         return true;
 
@@ -75,12 +79,14 @@ public class CraftingSystem : MonoBehaviour
     [SerializeField] private CraftingRecipeSO debugCraftingRecipe;
 
     [Button]
-    private void CraftGold()
+    private void CraftDebugRecipe()
     {
         if (requireApplicationPlaying && Application.isPlaying == false)
+        {
+            Debug.LogError("Application must be playing");
             return;
+        }
 
-        Debug.Log("Craft Debug Recipe");
         TryCraftingRecipe(debugCraftingRecipe);
     }
 
