@@ -114,8 +114,10 @@ public class GameCanvasController : HiddenSingleton<GameCanvasController>
             var targetSprite = currentHealth >= i ? hasHealthSprite : noHealthSprite;
             
             //If there was a change we should animate the element
-            if(healthStack[i].sprite != targetSprite)
+            if (healthStack[i].sprite != targetSprite)
+            {
                 healthStackAnimators[i]?.Play();
+            }
             
             healthStack[i].sprite = targetSprite;
         }

@@ -203,6 +203,9 @@ public class GameController : MonoBehaviour
 
             yield return null;
         }
+        
+        //Stop the drop rate for explosives
+        DynamiteManager.StopSpawning();
 
         PlayerHealth.OnPlayerDied -= OnPlayerDied;
         DayController.OnDayFinished -= OnDayFinished;
