@@ -69,7 +69,7 @@ public class GameController : MonoBehaviour
         ShowCanvas(GAME_STATE.MAIN_MENU);
         
         GameInputDelegator.SetInputLock(true);
-        m_dynamiteManager.enabled = false;
+        DynamiteManager.StopSpawning();
 
         var coroutines = new []
         {
@@ -151,7 +151,7 @@ public class GameController : MonoBehaviour
             GameInputDelegator.SetInputLock(false);
             
             //Start the drop rate for explosives
-            m_dynamiteManager.enabled = true;
+            DynamiteManager.StartSpawning();
 
             //Wait for the player death announcement
             yield return StartCoroutine(WaitForDeathCoroutine(
@@ -163,7 +163,7 @@ public class GameController : MonoBehaviour
                     GameInputDelegator.SetInputLock(true);
             
                     //Stop the drop rate for explosives
-                    m_dynamiteManager.enabled = false;
+                    DynamiteManager.StopSpawning();
                 }));
             
             //Display the store

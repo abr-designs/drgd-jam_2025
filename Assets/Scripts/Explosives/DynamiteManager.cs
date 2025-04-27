@@ -63,13 +63,13 @@ public class DynamiteManager : HiddenSingleton<DynamiteManager>
 
     public static void StartSpawning()
     {
-        DynamiteManager.Instance._isSpawning = true;
+        Instance._isSpawning = true;
     }
 
     public static void StopSpawning()
     {
         // TODO -- maybe cleanup any active dynamite?
-        DynamiteManager.Instance._isSpawning = false;
+        Instance._isSpawning = false;
     }
 
     private void SpawnNew()
