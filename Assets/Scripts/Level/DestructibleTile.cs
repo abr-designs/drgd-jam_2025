@@ -67,8 +67,7 @@ public class DestructibleTile : MonoBehaviour, IHaveHealth
 
     private void SpawnCollectable()
     {
-        Debug.Log("Spawn Collectable");
-        CollectableController.CreateCollectable(transform.position, 1);
+        CollectableController.TryCreateCollectable(transform.position, 1);
     }
 
     private void RandomizeTileRotation()

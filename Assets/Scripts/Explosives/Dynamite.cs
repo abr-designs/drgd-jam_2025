@@ -1,4 +1,5 @@
 using Audio;
+using Interfaces;
 using UnityEngine;
 using Utilities.Debugging;
 
@@ -7,7 +8,6 @@ public class Dynamite : MonoBehaviour
 {
     [SerializeField] private float ExplodeRadius = 2f;
     [SerializeField] private int Damage = 1;
-
 
     private GameObject _indicator;
     private Vector3 _target;
@@ -21,7 +21,7 @@ public class Dynamite : MonoBehaviour
 
     private LayerMask _explodeMask;
 
-    private Collider[] explosionHitColliders = new Collider[10];
+    private Collider[] explosionHitColliders = new Collider[30];
 
     //Unity Functions
     //============================================================================================================//
@@ -82,20 +82,16 @@ public class Dynamite : MonoBehaviour
         // Get affected tiles
         int hitCount = Physics.OverlapSphereNonAlloc(_target, ExplodeRadius, explosionHitColliders, _explodeMask);
 
-        var cutOffY = _target.y - ((LevelController.TileSize / 2f) + 0.05f);
+        float halfTile = LevelController.TileSize / 2f;
+        var cutOffY = _target.y - (halfTile + 0.01f);
         Draw.Circle(_target,Vector3.up, Color.green, ExplodeRadius);
 
         for (int i = 0; i < hitCount; i++)
         {
-            var tile = explosionHitColliders[i].GetComponent<DestructibleTile>();
-            if (tile != null && tile.transform.position.y >= cutOffY)
-            {
-                Draw.Circle(tile.transform.position, Vector3.up,  Color.pink, LevelController.TileSize);
-                // Debug.Log($"Tile damage {Damage}");
-                // Debug.Break();
-                tile.ApplyDamage(Damage);
+            var healthObj = explosionHitColliders[i].GetComponent<IHaveHealth>();
+            if (healthObj != null) {
+                healthObj.ApplyDamage(Damage);            
             }
-
         }
 
     }
