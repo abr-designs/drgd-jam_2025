@@ -1,23 +1,43 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Controllers;
 using GameInput;
 using UI;
 using UnityEngine;
 using UnityEngine.Assertions;
+using Utilities.Animations;
+using Utilities.WaitForAnimations;
+using Utilities.WaitForAnimations.Base;
 
+[RequireComponent(typeof(DayController))]
 public class GameController : MonoBehaviour
 {
+    private enum FINISH_TYPE
+    {
+        NONE = 0,
+        DEATH,
+        DAY_END,
+    }
+    
     [SerializeField]
     private GameObject mainMenuGameObject;
+
+    [SerializeField, Min(0f), Header("Intro Cinematic")]
+    private float introAnimationTime = 2f;
+    [SerializeField]
+    private WaitForAnimationBase introCinematicAnimator;
+    
+    [SerializeField, Min(0f), Header("Game Day Start Cinematic")]
+    private float dayStartAnimationTime = 2f;
+    [SerializeField]
+    private WaitForAnimationBase dayStartCinematicAnimator;
     
     //============================================================================================================//
     private void OnEnable()
     {
         
     }
-
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
     {
@@ -26,10 +46,10 @@ public class GameController : MonoBehaviour
         
         GameInputDelegator.SetInputLock(true);
 
-        var coroutines = new IEnumerator[]
+        var coroutines = new []
         {
             MainMenuCoroutine(),
-            GameStartCoroutine(),
+            GameStartingCoroutine(),
             GameLoopCoroutine()
         };
 
@@ -38,7 +58,6 @@ public class GameController : MonoBehaviour
 
     private void OnDisable()
     {
-        MainMenuUI.OnGameStarted -= OnGameStarted;
     }
 
     //Coroutines
@@ -73,44 +92,65 @@ public class GameController : MonoBehaviour
         MainMenuUI.OnGameStarted -= OnGameStarted;
     }
 
-    private IEnumerator GameStartCoroutine()
+    private IEnumerator GameStartingCoroutine()
     {
-        //TODO Do intro animation for game start
-        //TODO Start GameLoop Coroutine
-        //throw new NotImplementedException();
-
-        yield return new WaitForSeconds(2f);
+        if (introCinematicAnimator)
+            yield return introCinematicAnimator.DoAnimation(introAnimationTime, ANIM_DIR.START_TO_END);
+        else
+            yield return new WaitForSeconds(introAnimationTime);
     }
 
     private IEnumerator GameLoopCoroutine()
     {
-        GameInputDelegator.SetInputLock(false);
-        var playerDied = false;
-        var storeFinished = false;
-
-        void OnPlayerDied() => playerDied = true;
-        void OnStoreClosed() => storeFinished = true;
-
+        
         //------------------------------------------------//
 
         while (true)
         {
-            //TODO Start a Game Day
-            //TODO Start the drop rate for the explosives
-            //TODO Wait for the player death announcement
-            //TODO Display the store
-            //TODO Wait for the store to finish
+            //Start a Game Day
+            if (dayStartCinematicAnimator)
+                yield return dayStartCinematicAnimator.DoAnimation(dayStartAnimationTime, ANIM_DIR.START_TO_END);
+            else
+                yield return new WaitForSeconds(dayStartAnimationTime);
             
-            yield return null;
+            //Start day timer
+            DayController.StartGameDay();
+            GameInputDelegator.SetInputLock(false);
+            
+            //TODO Start the drop rate for the explosives
+            
+            
+            //Wait for the player death announcement
+            yield return StartCoroutine(WaitForDeathCoroutine(
+                type =>
+                {
+                    //TODO Maybe do something specific depending on how the day ended
+                }));
+            
+            //TODO Display the store
+            //Wait for the store to finish
+            yield return StartCoroutine(WaitForStoreCloseCoroutine());
         }
     }
 
-    private IEnumerator WaitForDeathCoroutine()
+
+    private IEnumerator WaitForDeathCoroutine(Action<FINISH_TYPE> onDayCompleted)
     {
         var playerDied = false;
         void OnPlayerDied() => playerDied = true;
+        
+        var dayFinished = false;
+        void OnDayFinished() => dayFinished = true;
+        
+        PlayerHealth.OnPlayerDied += OnPlayerDied;
+        DayController.OnDayFinished += OnDayFinished;
 
-        yield return new WaitUntil(() => playerDied);
+        yield return new WaitUntil(() => playerDied || dayFinished);
+        
+        PlayerHealth.OnPlayerDied -= OnPlayerDied;
+        DayController.OnDayFinished -= OnDayFinished;
+        
+        onDayCompleted?.Invoke(playerDied ? FINISH_TYPE.DEATH : FINISH_TYPE.DAY_END);
     }
 
     private IEnumerator WaitForStoreCloseCoroutine()
@@ -118,17 +158,15 @@ public class GameController : MonoBehaviour
         var storeFinished = false;
         void OnStoreClosed() => storeFinished = true;
         
+        UpgradeStore.OnStoreClosed += OnStoreClosed;
         yield return new WaitUntil(() => storeFinished);
-    }
-    
-    
-    //Callbacks
-    //============================================================================================================//
-    
-    private void OnGameStarted()
-    {
         
+        UpgradeStore.OnStoreClosed -= OnStoreClosed;
     }
-
     
+}
+
+public class PlayerHealth
+{
+    public static event Action OnPlayerDied;
 }
