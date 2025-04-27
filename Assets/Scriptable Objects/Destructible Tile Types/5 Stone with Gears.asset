@@ -10,25 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f81fec1480002bf439ab4776b3b745a5, type: 3}
-  m_Name: Dirt
+  m_Name: 5 Stone with Gears
   m_EditorClassIdentifier: 
-  name: Dirt
-  mesh: {fileID: 6202518890732439607, guid: 326695dc8ca50994e954685c38953bcc, type: 3}
+  name: Stone with Gears
+  mesh: {fileID: -4614289458419098355, guid: cd4de52d62b1dfd4d854f9c100782fca, type: 3}
   lootTable:
     lootItemList:
     - itemType: {fileID: 0}
       quantity: 0
-      weight: 44
-      dropRate: 0.88
-    - itemType: {fileID: 11400000, guid: 0d98f7c3eb0787241bd670725d9da027, type: 2}
-      quantity: 1
-      weight: 3
-      dropRate: 0.06
+      weight: 4
+      dropRate: 0.8
     - itemType: {fileID: 11400000, guid: 871d15ccf8c978b499e826b24abec332, type: 2}
       quantity: 1
-      weight: 2
-      dropRate: 0.04
-    - itemType: {fileID: 11400000, guid: 9422f247f8646b54fb13072b5c27e29f, type: 2}
-      quantity: 1
       weight: 1
-      dropRate: 0.02
+      dropRate: 0.2
