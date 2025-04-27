@@ -2,27 +2,29 @@ using System;
 using GGJ.Collectables;
 using Interfaces;
 using NaughtyAttributes;
-using Unity.Profiling;
 using UnityEngine;
-using Utilities.Debugging;
 using VisualFX;
 
-public class DestructibleTile : MonoBehaviour, IHaveHealth
+public class DestructibleTile : MonoBehaviour, IHaveHealth, IHaveLootTable
 {
     public static event Action<int> OnYLevelChanged;
     
     public int Health { get; private set; }
     public int StartingHealth => spawnHealth;
-    
+
+    public LootTable LootTable => lootTable;
+    [SerializeField]
+    private LootTable lootTable;
+
     [SerializeField] 
     private int spawnHealth = 1;
 
     [SerializeField]
     private VFX onDestroyVFX;
 
-//Unity Functions
+    //Unity Functions
     //============================================================================================================//
-    
+
     private void Awake()
     {
         Health = spawnHealth;
@@ -67,7 +69,8 @@ public class DestructibleTile : MonoBehaviour, IHaveHealth
 
     private void SpawnCollectable()
     {
-        CollectableController.TryCreateCollectable(transform.position, 1);
+        //CollectableController.TryCreateCollectable(lootTable, transform.position, 1);
+        CollectableController.TryCreateCollectable(lootTable, transform.position);
     }
 
     private void RandomizeTileRotation()
@@ -76,6 +79,23 @@ public class DestructibleTile : MonoBehaviour, IHaveHealth
         float rotation = randomRotationFactor * 90f;
         //transform.Rotate(Vector3.up * rotation);
         transform.rotation = Quaternion.Euler(0f, rotation, 0f);
+    }
+
+
+    public void CalculateDropRates()
+    {
+        // identify all weight in the loot table
+        int totalWeight = 0;
+        foreach (LootItem lootItem in lootTable.lootItemList)
+        {
+            totalWeight += lootItem.weight;
+        }
+        if (totalWeight < 1) return;
+
+        foreach (LootItem lootItem in lootTable.lootItemList)
+        {
+            lootItem.dropRate = (float)lootItem.weight / (float)totalWeight;
+        }
     }
 
     //Editor Functions
@@ -114,6 +134,12 @@ public class DestructibleTile : MonoBehaviour, IHaveHealth
 
         }
     }*/
+
+    [Button]
+    private void EvaluateLootTable()
+    {
+        CalculateDropRates();
+    }
 
 #endif
 }
