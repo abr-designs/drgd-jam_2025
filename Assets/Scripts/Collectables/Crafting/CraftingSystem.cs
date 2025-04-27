@@ -65,7 +65,7 @@ public class CraftingSystem : MonoBehaviour
         return true;
     }
 
-    private bool CheckInventoryQuantityForRecipe(CraftingRecipeSO recipe)
+    public bool CheckInventoryQuantityForRecipe(CraftingRecipeSO recipe)
     {
 
         bool haveQuantity = true;

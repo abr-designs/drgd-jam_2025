@@ -51,24 +51,28 @@ public class UpgradeManager : HiddenSingleton<UpgradeManager>
             upgradeLevels.Add(value, 0);
         }
 
-        // call apply the upgrade
+        /*// call apply the upgrade
         foreach (KeyValuePair<UpgradeType, int> pair in upgradeLevels)
         {
             TryApplyUpgrade(pair.Key, pair.Value);
-        }
+        }*/
     }
 
-    public int GetUpgradeLevel(UpgradeType upgradetype)
+    public static int GetUpgradeLevel(UpgradeType upgradeType)
     {
-        return upgradeLevels[upgradetype];
+        return Instance.upgradeLevels[upgradeType];
     }
 
-    public UpgradeRecipeSO GetUpgradeRecipe(UpgradeType upgradeType, int level)
+    public static UpgradeRecipeSO GetUpgradeRecipe(UpgradeType upgradeType, int level)
+    {
+        return Instance?.TryGetUpgradeRecipe(upgradeType, level);
+    }
+    
+    public UpgradeRecipeSO TryGetUpgradeRecipe(UpgradeType upgradeType, int level)
     {
         foreach(UpgradeRecipeSO upgradeRecipeSO in upgradeRecipes)
         {
-            if(upgradeRecipeSO.outputUpgradeType == upgradeType
-                && upgradeRecipeSO.level == level)
+            if(upgradeRecipeSO.outputUpgradeType == upgradeType && upgradeRecipeSO.level == level)
             {
                 return upgradeRecipeSO;
             }
@@ -76,6 +80,7 @@ public class UpgradeManager : HiddenSingleton<UpgradeManager>
 
         return null;
     }
+
 
     public static void TryApplyUpgrade(UpgradeType upgradeType, int level)
     {
@@ -85,7 +90,7 @@ public class UpgradeManager : HiddenSingleton<UpgradeManager>
     private void ApplyUpgrade(UpgradeType upgradeType, int level)
     {
         UpgradeData targetUpgrade = FindUpgradeData(upgradeType);
-        float multiplier = targetUpgrade.levelValues[level];
+        float multiplier = targetUpgrade.levelValues[level - 1];
         switch (upgradeType)
         {
             case UpgradeType.ShieldUpgrade:
@@ -98,6 +103,8 @@ public class UpgradeManager : HiddenSingleton<UpgradeManager>
                 inventorySystem.ApplyUpgrade(multiplier);
                 break;
         }
+
+        upgradeLevels[upgradeType] = level;
     }
     private UpgradeData FindUpgradeData(UpgradeType upgradeType)
     {

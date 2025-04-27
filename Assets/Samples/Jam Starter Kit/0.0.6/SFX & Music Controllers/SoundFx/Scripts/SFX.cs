@@ -10,5 +10,6 @@
         CLICK_UI_BUTTON = 5,
         PLAYER_HIT = 6,
         PLAYER_DIED = 7,
+        BUTTON_PRESSED = 8,
     }
 }

@@ -6,6 +6,8 @@ using UnityEngine;
 public class UpgradeRecipeSO : ScriptableObject {
 
     public new string name;
+    [TextArea]
+    public string description;
     public List<ItemStack> inputItemStackList;
     public UpgradeType outputUpgradeType;
     public int level;
