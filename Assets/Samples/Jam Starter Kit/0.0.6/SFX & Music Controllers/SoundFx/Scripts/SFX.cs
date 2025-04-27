@@ -7,5 +7,6 @@
         EXPLOSION = 2,
         DROPING = 3,
         OBJECT_PICKUP = 4,
+        CLICK_UI_BUTTON = 5,
     }
 }

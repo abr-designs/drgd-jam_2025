@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2495197635525687844}
+  - component: {fileID: -418719941533212826}
   - component: {fileID: 4881529383321450506}
   - component: {fileID: 9020507540062617489}
-  - component: {fileID: -418719941533212826}
   - component: {fileID: 6461007160854961606}
   m_Layer: 0
   m_Name: DestructibleTile
@@ -35,6 +35,34 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-418719941533212826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7396593403012926009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 778875fa82c285b4c83d3d0ef8ab1987, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lootTable:
+    lootItemList:
+    - itemType: {fileID: 0}
+      quantity: 0
+      weight: 5
+      dropRate: 0.5
+    - itemType: {fileID: 11400000, guid: 89cebaea36971774eaff40af3ee50b48, type: 2}
+      quantity: 1
+      weight: 4
+      dropRate: 0.4
+    - itemType: {fileID: 11400000, guid: 0d98f7c3eb0787241bd670725d9da027, type: 2}
+      quantity: 1
+      weight: 1
+      dropRate: 0.1
+  spawnHealth: 1
+  onDestroyVFX: 1
 --- !u!33 &4881529383321450506
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -88,20 +116,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &-418719941533212826
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7396593403012926009}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 778875fa82c285b4c83d3d0ef8ab1987, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spawnHealth: 1
-  onDestroyVFX: 1
 --- !u!65 &6461007160854961606
 BoxCollider:
   m_ObjectHideFlags: 0
