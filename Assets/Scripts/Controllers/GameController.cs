@@ -1,14 +1,10 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using Controllers;
 using GameInput;
 using UI;
 using UnityEngine;
 using UnityEngine.Assertions;
-using Utilities;
-using Utilities.Animations;
-using Utilities.WaitForAnimations;
 using Utilities.WaitForAnimations.Base;
 
 [RequireComponent(typeof(DayController))]
@@ -29,12 +25,6 @@ public class GameController : MonoBehaviour
         STORE
     }
 
-    //[SerializeField, Obsolete]
-    //private DynamiteManager DynamiteManager;
-    
-    //[SerializeField]
-    //private GameObject mainMenuGameObject;
-
     [SerializeField, Min(0f), Header("Intro Cinematic")]
     private float introAnimationTime = 2f;
     [SerializeField]
@@ -46,11 +36,6 @@ public class GameController : MonoBehaviour
     private WaitForAnimationBase dayStartCinematicAnimator;
 
     private DynamiteManager m_dynamiteManager;
-    
-    //private MainMenuUI m_mainMenuUI;
-    //private GameCanvasController m_gameCanvasController;
-    //private UpgradeStoreController m_upgradeStoreController;
-
     private GameObject[] m_canvases;
     
     //============================================================================================================//
