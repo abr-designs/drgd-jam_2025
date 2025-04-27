@@ -232,9 +232,3 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 3042e9024d4fb8f488f33a593e029f4c, type: 3}
     volume: 1
     maxPlaying: 1
-  - name: CLICK_UI_BUTTON
-    type: 5
-    audioClips:
-    - {fileID: 8300000, guid: 3042e9024d4fb8f488f33a593e029f4c, type: 3}
-    volume: 0.1
-    maxPlaying: 1
