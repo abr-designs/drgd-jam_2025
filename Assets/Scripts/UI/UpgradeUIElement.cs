@@ -44,6 +44,8 @@ public class UpgradeUIElement : MonoBehaviour
 
     public void UpdateUIElement(UpgradeRecipeSO craftingRecipeSo)
     {
+        gameObject.SetActive(craftingRecipeSo != null);
+        
         titleText.text = craftingRecipeSo.name;
         descriptionText.text = craftingRecipeSo.description;
         

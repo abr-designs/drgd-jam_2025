@@ -9,7 +9,7 @@ namespace Interfaces
 
     public interface IHaveUpgrade
     {
-        float multiplier { get; }
+        float upgradeAdditiveCapacity { get; }
 
         void ApplyUpgrade(float newMultiplier);
     }

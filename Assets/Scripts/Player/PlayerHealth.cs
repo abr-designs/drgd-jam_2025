@@ -10,9 +10,9 @@ public class PlayerHealth : MonoBehaviour, IHaveHealth, IHaveUpgrade
     public static event Action<int, int> OnPlayerHealthChange;
 
     public int Health { get; private set; }
-    public int StartingHealth => spawnHealth + (int)multiplier;
+    public int StartingHealth => spawnHealth + (int)upgradeAdditiveCapacity;
 
-    public float multiplier { get; private set; }
+    public float upgradeAdditiveCapacity { get; private set; }
 
     [SerializeField]
     private int spawnHealth = 3;
@@ -51,6 +51,6 @@ public class PlayerHealth : MonoBehaviour, IHaveHealth, IHaveUpgrade
 
     public void ApplyUpgrade(float newMultiplier)
     {
-        multiplier = newMultiplier;
+        upgradeAdditiveCapacity = newMultiplier;
     }
 }
