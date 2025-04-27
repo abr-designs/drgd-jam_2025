@@ -161,9 +161,6 @@ public class GameController : MonoBehaviour
 
                     //Lock the player inputs
                     GameInputDelegator.SetInputLock(true);
-            
-                    //Stop the drop rate for explosives
-                    DynamiteManager.StopSpawning();
                 }));
             
             //Display the store
@@ -185,8 +182,27 @@ public class GameController : MonoBehaviour
         PlayerHealth.OnPlayerDied += OnPlayerDied;
         DayController.OnDayFinished += OnDayFinished;
 
-        yield return new WaitUntil(() => playerDied || dayFinished);
-        
+        while (true)
+        {
+            if (playerDied)
+                break;
+
+            //Wait for all of the dynamite to finish before wrapping
+            if (dayFinished && Dynamite.ActiveCount == 0)
+            {
+                yield return new WaitForSeconds(0.5f);
+                break;
+            }
+
+            if (dayFinished)
+            {
+                //Stop the drop rate for explosives
+                DynamiteManager.StopSpawning();
+            }
+
+            yield return null;
+        }
+
         PlayerHealth.OnPlayerDied -= OnPlayerDied;
         DayController.OnDayFinished -= OnDayFinished;
         

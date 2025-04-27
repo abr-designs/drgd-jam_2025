@@ -1,7 +1,9 @@
+using System;
 using Audio;
 using Interfaces;
 using UnityEngine;
 using Utilities.Debugging;
+using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(Rigidbody))]
 public class Dynamite : MonoBehaviour
@@ -11,6 +13,8 @@ public class Dynamite : MonoBehaviour
         Thrown = 0,
         Dropped
     }
+
+    public static int ActiveCount { get; private set; }
 
     [SerializeField] private float ExplodeRadius = 2f;
     [SerializeField] private int Damage = 1;
@@ -33,13 +37,13 @@ public class Dynamite : MonoBehaviour
     //Unity Functions
     //============================================================================================================//
 
-    private void FixedUpdate()
+    private void OnEnable()
     {
-        if (!_rigidbody) return;
-
-        Vector3 grav = Physics.gravity * _gravityMult;
-        _rigidbody.AddForce(grav, ForceMode.Acceleration);
+        ActiveCount++;
+        PlayerHealth.OnPlayerDied += OnPlayerDied;
     }
+
+
 
     private void Update()
     {
@@ -56,6 +60,29 @@ public class Dynamite : MonoBehaviour
             Destroy(_indicator.gameObject);
         }
 
+    }
+    
+    private void FixedUpdate()
+    {
+        if (!_rigidbody) return;
+
+        Vector3 grav = Physics.gravity * _gravityMult;
+        _rigidbody.AddForce(grav, ForceMode.Acceleration);
+    }
+    
+    private void OnDisable()
+    {
+        ActiveCount--;
+        PlayerHealth.OnPlayerDied -= OnPlayerDied;
+    }
+
+    //Callbacks
+    //============================================================================================================//
+    
+    private void OnPlayerDied()
+    {
+        Destroy(gameObject);
+        Destroy(_indicator.gameObject);
     }
 
     //============================================================================================================//
