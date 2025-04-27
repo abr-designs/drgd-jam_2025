@@ -54,9 +54,12 @@ MonoBehaviour:
   SpawnRate: 0.5
   GravityMultiplier: 1
   ThrowTargetTime: 2
+  ExplodeLayerMask:
+    serializedVersion: 2
+    m_Bits: 769
   LevelLayerMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 257
   dynamitePrefab: {fileID: 3910126737517379331, guid: e371d5ee4b56c174cbe0fe2031533cc3, type: 3}
   indicatorPrefab: {fileID: 6557073079331992831, guid: bb0233c1debd26949a3bb628efb4cbbb, type: 3}
   dynamiteThrowers:
