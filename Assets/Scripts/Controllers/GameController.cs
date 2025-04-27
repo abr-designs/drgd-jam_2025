@@ -165,8 +165,3 @@ public class GameController : MonoBehaviour
     }
     
 }
-
-public class PlayerHealth
-{
-    public static event Action OnPlayerDied;
-}

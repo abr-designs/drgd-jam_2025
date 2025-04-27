@@ -53,6 +53,8 @@ MonoBehaviour:
   mainMenuGameObject: {fileID: 0}
   introAnimationTime: 2
   introCinematicAnimator: {fileID: 0}
+  dayStartAnimationTime: 1
+  dayStartCinematicAnimator: {fileID: 0}
 --- !u!114 &6193558176145682402
 MonoBehaviour:
   m_ObjectHideFlags: 0
