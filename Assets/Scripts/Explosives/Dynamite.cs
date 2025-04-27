@@ -16,12 +16,14 @@ public class Dynamite : MonoBehaviour
     [SerializeField] private int Damage = 1;
 
     private GameObject _indicator;
+    private Material _indicatorMat;
     private Vector3 _target;
     private float _gravityMult;
 
     private Rigidbody _rigidbody;
 
     private LayerMask _explodeMask;
+    private LayerMask _levelMask;
 
     private Collider[] explosionHitColliders = new Collider[30];
 
@@ -30,17 +32,6 @@ public class Dynamite : MonoBehaviour
 
     //Unity Functions
     //============================================================================================================//
-
-    private void OnEnable()
-    {
-        // Listen for block change events (to change indicator)
-        DestructibleTile.OnYLevelChanged += OnBlockChange;
-    }
-    private void OnDisable()
-    {
-        // Listen for block change events (to change indicator)
-        DestructibleTile.OnYLevelChanged -= OnBlockChange;
-    }
 
     private void FixedUpdate()
     {
@@ -53,6 +44,9 @@ public class Dynamite : MonoBehaviour
     private void Update()
     {
         if (_indicator == null) return;
+
+        // Check if the indicator needs to move
+        CheckIndicator();
 
         // Check if this has hit the ground
         if (_target.y >= transform.position.y)
@@ -89,15 +83,17 @@ public class Dynamite : MonoBehaviour
         _rigidbody.linearVelocity = result;
     }
 
-    public void Spawn(Vector3 targetPoint, float gravityMult, GameObject indicator, LayerMask explodeMask, float timeToTarget = 3f,
+    public void Spawn(Vector3 targetPoint, float gravityMult, GameObject indicator, LayerMask explodeMask, LayerMask levelMask, float timeToTarget = 3f,
         DYNAMITE_BEHAVIOUR behaviour = DYNAMITE_BEHAVIOUR.Dropped)
     {
         SFXManager.Instance.PlaySound(SFX.DROPING, 0.25f); // hardcoded quieter volume
 
         _indicator = indicator;
+        _indicatorMat = indicator.GetComponent<MeshRenderer>().material;
         _target = targetPoint;
         _gravityMult = gravityMult;
         _explodeMask = explodeMask;
+        _levelMask = levelMask;
 
         _rigidbody = GetComponent<Rigidbody>();
         _rigidbody.useGravity = false;
@@ -112,7 +108,7 @@ public class Dynamite : MonoBehaviour
         _rigidbody.AddTorque(randomTorque, ForceMode.Impulse);
 
         _indicator.transform.position = _target;
-        _indicator.transform.localScale = new Vector3(ExplodeRadius, 0.1f, ExplodeRadius);
+        _indicator.transform.localScale = new Vector3(ExplodeRadius, 1f, ExplodeRadius);
 
         // If it was thrown we need to calculate an initial launch force
         if (behaviour == DYNAMITE_BEHAVIOUR.Thrown) Launch(timeToTarget);
@@ -141,9 +137,28 @@ public class Dynamite : MonoBehaviour
         }
     }
 
-    private void OnBlockChange(int newY) {
 
-        if(Time.frameCount == _lastFrameCheck) return;
+    private RaycastHit[] _raycastHits = new RaycastHit[5];
+    private void CheckIndicator() {
+
+        if(!_indicator) return;
+
+        // Color the material based on the distance left
+        float dist = Mathf.Abs(transform.position.y - _indicator.transform.position.y);
+        _indicatorMat.SetColor("_BaseColor",Color.Lerp(Color.red, Color.white, dist/10.0f));
+
+        if(Time.frameCount - _lastFrameCheck <= 10) return;
+
+        // Do a new raycast and check  
+        Vector3 startPos = _indicator.transform.position + Vector3.up * LevelController.TileSize * 5f;      
+        Ray ray = new Ray(startPos, Vector3.down);
+        int hitCount = Physics.RaycastNonAlloc(ray, _raycastHits, LevelController.TileSize * 10f, _levelMask);
+
+        Debug.DrawRay(startPos, Vector3.down * LevelController.TileSize * 10f, Color.purple, 1f);
+        Debug.Assert(hitCount > 0, "Indicator was unable to find a tile beneath!");
+
+        Vector3 newPos = _raycastHits[0].point;
+        _indicator.transform.position = newPos;
 
         _lastFrameCheck = Time.frameCount;
 

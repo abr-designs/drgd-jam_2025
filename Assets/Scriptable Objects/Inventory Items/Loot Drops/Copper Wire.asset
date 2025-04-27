@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f189c616c94c65846bbbcb507d918c67, type: 3}
-  m_Name: Spring
+  m_Name: Copper Wire
   m_EditorClassIdentifier: 
-  name: Spring
-  maxHoldCount: 999
+  name: CopperWire
+  maxHoldCount: 5
   inventoryIconSprite: {fileID: 0}
-  collectablePrefab: {fileID: 0}
+  collectablePrefab: {fileID: 4950491224260487683, guid: 7fa9bc04f9fe527498b2184a986d57a1, type: 3}

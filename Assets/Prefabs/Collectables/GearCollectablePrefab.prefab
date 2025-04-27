@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8961553476093911887}
   - component: {fileID: 7687521655831638182}
   m_Layer: 6
-  m_Name: GoldCollectablePrefab
+  m_Name: GearCollectablePrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,8 +28,8 @@ Transform:
   m_GameObject: {fileID: 5762493328588042425}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_LocalPosition: {x: 0, y: 0.25, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -46,9 +46,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cf7548d6d9dddc4baed4d856962b25f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _type: 2
+  _type: 4
   itemStack:
-    itemSo: {fileID: 11400000, guid: 4cec0094ef0300b4a856f8ffc737a60a, type: 2}
+    itemSo: {fileID: 11400000, guid: 871d15ccf8c978b499e826b24abec332, type: 2}
     quantity: 1
   maxDistanceFromGround: 1
   raycastDistance: 100
@@ -63,7 +63,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5762493328588042425}
-  m_Mesh: {fileID: -4614289458419098355, guid: cd4de52d62b1dfd4d854f9c100782fca, type: 3}
+  m_Mesh: {fileID: 8518589719186111760, guid: abe22a443249f9d408750fb9b5a78736, type: 3}
 --- !u!23 &7687521655831638182
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -87,7 +87,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d76248ed1e429b54a941cf786ad3cf81, type: 2}
+  - {fileID: 2100000, guid: f12d03f32866e8a44a35dbc24c65cf88, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
