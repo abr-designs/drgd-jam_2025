@@ -39,7 +39,7 @@ public class ButtonPressReactor : MonoBehaviour
 
     private void OnButtonPressed()
     {
-        m_transformAnimator.Play();
+        m_transformAnimator?.Play();
         soundWhenPressed.PlaySound();
     }
 }

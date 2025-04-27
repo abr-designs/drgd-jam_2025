@@ -34,6 +34,8 @@ public class InventorySystem : MonoBehaviour, IHaveUpgrade
     public float upgradeAdditiveCapacity { get; private set; }
 
     private List<ItemStack> items = new List<ItemStack>();
+    public List<ItemStack> GetItems {  get { return items; } }
+
     [SerializeField] private int maxDistinctItems = 3;
 
     int currentSelectedIndex = 0;
@@ -221,6 +223,6 @@ public class InventorySystem : MonoBehaviour, IHaveUpgrade
         upgradeAdditiveCapacity = newMultiplier;
         maxDistinctItems = 3 + (int)upgradeAdditiveCapacity; // starting value is 3
 
-        Debug.Log($"Increased inventory capacity bonus quantity to {upgradeAdditiveCapacity}");
+        //Debug.Log($"Increased inventory capacity bonus quantity to {upgradeAdditiveCapacity}");
     }
 }

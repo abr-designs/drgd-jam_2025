@@ -60,7 +60,7 @@ public class CraftingSystem : MonoBehaviour
 
         SFX.CLICK_UI_BUTTON.PlaySound();
 
-        Debug.Log($"Consumed resources for upgrade {recipe.name}");
+        //Debug.Log($"Consumed resources for upgrade {recipe.name}");
 
         return true;
     }
