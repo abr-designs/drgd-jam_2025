@@ -3,10 +3,11 @@ using Audio;
 using Interfaces;
 using UnityEngine;
 using Utilities.Debugging;
+using Utilities.Recycling;
 using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(Rigidbody))]
-public class Dynamite : MonoBehaviour
+public class Dynamite : MonoBehaviour, IRecyclable
 {
     public enum DYNAMITE_BEHAVIOUR
     {
@@ -14,11 +15,18 @@ public class Dynamite : MonoBehaviour
         Dropped
     }
 
+    public enum INDICATORS
+    {
+        TARGET = 0
+    }
+
     public static int ActiveCount { get; private set; }
 
     [SerializeField] private float ExplodeRadius = 2f;
     [SerializeField] private int Damage = 1;
 
+    [SerializeField]
+    private GameObject indicatorPrefab;
     private GameObject _indicator;
     private Material _indicatorMat;
     private Vector3 _target;
@@ -33,6 +41,9 @@ public class Dynamite : MonoBehaviour
 
     // Used to mark which frame we have already done an indicator check on
     private int _lastFrameCheck = 0;
+
+    // Recycling
+    public bool IsRecycled { get; set; }
 
     //Unity Functions
     //============================================================================================================//
@@ -56,8 +67,8 @@ public class Dynamite : MonoBehaviour
         if (_target.y >= transform.position.y)
         {
             Explode();
-            Destroy(gameObject);
-            Destroy(_indicator.gameObject);
+            Recycler.RecycleEnum(INDICATORS.TARGET, _indicator);
+            Recycler.Recycle(this);
         }
 
     }
@@ -81,8 +92,8 @@ public class Dynamite : MonoBehaviour
     
     private void OnPlayerDied()
     {
-        Destroy(gameObject);
-        Destroy(_indicator.gameObject);
+        Recycler.RecycleEnum(INDICATORS.TARGET, _indicator);
+        Recycler.Recycle(this);
     }
 
     //============================================================================================================//
@@ -110,14 +121,18 @@ public class Dynamite : MonoBehaviour
         _rigidbody.linearVelocity = result;
     }
 
-    public void Spawn(Vector3 targetPoint, float gravityMult, GameObject indicator, LayerMask explodeMask, LayerMask levelMask, float timeToTarget = 3f,
+    public void Init(Vector3 targetPoint, float gravityMult, LayerMask explodeMask, LayerMask levelMask, float timeToTarget = 3f,
         DYNAMITE_BEHAVIOUR behaviour = DYNAMITE_BEHAVIOUR.Dropped)
     {
         SFXManager.Instance.PlaySound(SFX.DROPING, 0.25f); // hardcoded quieter volume
 
-        _indicator = indicator;
-        _indicatorMat = indicator.GetComponent<MeshRenderer>().material;
         _target = targetPoint;
+        if (Recycler.TryGrabEnum(INDICATORS.TARGET, null, Vector3.zero, Quaternion.identity, out _indicator) == false)
+            _indicator = Instantiate(indicatorPrefab, transform.parent, true);
+
+        _indicator.transform.position = _target;
+        _indicatorMat = _indicator.GetComponent<MeshRenderer>().material;
+
         _gravityMult = gravityMult;
         _explodeMask = explodeMask;
         _levelMask = levelMask;
@@ -190,6 +205,13 @@ public class Dynamite : MonoBehaviour
         _lastFrameCheck = Time.frameCount;
 
     }
+
+
+    public void OnRecycled() {
+        _rigidbody.linearVelocity = Vector3.zero;
+        _indicator = null;
+    }
+
     //============================================================================================================//
 
 }

@@ -48,6 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ExplodeRadius: 2
   Damage: 1
+  indicatorPrefab: {fileID: 6557073079331992831, guid: bb0233c1debd26949a3bb628efb4cbbb, type: 3}
 --- !u!54 &842256159890747534
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -339,3 +340,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ExplodeRadius: 2
   Damage: 1
+  indicatorPrefab: {fileID: 0}
