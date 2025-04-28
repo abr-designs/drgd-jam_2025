@@ -121,7 +121,7 @@ PrefabInstance:
       objectReference: {fileID: 24100000, guid: ce08768a569db8b429bc3e45071f1f19, type: 2}
     - target: {fileID: 5075773765866298905, guid: 64e020dcbf081c04aaa5df70cab3190b, type: 3}
       propertyPath: musicDatas.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5075773765866298905, guid: 64e020dcbf081c04aaa5df70cab3190b, type: 3}
       propertyPath: musicDatas.Array.data[1].name
@@ -132,6 +132,14 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5075773765866298905, guid: 64e020dcbf081c04aaa5df70cab3190b, type: 3}
+      propertyPath: musicDatas.Array.data[2].name
+      value: WIN
+      objectReference: {fileID: 0}
+    - target: {fileID: 5075773765866298905, guid: 64e020dcbf081c04aaa5df70cab3190b, type: 3}
+      propertyPath: musicDatas.Array.data[2].type
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5075773765866298905, guid: 64e020dcbf081c04aaa5df70cab3190b, type: 3}
       propertyPath: musicDatas.Array.data[0].audioClip
       value: 
       objectReference: {fileID: 8300000, guid: e4fd6a0ed6c6e154abf0513f9a94ea31, type: 3}
@@ -140,11 +148,19 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8300000, guid: 95e4e40efe557fb40814303c8356f6e8, type: 3}
     - target: {fileID: 5075773765866298905, guid: 64e020dcbf081c04aaa5df70cab3190b, type: 3}
+      propertyPath: musicDatas.Array.data[2].audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: e4fd6a0ed6c6e154abf0513f9a94ea31, type: 3}
+    - target: {fileID: 5075773765866298905, guid: 64e020dcbf081c04aaa5df70cab3190b, type: 3}
       propertyPath: musicDatas.Array.data[0].targetVolume
       value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 5075773765866298905, guid: 64e020dcbf081c04aaa5df70cab3190b, type: 3}
       propertyPath: musicDatas.Array.data[1].targetVolume
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5075773765866298905, guid: 64e020dcbf081c04aaa5df70cab3190b, type: 3}
+      propertyPath: musicDatas.Array.data[2].targetVolume
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7852912579961033763, guid: 64e020dcbf081c04aaa5df70cab3190b, type: 3}

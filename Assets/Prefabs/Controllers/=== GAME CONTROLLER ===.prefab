@@ -58,6 +58,12 @@ MonoBehaviour:
   introCinematicAnimator: {fileID: 198839030207408132}
   dayStartAnimationTime: 1
   dayStartCinematicAnimator: {fileID: 0}
+  startDebt: 100
+  debtInterestStart: 0
+  debtInterestIncrement: 1
+  debtInterestDays: 3
+  debtRepairCostStart: 1
+  debtRepairCostIncrease: 1
 --- !u!114 &6193558176145682402
 MonoBehaviour:
   m_ObjectHideFlags: 0

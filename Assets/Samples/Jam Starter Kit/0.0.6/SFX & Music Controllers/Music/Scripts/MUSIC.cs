@@ -5,6 +5,7 @@
         NONE,
         MENU,
         GAME,
-        LOSE
+        LOSE, 
+        WIN
     }
 }
