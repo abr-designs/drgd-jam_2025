@@ -229,7 +229,7 @@ namespace Samples.CharacterController3D.Scripts
             VerticalVelocity = characterMovementData.InitialJumpVelocity;
             m_numberOfJumpsUsed += numberOfJumpsUsed;
 
-            SFXManager.Instance.PlaySound(SFX.JUMP);
+            SFXManager.Instance.PlaySound(SFX.JUMP, 1f, true);
         }
 
         private void Jump()

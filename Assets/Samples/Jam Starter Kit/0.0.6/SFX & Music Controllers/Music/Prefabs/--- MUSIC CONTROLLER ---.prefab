@@ -56,4 +56,8 @@ MonoBehaviour:
     type: 2
     audioClip: {fileID: 8300000, guid: 95e4e40efe557fb40814303c8356f6e8, type: 3}
     targetVolume: 1
+  - name: WIN
+    type: 4
+    audioClip: {fileID: 8300000, guid: f5ce518eed95d7040931e9f4ed91024e, type: 3}
+    targetVolume: 1
   musicSourcePrefab: {fileID: 2744353851148896356, guid: b4fd897668d6ac841ad6e796534532c8, type: 3}
