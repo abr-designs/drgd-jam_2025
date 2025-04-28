@@ -92,7 +92,7 @@ namespace Audio
 
         //============================================================================================================//
 
-        internal void PlaySound(SFX sfx, float volume = 1f)
+        internal void PlaySound(SFX sfx, float volume = 1f, bool randomPitch = false)
         {
             var sfxData = GetSFXData(sfx);
 
@@ -108,6 +108,8 @@ namespace Audio
 
             Assert.IsNotNull(sfxData);
             Assert.IsNotNull(audioClip);
+
+            sfxAudioSource.pitch = randomPitch ? Random.Range(0.5f,1.5f) : 1f;
 
             sfxAudioSource.PlayOneShot(audioClip, volume);
             //FIXME This should just use a loop, and not a coroutine
