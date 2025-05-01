@@ -8,7 +8,7 @@ namespace Samples.CharacterController3D.Scripts
     public class CharacterController3D : MonoBehaviour
     {
         public bool IsGrounded => m_3dBalancer.Grounded;
-        
+
         [SerializeField]
         private CharacterMovement3DDataScriptableObject characterMovementData;
 
@@ -18,7 +18,7 @@ namespace Samples.CharacterController3D.Scripts
         private Vector3 groundVelocity = Vector3.zero;
         private float speedFactor = 1f;
         private float maxAccelerationForceFactor = 1f;
-        
+
         //Private Fields
         //------------------------------------------------//
 
@@ -36,7 +36,7 @@ namespace Samples.CharacterController3D.Scripts
         public float VerticalVelocity { get; private set; }
         private bool m_isJumpPressed;
         private bool m_lastFrameJumpPressed;
-        
+
         private bool m_isJumping;
         private bool m_isJumpAvailable;
         private bool m_isFalling;
@@ -47,7 +47,7 @@ namespace Samples.CharacterController3D.Scripts
         private bool m_isPastApexThreshold;
         private float m_apexPoint;
         private float m_timePastApexThreshold;
-        
+
         // jump buffer vars
         private float m_jumpBufferTimer;
         private bool m_jumpReleasedDuringBuffer;
@@ -75,7 +75,7 @@ namespace Samples.CharacterController3D.Scripts
         {
             CountTimers();
             JumpInputChecks();
-            
+
             m_adjustMovementDirection = GetCameraBasedMove(m_movementInput).normalized;
             m_3dBalancer?.FaceDirection(m_adjustMovementDirection);
         }
@@ -116,7 +116,7 @@ namespace Samples.CharacterController3D.Scripts
             var accel = acceleration * characterMovementData.accelerationFactorFromDot.Evaluate(velocityDot);
             var goalVelocity = inputGoal * (characterMovementData.maxSpeed * speedFactor);
 
-            m_goalVelocity = Vector3.MoveTowards(m_goalVelocity, 
+            m_goalVelocity = Vector3.MoveTowards(m_goalVelocity,
                 goalVelocity + groundVelocity,
                 accel * Time.fixedDeltaTime);
 
@@ -126,7 +126,7 @@ namespace Samples.CharacterController3D.Scripts
                                   maxAccelerationForceFactor;
 
             neededAcceleration = Vector3.ClampMagnitude(neededAcceleration, maxAcceleration);
-            
+
             m_rigidbody.AddForce(Vector3.Scale(neededAcceleration * m_rigidbody.mass, characterMovementData.forceScale));
         }
 
@@ -134,7 +134,7 @@ namespace Samples.CharacterController3D.Scripts
 
         //Jumping
         //============================================================================================================//
-        
+
         #region Jump
 
         // Process vertical velocity
@@ -143,7 +143,7 @@ namespace Samples.CharacterController3D.Scripts
             // Player pressed jump button this frame -- start the jump buffer
             bool jumpPressedThisFrame = !m_lastFrameJumpPressed && m_isJumpPressed;
             bool jumpReleasedThisFrame = m_lastFrameJumpPressed && !m_isJumpPressed;
-            
+
             // Jumping starts the buffer timer -- hitting ground within this timer will trigger a jump
             if (jumpPressedThisFrame)
             {
@@ -331,7 +331,7 @@ namespace Samples.CharacterController3D.Scripts
         }
 
         #endregion
-        
+
         //Timers
         //============================================================================================================//
 
@@ -351,20 +351,20 @@ namespace Samples.CharacterController3D.Scripts
         }
 
         #endregion
-        
+
         //Callbacks
         //============================================================================================================//
-        
+
         private void OnMovementChanged(Vector2 movementValue)
         {
             m_movementInput = movementValue;
         }
-        
+
         private void OnJumpPressed(bool pressed)
         {
             m_isJumpPressed = pressed;
         }
-        
+
         //============================================================================================================//
     }
 }
