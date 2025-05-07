@@ -1,6 +1,7 @@
 using Audio;
 using System;
 using UnityEngine;
+using VisualFX;
 
 namespace Samples.CharacterController3D.Scripts
 {
@@ -8,7 +9,7 @@ namespace Samples.CharacterController3D.Scripts
     public class CharacterController3D : MonoBehaviour
     {
         public bool IsGrounded => m_3dBalancer.Grounded;
-        
+
         [SerializeField]
         private CharacterMovement3DDataScriptableObject characterMovementData;
 
@@ -18,7 +19,7 @@ namespace Samples.CharacterController3D.Scripts
         private Vector3 groundVelocity = Vector3.zero;
         private float speedFactor = 1f;
         private float maxAccelerationForceFactor = 1f;
-        
+
         //Private Fields
         //------------------------------------------------//
 
@@ -36,7 +37,7 @@ namespace Samples.CharacterController3D.Scripts
         public float VerticalVelocity { get; private set; }
         private bool m_isJumpPressed;
         private bool m_lastFrameJumpPressed;
-        
+
         private bool m_isJumping;
         private bool m_isJumpAvailable;
         private bool m_isFalling;
@@ -47,7 +48,7 @@ namespace Samples.CharacterController3D.Scripts
         private bool m_isPastApexThreshold;
         private float m_apexPoint;
         private float m_timePastApexThreshold;
-        
+
         // jump buffer vars
         private float m_jumpBufferTimer;
         private bool m_jumpReleasedDuringBuffer;
@@ -55,12 +56,21 @@ namespace Samples.CharacterController3D.Scripts
         // coyote time vars
         private float m_coyoteTimer;
 
+        // dash vars
+        private float m_dashCooldownTimer;
+        private float m_dashTimer;
+        private bool m_isDashPressed;
+        private bool m_lastFrameDashPressed;
+        private bool m_isDashing;
+        Vector3 m_dashDir;
+
         //============================================================================================================//
 
         private void OnEnable()
         {
             GameInput.GameInputDelegator.OnMovementChanged += OnMovementChanged;
             GameInput.GameInputDelegator.OnJumpPressed += OnJumpPressed;
+            GameInput.GameInputDelegator.OnDashPressed += OnDashPressed;
         }
 
         private void Start()
@@ -74,8 +84,10 @@ namespace Samples.CharacterController3D.Scripts
         private void Update()
         {
             CountTimers();
-            JumpInputChecks();
-            
+            DashInputChecks();
+            if (!m_isDashing)
+                JumpInputChecks();
+
             m_adjustMovementDirection = GetCameraBasedMove(m_movementInput).normalized;
             m_3dBalancer?.FaceDirection(m_adjustMovementDirection);
         }
@@ -84,16 +96,23 @@ namespace Samples.CharacterController3D.Scripts
         {
             Jump();
 
-            ApplyMoveForce(m_adjustMovementDirection,
-                m_3dBalancer.Grounded
-                    ? characterMovementData.GroundAcceleration
-                    : characterMovementData.AirAcceleration);
+            float accel = 0f;
+            if (m_isDashing)
+                accel = characterMovementData.DashAcceleration;
+            else if (m_3dBalancer.Grounded)
+                accel = characterMovementData.GroundAcceleration;
+            else if (!m_3dBalancer.Grounded)
+                accel = characterMovementData.GroundAcceleration;
+
+            var moveDir = m_isDashing ? m_dashDir : m_adjustMovementDirection;
+            ApplyMoveForce(moveDir, accel);
         }
 
         private void OnDisable()
         {
             GameInput.GameInputDelegator.OnMovementChanged -= OnMovementChanged;
             GameInput.GameInputDelegator.OnJumpPressed -= OnJumpPressed;
+            GameInput.GameInputDelegator.OnDashPressed -= OnDashPressed;
         }
 
         //Locomotion Functions
@@ -111,12 +130,13 @@ namespace Samples.CharacterController3D.Scripts
 
         private void ApplyMoveForce(Vector3 inputGoal, float acceleration)
         {
+            var maxSpeed = m_isDashing ? characterMovementData.maxDashSpeed : characterMovementData.maxSpeed;
             var unitVelocity = m_goalVelocity.normalized;
             var velocityDot = Vector3.Dot(inputGoal, unitVelocity);
             var accel = acceleration * characterMovementData.accelerationFactorFromDot.Evaluate(velocityDot);
-            var goalVelocity = inputGoal * (characterMovementData.maxSpeed * speedFactor);
+            var goalVelocity = inputGoal * (maxSpeed * speedFactor);
 
-            m_goalVelocity = Vector3.MoveTowards(m_goalVelocity, 
+            m_goalVelocity = Vector3.MoveTowards(m_goalVelocity,
                 goalVelocity + groundVelocity,
                 accel * Time.fixedDeltaTime);
 
@@ -126,7 +146,7 @@ namespace Samples.CharacterController3D.Scripts
                                   maxAccelerationForceFactor;
 
             neededAcceleration = Vector3.ClampMagnitude(neededAcceleration, maxAcceleration);
-            
+
             m_rigidbody.AddForce(Vector3.Scale(neededAcceleration * m_rigidbody.mass, characterMovementData.forceScale));
         }
 
@@ -134,7 +154,7 @@ namespace Samples.CharacterController3D.Scripts
 
         //Jumping
         //============================================================================================================//
-        
+
         #region Jump
 
         // Process vertical velocity
@@ -143,7 +163,7 @@ namespace Samples.CharacterController3D.Scripts
             // Player pressed jump button this frame -- start the jump buffer
             bool jumpPressedThisFrame = !m_lastFrameJumpPressed && m_isJumpPressed;
             bool jumpReleasedThisFrame = m_lastFrameJumpPressed && !m_isJumpPressed;
-            
+
             // Jumping starts the buffer timer -- hitting ground within this timer will trigger a jump
             if (jumpPressedThisFrame)
             {
@@ -234,6 +254,14 @@ namespace Samples.CharacterController3D.Scripts
 
         private void Jump()
         {
+
+            // Dashing will temporarily suspend vertical movement
+            if (m_isDashing)
+            {
+                VerticalVelocity = 0f;
+                m_rigidbody.linearVelocity = new Vector3(m_rigidbody.linearVelocity.x, VerticalVelocity, m_rigidbody.linearVelocity.z);
+                return;
+            }
 
             //Apply Gravity While Jumping
             //------------------------------------------------//
@@ -331,7 +359,53 @@ namespace Samples.CharacterController3D.Scripts
         }
 
         #endregion
-        
+
+        //Dashing
+        //============================================================================================================//
+
+        #region Dash
+
+        private void DashInputChecks()
+        {
+            bool dashPressedThisFrame = !m_lastFrameDashPressed && m_isDashPressed;
+            bool dashReleasedThisFrame = m_lastFrameDashPressed && !m_isDashPressed;
+
+            if (dashPressedThisFrame && m_dashCooldownTimer <= 0f)
+            {
+                DoDash();
+            }
+
+            // Clear dash if it's done
+            if (m_isDashing && m_dashTimer <= 0f)
+            {
+                m_isDashing = false;
+            }
+
+        }
+
+        private void DoDash()
+        {
+            if (!m_isDashing)
+            {
+                m_isDashing = true;
+            }
+
+            m_dashCooldownTimer = characterMovementData.DashCooldown;
+            m_dashTimer = characterMovementData.DashTimer;
+
+            VerticalVelocity = 0f;
+
+            // Dash direction is current character facing
+            m_dashDir = new Vector3(transform.forward.x, 0f, transform.forward.z).normalized;
+
+            SFXManager.Instance.PlaySound(SFX.JUMP, 1f, true);
+            var dashVFX = VFX.DASH.PlayAtLocation(transform.position);
+            dashVFX.transform.SetParent(this.transform);
+            dashVFX.transform.localRotation = Quaternion.identity;
+        }
+
+        #endregion
+
         //Timers
         //============================================================================================================//
 
@@ -348,23 +422,33 @@ namespace Samples.CharacterController3D.Scripts
             {
                 m_coyoteTimer = characterMovementData.JumpCoyoteTime;
             }
+
+            m_dashCooldownTimer -= Time.deltaTime;
+            m_dashTimer -= Time.deltaTime;
+
         }
 
         #endregion
-        
+
         //Callbacks
         //============================================================================================================//
-        
+
         private void OnMovementChanged(Vector2 movementValue)
         {
             m_movementInput = movementValue;
         }
-        
+
         private void OnJumpPressed(bool pressed)
         {
             m_isJumpPressed = pressed;
         }
-        
+
+        private void OnDashPressed(bool pressed)
+        {
+            m_isDashPressed = pressed;
+        }
+
+
         //============================================================================================================//
     }
 }

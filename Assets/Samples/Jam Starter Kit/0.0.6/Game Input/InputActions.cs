@@ -106,7 +106,7 @@ namespace GameInput
                     ""name"": ""VerticalMovement"",
                     ""type"": ""Button"",
                     ""id"": ""bd12a9d6-db60-4d4d-974b-025888a450f1"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -133,7 +133,16 @@ namespace GameInput
                     ""name"": ""Mouse Right Click"",
                     ""type"": ""Button"",
                     ""id"": ""0710c818-4bfa-4517-8352-d9ce6c382a0c"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": ""Press(behavior=2)"",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Dash"",
+                    ""type"": ""Button"",
+                    ""id"": ""d403017b-7542-42ce-a0f0-f7eef717d81b"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": ""Press(behavior=2)"",
                     ""initialStateCheck"": false
@@ -238,6 +247,28 @@ namespace GameInput
                     ""action"": ""Mouse Right Click"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d9601804-1214-4e54-93f5-dadbbba994fa"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cfaa1144-8c9d-4fc9-8758-581a306f4c3d"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -257,6 +288,7 @@ namespace GameInput
             m_Gameplay_Jump = m_Gameplay.FindAction("Jump", throwIfNotFound: true);
             m_Gameplay_MouseLeftClick = m_Gameplay.FindAction("Mouse Left Click", throwIfNotFound: true);
             m_Gameplay_MouseRightClick = m_Gameplay.FindAction("Mouse Right Click", throwIfNotFound: true);
+            m_Gameplay_Dash = m_Gameplay.FindAction("Dash", throwIfNotFound: true);
             // Menu
             m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
         }
@@ -345,6 +377,7 @@ namespace GameInput
         private readonly InputAction m_Gameplay_Jump;
         private readonly InputAction m_Gameplay_MouseLeftClick;
         private readonly InputAction m_Gameplay_MouseRightClick;
+        private readonly InputAction m_Gameplay_Dash;
         /// <summary>
         /// Provides access to input actions defined in input action map "Gameplay".
         /// </summary>
@@ -376,6 +409,10 @@ namespace GameInput
             /// Provides access to the underlying input action "Gameplay/MouseRightClick".
             /// </summary>
             public InputAction @MouseRightClick => m_Wrapper.m_Gameplay_MouseRightClick;
+            /// <summary>
+            /// Provides access to the underlying input action "Gameplay/Dash".
+            /// </summary>
+            public InputAction @Dash => m_Wrapper.m_Gameplay_Dash;
             /// <summary>
             /// Provides access to the underlying input action map instance.
             /// </summary>
@@ -417,6 +454,9 @@ namespace GameInput
                 @MouseRightClick.started += instance.OnMouseRightClick;
                 @MouseRightClick.performed += instance.OnMouseRightClick;
                 @MouseRightClick.canceled += instance.OnMouseRightClick;
+                @Dash.started += instance.OnDash;
+                @Dash.performed += instance.OnDash;
+                @Dash.canceled += instance.OnDash;
             }
 
             /// <summary>
@@ -443,6 +483,9 @@ namespace GameInput
                 @MouseRightClick.started -= instance.OnMouseRightClick;
                 @MouseRightClick.performed -= instance.OnMouseRightClick;
                 @MouseRightClick.canceled -= instance.OnMouseRightClick;
+                @Dash.started -= instance.OnDash;
+                @Dash.performed -= instance.OnDash;
+                @Dash.canceled -= instance.OnDash;
             }
 
             /// <summary>
@@ -603,6 +646,13 @@ namespace GameInput
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnMouseRightClick(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "Dash" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnDash(InputAction.CallbackContext context);
         }
         /// <summary>
         /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Menu" which allows adding and removing callbacks.

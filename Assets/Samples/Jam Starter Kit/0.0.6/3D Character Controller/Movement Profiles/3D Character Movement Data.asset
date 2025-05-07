@@ -99,6 +99,10 @@ MonoBehaviour:
   ApexHangTime: 0.04
   JumpBufferTime: 0.125
   JumpCoyoteTime: 0.1
+  maxDashSpeed: 20
+  DashAcceleration: 300
+  DashTimer: 0.2
+  DashCooldown: 2
   rideHeight: 0.5
   springStrength: 1317.9
   springDamper: 0.1

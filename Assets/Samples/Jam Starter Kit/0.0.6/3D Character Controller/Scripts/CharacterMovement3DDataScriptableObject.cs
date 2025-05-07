@@ -8,7 +8,7 @@ namespace Samples.CharacterController3D.Scripts
     {
         public float Gravity { get; private set; }
         public float InitialJumpVelocity { get; private set; }
-        
+
         //Locomotion
         //------------------------------------------------//
         [Header("Locomotion")]
@@ -20,16 +20,16 @@ namespace Samples.CharacterController3D.Scripts
         public AnimationCurve maxAccelerationForceFactorFromDot;
         public Vector3 forceScale;
         public float gravityScaleDrop;
-        
+
         //Grounded/Collision Checks
         //------------------------------------------------//
-        [Header("Grounded/Collision Checks")] 
+        [Header("Grounded/Collision Checks")]
         public LayerMask GroundLayer;
         //public float GroundDetectionRayLength = 0.02f;
-        
+
         //Jump
         //------------------------------------------------//
-        [Header("Jump"), Range(1.0f, 1.1f)] 
+        [Header("Jump"), Range(1.0f, 1.1f)]
         public float JumpHeightCompensationFactor = 1.054f;
         public float MaxVerticalVelocity = 50f;
         public float JumpHeight = 6.5f;
@@ -39,27 +39,37 @@ namespace Samples.CharacterController3D.Scripts
         public float MaxFallSpeed = 26f;
         [Range(0, 10)]
         public int NumberOfJumpsAllowed = 2;
-        
+
         //Jump Cut
         //------------------------------------------------//
-        [Header("Jump Cut"), Range(0f, 1f)] 
+        [Header("Jump Cut"), Range(0f, 1f)]
         public float TimeForUpwardsCancel = 0.027f;
-        
+
         //Jump Apex
         //------------------------------------------------//
         [Header("Jump Apex"), Range(0f, 1f)]
         public float ApexThreshold;
         public float ApexHangTime = 0.075f;
-        
+
         //Jump Buffer
         //------------------------------------------------//
-        [Header("Jump Buffer"), Range(0f, 1f)] 
+        [Header("Jump Buffer"), Range(0f, 1f)]
         public float JumpBufferTime = 0.125f;
 
         //Jump Coyote Time
         //------------------------------------------------//
         [Header("Jump Coyote Time"), Range(0f, 1f)]
         public float JumpCoyoteTime = 0.1f;
+
+        //Dash
+        //------------------------------------------------//
+        [Header("Dash")]
+        public float maxDashSpeed;
+        [Min(0f)] public float DashAcceleration = 200f;
+        [Header("Dash Timer"), Range(0, 1f)]
+        public float DashTimer = 0.5f;
+        [Header("Dash Cooldown"), Range(0, 10f)]
+        public float DashCooldown = 3f;
 
         //Character Balancing
         //------------------------------------------------//
@@ -86,7 +96,7 @@ namespace Samples.CharacterController3D.Scripts
             Gravity = -(2f * adjustedJumpHeight) / Mathf.Pow(TimeTillJumpApex, 2f);
             InitialJumpVelocity = Mathf.Abs(Gravity) * TimeTillJumpApex;
         }
-         
+
         [Conditional("UNITY_EDITOR")]
         private void OnValidate()
         {
