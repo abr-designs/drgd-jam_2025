@@ -55,12 +55,20 @@ namespace Samples.CharacterController3D.Scripts
         // coyote time vars
         private float m_coyoteTimer;
 
+        // dash vars
+        private float m_dashCooldownTimer;
+        private float m_dashTimer;
+        private bool m_isDashPressed;
+        private bool m_lastFrameDashPressed;
+        private bool m_isDashing;
+
         //============================================================================================================//
 
         private void OnEnable()
         {
             GameInput.GameInputDelegator.OnMovementChanged += OnMovementChanged;
             GameInput.GameInputDelegator.OnJumpPressed += OnJumpPressed;
+            GameInput.GameInputDelegator.OnDashPressed += OnDashPressed;
         }
 
         private void Start()
@@ -84,16 +92,22 @@ namespace Samples.CharacterController3D.Scripts
         {
             Jump();
 
-            ApplyMoveForce(m_adjustMovementDirection,
-                m_3dBalancer.Grounded
-                    ? characterMovementData.GroundAcceleration
-                    : characterMovementData.AirAcceleration);
+            float accel = 0f;
+            if (m_isDashing)
+                accel = characterMovementData.DashAcceleration;
+            else if (m_3dBalancer.Grounded)
+                accel = characterMovementData.GroundAcceleration;
+            else if (!m_3dBalancer.Grounded)
+                accel = characterMovementData.GroundAcceleration;
+
+            ApplyMoveForce(m_adjustMovementDirection, accel);
         }
 
         private void OnDisable()
         {
             GameInput.GameInputDelegator.OnMovementChanged -= OnMovementChanged;
             GameInput.GameInputDelegator.OnJumpPressed -= OnJumpPressed;
+            GameInput.GameInputDelegator.OnDashPressed -= OnDashPressed;
         }
 
         //Locomotion Functions
@@ -235,6 +249,13 @@ namespace Samples.CharacterController3D.Scripts
         private void Jump()
         {
 
+            // Dashing will temporarily suspend vertical movement
+            if (m_isDashing)
+            {
+                VerticalVelocity = 0f;
+                return;
+            }
+
             //Apply Gravity While Jumping
             //------------------------------------------------//
             if (m_isJumping)
@@ -332,6 +353,29 @@ namespace Samples.CharacterController3D.Scripts
 
         #endregion
 
+        //Dashing
+        //============================================================================================================//
+
+        #region Dash
+
+        private void DashInputChecks()
+        {
+            bool dashPressedThisFrame = !m_lastFrameDashPressed && m_isDashPressed;
+            bool dashReleasedThisFrame = m_lastFrameDashPressed && !m_isDashPressed;
+
+
+        }
+
+        private void DoDash()
+        {
+            if (!m_isDashing && m_dashCooldownTimer <= 0)
+            {
+                m_isDashing = true;
+            }
+        }
+
+        #endregion
+
         //Timers
         //============================================================================================================//
 
@@ -348,6 +392,9 @@ namespace Samples.CharacterController3D.Scripts
             {
                 m_coyoteTimer = characterMovementData.JumpCoyoteTime;
             }
+
+            m_dashCooldownTimer -= Time.deltaTime;
+
         }
 
         #endregion
@@ -364,6 +411,12 @@ namespace Samples.CharacterController3D.Scripts
         {
             m_isJumpPressed = pressed;
         }
+
+        private void OnDashPressed(bool pressed)
+        {
+            m_isDashPressed = pressed;
+        }
+
 
         //============================================================================================================//
     }

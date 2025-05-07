@@ -23,9 +23,10 @@ public class Thrower : MonoBehaviour
     public void Throw()
     {
         animator.Play("Throw");
+        Debug.Log("Playing throw animation");
         animator.speed = Random.Range(1f, 1.5f);
     }
-    
+
     private void OnStopThrowing()
     {
         gameObject.SetActive(false);

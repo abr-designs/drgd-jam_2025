@@ -9,14 +9,16 @@ namespace GameInput
         public static event Action<bool> InputLockChanged;
         public static event Action<Vector2> OnMovementChanged;
         public static event Action<bool> OnJumpPressed;
-    
+        public static event Action<bool> OnDashPressed;
+
         public static event Action<bool> OnLeftClick;
         public static event Action<bool> OnRightClick;
+
 
         public static bool LockInputs { get; private set; }
 
         private Vector2 _currentInput;
-    
+
         //============================================================================================================//\
 
         private void OnEnable()
@@ -28,9 +30,9 @@ namespace GameInput
         // Start is called before the first frame update
         void Start()
         {
-        
+
         }
-    
+
         private void OnDisable()
         {
             Inputs.Input.Gameplay.Disable();
@@ -39,11 +41,11 @@ namespace GameInput
 
         //Lock Input
         //============================================================================================================//
-        
+
         public static void SetInputLock(bool lockState)
         {
             LockInputs = lockState;
-            
+
             InputLockChanged?.Invoke(lockState);
         }
 
@@ -57,7 +59,7 @@ namespace GameInput
                 OnMovementChanged?.Invoke(_currentInput);
                 return;
             }
-            
+
             var x = context.ReadValue<float>();
 
             _currentInput.x = x;
@@ -73,7 +75,7 @@ namespace GameInput
                 OnMovementChanged?.Invoke(_currentInput);
                 return;
             }
-            
+
             var y = context.ReadValue<float>();
 
             _currentInput.y = y;
@@ -82,15 +84,28 @@ namespace GameInput
 
         public void OnJump(InputAction.CallbackContext context)
         {
-            if (LockInputs) 
+            if (LockInputs)
                 return;
 
             if (context.performed == false)
                 return;
-            
+
             var pressed = context.ReadValueAsButton();
             OnJumpPressed?.Invoke(pressed);
         }
+
+        public void OnDash(InputAction.CallbackContext context)
+        {
+            if (LockInputs)
+                return;
+
+            if (context.performed == false)
+                return;
+
+            var pressed = context.ReadValueAsButton();
+            OnDashPressed?.Invoke(pressed);
+        }
+
 
         public void OnMouseLeftClick(InputAction.CallbackContext context)
         {
@@ -99,7 +114,7 @@ namespace GameInput
                 OnLeftClick?.Invoke(false);
                 return;
             }
-            
+
             var pressed = context.ReadValueAsButton();
             OnLeftClick?.Invoke(pressed);
         }
@@ -111,7 +126,7 @@ namespace GameInput
                 OnRightClick?.Invoke(false);
                 return;
             }
-            
+
             var pressed = context.ReadValueAsButton();
             OnRightClick?.Invoke(pressed);
         }
