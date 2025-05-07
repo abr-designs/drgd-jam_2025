@@ -1,6 +1,7 @@
 using Audio;
 using System;
 using UnityEngine;
+using VisualFX;
 
 namespace Samples.CharacterController3D.Scripts
 {
@@ -61,6 +62,7 @@ namespace Samples.CharacterController3D.Scripts
         private bool m_isDashPressed;
         private bool m_lastFrameDashPressed;
         private bool m_isDashing;
+        Vector3 m_dashDir;
 
         //============================================================================================================//
 
@@ -82,7 +84,9 @@ namespace Samples.CharacterController3D.Scripts
         private void Update()
         {
             CountTimers();
-            JumpInputChecks();
+            DashInputChecks();
+            if (!m_isDashing)
+                JumpInputChecks();
 
             m_adjustMovementDirection = GetCameraBasedMove(m_movementInput).normalized;
             m_3dBalancer?.FaceDirection(m_adjustMovementDirection);
@@ -100,7 +104,8 @@ namespace Samples.CharacterController3D.Scripts
             else if (!m_3dBalancer.Grounded)
                 accel = characterMovementData.GroundAcceleration;
 
-            ApplyMoveForce(m_adjustMovementDirection, accel);
+            var moveDir = m_isDashing ? m_dashDir : m_adjustMovementDirection;
+            ApplyMoveForce(moveDir, accel);
         }
 
         private void OnDisable()
@@ -125,10 +130,11 @@ namespace Samples.CharacterController3D.Scripts
 
         private void ApplyMoveForce(Vector3 inputGoal, float acceleration)
         {
+            var maxSpeed = m_isDashing ? characterMovementData.maxDashSpeed : characterMovementData.maxSpeed;
             var unitVelocity = m_goalVelocity.normalized;
             var velocityDot = Vector3.Dot(inputGoal, unitVelocity);
             var accel = acceleration * characterMovementData.accelerationFactorFromDot.Evaluate(velocityDot);
-            var goalVelocity = inputGoal * (characterMovementData.maxSpeed * speedFactor);
+            var goalVelocity = inputGoal * (maxSpeed * speedFactor);
 
             m_goalVelocity = Vector3.MoveTowards(m_goalVelocity,
                 goalVelocity + groundVelocity,
@@ -253,6 +259,7 @@ namespace Samples.CharacterController3D.Scripts
             if (m_isDashing)
             {
                 VerticalVelocity = 0f;
+                m_rigidbody.linearVelocity = new Vector3(m_rigidbody.linearVelocity.x, VerticalVelocity, m_rigidbody.linearVelocity.z);
                 return;
             }
 
@@ -363,15 +370,38 @@ namespace Samples.CharacterController3D.Scripts
             bool dashPressedThisFrame = !m_lastFrameDashPressed && m_isDashPressed;
             bool dashReleasedThisFrame = m_lastFrameDashPressed && !m_isDashPressed;
 
+            if (dashPressedThisFrame && m_dashCooldownTimer <= 0f)
+            {
+                DoDash();
+            }
+
+            // Clear dash if it's done
+            if (m_isDashing && m_dashTimer <= 0f)
+            {
+                m_isDashing = false;
+            }
 
         }
 
         private void DoDash()
         {
-            if (!m_isDashing && m_dashCooldownTimer <= 0)
+            if (!m_isDashing)
             {
                 m_isDashing = true;
             }
+
+            m_dashCooldownTimer = characterMovementData.DashCooldown;
+            m_dashTimer = characterMovementData.DashTimer;
+
+            VerticalVelocity = 0f;
+
+            // Dash direction is current character facing
+            m_dashDir = new Vector3(transform.forward.x, 0f, transform.forward.z).normalized;
+
+            SFXManager.Instance.PlaySound(SFX.JUMP, 1f, true);
+            var dashVFX = VFX.DASH.PlayAtLocation(transform.position);
+            dashVFX.transform.SetParent(this.transform);
+            dashVFX.transform.localRotation = Quaternion.identity;
         }
 
         #endregion
@@ -394,6 +424,7 @@ namespace Samples.CharacterController3D.Scripts
             }
 
             m_dashCooldownTimer -= Time.deltaTime;
+            m_dashTimer -= Time.deltaTime;
 
         }
 

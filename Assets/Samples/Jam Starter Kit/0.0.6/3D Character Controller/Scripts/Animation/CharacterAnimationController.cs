@@ -17,11 +17,14 @@ namespace Samples.CharacterController3D.Scripts
         [SerializeField]
         private CharacterMovement3DDataScriptableObject characterMovementData;
 
+        [SerializeField]
+        private ParticleSystem movementDust;
+
         private float m_sqrSpeed;
 
         //Unity Functions
         //============================================================================================================//
-        
+
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         private void Start()
         {
@@ -33,23 +36,35 @@ namespace Samples.CharacterController3D.Scripts
         {
             animator.SetBool(IsGroundedHash, characterController3D.IsGrounded);
 
+            var speed = GetNormalizedSpeed();
+            // Show dust based on if the character is grounded with speed
+            if (characterController3D.IsGrounded && speed > 0.2f)
+            {
+                if (!movementDust.isEmitting)
+                    movementDust.Play();
+            }
+            else if (movementDust.isEmitting)
+            {
+                movementDust.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+            }
+
             //If we're in the air, we don't need to worry about setting the speed
             if (!characterController3D.IsGrounded)
                 return;
-            
-            animator.SetFloat(SpeedHash, GetNormalizedSpeed());
+
+            animator.SetFloat(SpeedHash, speed);
         }
 
         //CharacterAnimationController Functions
         //============================================================================================================//
-        
+
         private float GetNormalizedSpeed()
         {
             var velocity = characterRigidbody.linearVelocity;
             velocity.y = 0;
             return velocity.sqrMagnitude / m_sqrSpeed;
         }
-        
-        
+
+
     }
 }

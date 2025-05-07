@@ -15,7 +15,6 @@ namespace Samples.CharacterController3D.Scripts
         public float maxSpeed;
         [Min(0f)] public float GroundAcceleration = 100f;
         [Min(0f)] public float AirAcceleration = 50f;
-        [Min(0f)] public float DashAcceleration = 200f;
         public AnimationCurve accelerationFactorFromDot;
         public float maxAccelerationForce;
         public AnimationCurve maxAccelerationForceFactorFromDot;
@@ -64,6 +63,9 @@ namespace Samples.CharacterController3D.Scripts
 
         //Dash
         //------------------------------------------------//
+        [Header("Dash")]
+        public float maxDashSpeed;
+        [Min(0f)] public float DashAcceleration = 200f;
         [Header("Dash Timer"), Range(0, 1f)]
         public float DashTimer = 0.5f;
         [Header("Dash Cooldown"), Range(0, 10f)]
